@@ -1,0 +1,11 @@
+/target/
+/.classpath
+/ocupelago/
+
+.classpath
+
+*.class
+
+*.war
+
+*.jar
