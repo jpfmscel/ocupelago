@@ -1,0 +1,192 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+
+	<style>
+.ui-lightbox-content {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	background-color: lightgray;
+}
+</style>
+
+	<meta charset="utf-8" />
+	<meta
+		http-equiv="X-UA-Compatible"
+		content="IE=edge" />
+	<meta
+		name="viewport"
+		content="width=device-width, initial-scale=1" />
+	<meta
+		name="description"
+		content="" />
+	<meta
+		name="author"
+		content="" />
+
+	<title>iSave - Gestão Inteligente de Energia</title>
+
+	<!-- Bootstrap Core CSS -->
+	<link
+		href="css/bootstrap.min.css"
+		rel="stylesheet" />
+
+	<!-- Custom CSS -->
+	<link
+		href="css/sb-admin.css"
+		rel="stylesheet" />
+
+	<!-- Morris Charts CSS -->
+	<link
+		href="css/plugins/morris.css"
+		rel="stylesheet" />
+
+	<!-- Custom Fonts -->
+	<link
+		href="font-awesome/css/font-awesome.min.css"
+		rel="stylesheet" />
+
+	<!-- CSS para botões -->
+	<link
+		href="docs/css/main.css"
+		rel="stylesheet" />
+	<link
+		href="dist/css/bootstrap3/bootstrap-switch.css"
+		rel="stylesheet" />
+	<link
+		href="docs/css/highlight.css"
+		rel="stylesheet" />
+	<link
+		href="http://getbootstrap.com/assets/css/docs.min.css"
+		rel="stylesheet" />
+
+	<h:outputScript
+		library="primefaces"
+		name="jquery/jquery.js" />
+	<h:outputScript
+		library="primefaces"
+		name="primefaces.js" />
+	<h:outputScript
+		name="charts/charts.js"
+		library="primefaces" />
+	<h:outputStylesheet
+		name="charts/charts.css"
+		library="primefaces" />
+
+</h:head>
+
+<body>
+
+	<div id="wrapper">
+
+		<!-- Navigation -->
+		<nav
+			class="navbar navbar-inverse navbar-fixed-top"
+			role="navigation"> <!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button
+				type="button"
+				class="navbar-toggle"
+				data-toggle="collapse"
+				data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<h:link
+				class="navbar-brand"
+				outcome="index">iSave</h:link>
+		</div>
+		<!-- Top Menu Items --> <h:form id="logout">
+			<ul class="nav navbar-right top-nav">
+				<li class="dropdown"><a
+					href="#"
+					class="dropdown-toggle"
+					data-toggle="dropdown"> <i class="fa fa-user" /> <ui:insert name="user"> #{loginBean.usuarioLogado.nome}</ui:insert> <b class="caret" />
+				</a>
+					<ul class="dropdown-menu">
+						<li><h:commandLink
+								action="#{loginBean.logout}"
+								value="Log out">
+								<i class="fa fa-fw fa-power-off" />
+							</h:commandLink></li>
+						<li><h:commandLink
+								action="#{geradorLocal.cadastrarLocalizacoes()}"
+								value="Gerar Locais">
+								<i class="fa fa-fw fa-power-on" />
+							</h:commandLink></li>
+						<li><h:commandLink
+								action="#{cadastroMedicao.adicionarMedicao()}"
+								value="Gerar Medicoes">
+								<i class="fa fa-fw fa-power-on" />
+							</h:commandLink></li>
+
+					</ul></li>
+			</ul>
+		</h:form> <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav side-nav">
+				<li><h:link outcome="index">
+						<i class="fa fa-fw fa-home" /> Home</h:link></li>
+				<li style="display: none;"><a
+					href="javascript:;"
+					data-toggle="collapse"
+					data-target="#demo"><i class="fa fa-fw fa-institution"></i> Administração <i class="fa fa-fw fa-caret-down"></i></a>
+					<ul
+						id="demo"
+						class="collapse">
+						<li><h:link outcome="usuario">
+								<i class="fa fa-fw fa-user" /> Usuários</h:link></li>
+					</ul></li>
+				<ui:insert name="menu" />
+			</ul>
+		</div>
+		<!-- /.navbar-collapse --> </nav>
+
+		<div id="page-wrapper">
+
+			<div class="container-fluid">
+
+				<!-- Page Heading -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header">
+							<ui:insert name="page-name"></ui:insert>
+							<small><ui:insert name="page-subname"></ui:insert></small>
+						</h1>
+						<ol class="breadcrumb">
+							<li class="active"><i class="fa fa-list" /> <ui:insert name="page-info"></ui:insert></li>
+						</ol>
+					</div>
+				</div>
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-lg-12">
+						<ui:insert name="body"></ui:insert>
+					</div>
+				</div>
+				<!-- /.row -->
+
+			</div>
+			<!-- /.container-fluid -->
+
+		</div>
+		<!-- /#page-wrapper -->
+
+	</div>
+	<!-- /#wrapper -->
+
+	<!--jQuery do botão-->
+	<script src="docs/js/jquery.min.js"></script>
+	<script src="docs/js/bootstrap.min.js"></script>
+	<script src="docs/js/highlight.js"></script>
+	<script src="dist/js/bootstrap-switch.js"></script>
+	<script src="docs/js/main.js"></script>
+
+</body>
+
+</html>

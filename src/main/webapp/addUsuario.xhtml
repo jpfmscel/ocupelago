@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de Usuários</title>
+
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<h:outputScript
+		library="primefaces"
+		name="jquery/jquery.js" />
+	<h:outputScript
+		library="primefaces"
+		name="primefaces.js" />
+	<h:outputScript
+		name="charts/charts.js"
+		library="primefaces" />
+	<h:outputStylesheet
+		name="charts/charts.css"
+		library="primefaces" />
+	<link
+		href="css/bootstrap.min.css"
+		rel="stylesheet" />
+	<link
+		href="css/login.css"
+		rel="stylesheet" />
+	<link
+		href="font-awesome/css/font-awesome.min.css"
+		rel="stylesheet" />
+</h:head>
+<h:body>
+
+	<div class="row">
+		<div class="col-lg-4 col-sm-6 col-xs-8 col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
+			<h:form id="adduser">
+				<h2 class="form-signin-heading text-center">iSave</h2>
+				<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+					<br></br>
+					<ui:repeat
+						value="#{facesContext.messageList}"
+						var="message">
+						<div
+							class="row"
+							style="margin-left: 1%">
+							<span class="label label-danger"><h:outputText
+									value="#{message.summary}"
+									escape="false" /></span>
+						</div>
+					</ui:repeat>
+				</p:outputPanel>
+				<br></br>
+				<div class="form-group">
+					<h:outputLabel
+						id="username"
+						value="Nome" />
+					<h:inputText
+						class="form-control" required="true"
+						a:placeholder="Nome completo" requiredMessage="Digite o nome do usuário."
+						value="#{manterUsuario.usuarioAdd.nome}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="login"
+						value="Login" />
+					<h:inputText
+						class="form-control" requiredMessage="Digite o login."
+						a:placeholder="Informe o login para acesso" required="true"
+						value="#{manterUsuario.usuarioAdd.login}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="senha"
+						value="Senha" />
+					<h:inputSecret requiredMessage="Digite a senha"
+						class="form-control" required="true"
+						value="#{manterUsuario.usuarioAdd.senha}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="confSenha"
+						value="Confirmação Senha" />
+					<h:inputSecret
+						class="form-control" required="true" requiredMessage="Digite a confirmação de senha."
+						value="#{manterUsuario.usuarioAdd.confirmacaoSenha}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="email"
+						value="E-mail" />
+					<h:inputText
+						class="form-control" required="true"
+						a:placeholder="exemple@gmail.com" requiredMessage="Digite o e-mail."
+						value="#{manterUsuario.usuarioAdd.email}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="endereco"
+						value="Endereço" />
+					<h:inputText
+						class="form-control" required="true" requiredMessage="Digite o endereço."
+						value="#{manterUsuario.usuarioAdd.endereco}" />
+				</div>
+				<div class="form-group">
+					<h:outputLabel
+						id="fone"
+						value="Fone" />
+					<p:inputMask
+						class="form-control"
+						mask="(99) 9999-9999?9" required="true" requiredMessage="Digite o telefone."
+						value="#{manterUsuario.usuarioAdd.telefone}" />
+					<!--<h:inputText class="form-control" a:placeholder="Apenas números"/>-->
+				</div>
+				<div class="form-group">
+					<h:commandLink
+						value="Salvar"
+						class="btn btn-lg btn-success"
+						action="#{manterUsuario.adicionarUsuario}">
+						<i class="fa fa-fw fa-save" />
+					</h:commandLink>
+					<h:outputText value=" " />
+					<h:commandLink
+						value="Voltar"
+						class="btn btn-lg btn-primary"
+						action="login"
+						immediate="true">
+						<i class="fa fa-fw fa-remove" />
+					</h:commandLink>
+				</div>
+			</h:form>
+		</div>
+		<div class="col-lg-4" />
+	</div>
+</h:body>
+</html>
