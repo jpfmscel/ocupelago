@@ -1,14 +1,15 @@
 package br.entidades;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Localizacao implements Serializable {
@@ -21,13 +22,13 @@ public class Localizacao implements Serializable {
 	private int id;
 
 	@Column(nullable = false)
-	private String local;
+	private double latitude;
 
-	@Column(nullable=true)
-	private Timestamp timestamp;
+	@Column(nullable = false)
+	private double longitude;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Usuario usuario;
+	@OneToMany(mappedBy="localizacao", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Alerta> alertas;
 
 	public int getId() {
 		return id;
@@ -37,28 +38,20 @@ public class Localizacao implements Serializable {
 		this.id = id;
 	}
 
-	public String getLocal() {
-		return local;
+	public double getLatitude() {
+		return latitude;
 	}
 
-	public void setLocal(String local) {
-		this.local = local;
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
 	}
 
-	public Timestamp getTimestamp() {
-		return timestamp;
+	public double getLongitude() {
+		return longitude;
 	}
 
-	public void setTimestamp(Timestamp timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	@Override
@@ -66,9 +59,11 @@ public class Localizacao implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + id;
-		result = prime * result + ((local == null) ? 0 : local.hashCode());
-		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
-		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		long temp;
+		temp = Double.doubleToLongBits(latitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		temp = Double.doubleToLongBits(longitude);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
 
@@ -83,22 +78,27 @@ public class Localizacao implements Serializable {
 		Localizacao other = (Localizacao) obj;
 		if (id != other.id)
 			return false;
-		if (local == null) {
-			if (other.local != null)
-				return false;
-		} else if (!local.equalsIgnoreCase(other.local))
+		if (Double.doubleToLongBits(latitude) != Double
+				.doubleToLongBits(other.latitude))
 			return false;
-		if (timestamp == null) {
-			if (other.timestamp != null)
-				return false;
-		} else if (!timestamp.equals(other.timestamp))
-			return false;
-		if (usuario == null) {
-			if (other.usuario != null)
-				return false;
-		} else if (!usuario.equals(other.usuario))
+		if (Double.doubleToLongBits(longitude) != Double
+				.doubleToLongBits(other.longitude))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Localizacao [id=" + id + ", latitude=" + latitude
+				+ ", longitude=" + longitude + "]";
+	}
+
+	public List<Alerta> getAlertas() {
+		return alertas;
+	}
+
+	public void setAlertas(List<Alerta> alertas) {
+		this.alertas = alertas;
 	}
 
 }

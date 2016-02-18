@@ -1,54 +1,61 @@
 jQuery(function($) {
 
-	$(function(){
+	$(function() {
 		$('#main-slider.carousel').carousel({
-			interval: 10000,
-			pause: false
+			interval : 10000,
+			pause : false
 		});
 	});
 
-	//Ajax contact
+	// Ajax contact
 	var form = $('.contact-form');
-	form.submit(function () {
+	form.submit(function() {
 		$this = $(this);
 		$.post($(this).attr('action'), function(data) {
 			$this.prev().text(data.message).fadeIn().delay(3000).fadeOut();
-		},'json');
+		}, 'json');
 		return false;
 	});
 
-	//smooth scroll
+	// smooth scroll
 	$('.navbar-nav > li').click(function(event) {
-		event.preventDefault();
 		var target = $(this).find('>a').prop('hash');
-		$('html, body').animate({
-			scrollTop: $(target).offset().top
-		}, 500);
+		if (target == "") {
+			$(this).unbind('click');
+		} else {
+			event.preventDefault();
+
+			$('html, body').animate({
+				scrollTop : $(target).offset().top
+			}, 500);
+		}
 	});
 
-	//scrollspy
-	$('[data-spy="scroll"]').each(function () {
+	// scrollspy
+	$('[data-spy="scroll"]').each(function() {
 		var $spy = $(this).scrollspy('refresh')
 	})
 
-	//PrettyPhoto
+	// PrettyPhoto
 	$("a.preview").prettyPhoto({
-		social_tools: false
+		social_tools : false
 	});
 
-	//Isotope
-	$(window).load(function(){
+	// Isotope
+	$(window).load(function() {
 		$portfolio = $('.portfolio-items');
 		$portfolio.isotope({
 			itemSelector : 'li',
 			layoutMode : 'fitRows'
 		});
 		$portfolio_selectors = $('.portfolio-filter >li>a');
-		$portfolio_selectors.on('click', function(){
+		$portfolio_selectors.on('click', function() {
 			$portfolio_selectors.removeClass('active');
 			$(this).addClass('active');
 			var selector = $(this).attr('data-filter');
-			$portfolio.isotope({ filter: selector });
+			$portfolio.isotope({
+				filter : selector
+			});
 			return false;
 		});
 	});

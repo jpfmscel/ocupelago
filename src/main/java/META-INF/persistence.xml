@@ -7,16 +7,14 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>br.entidades.Localizacao</class>
 		<class>br.entidades.Usuario</class>
+		<class>br.entidades.Alerta</class>
 
 		<properties>
 			<!-- propriedades do hibernate -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
-			
-<!-- 			<property name="hibernate.ejb.entitymanager_factory_name" -->
-<!-- 				value="ocupelago" /> -->
+			<property name="hibernate.hbm2ddl.auto" value="validate" />
 			
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ocupelago" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
