@@ -19,26 +19,16 @@ public class Usuario implements Serializable {
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
 	private int id;
-
 	@Column(nullable = false)
 	private String nome;
 	@Column(nullable = false)
 	private String email;
 	@Column(nullable = false)
-	private String endereco;
-	@Column(nullable = false)
-	private String telefone;
-
-	@Column(nullable = false)
-	private String login;
-	@Column(nullable = false)
 	private String senha;
 
-	
 	@Transient
 	private String confirmacaoSenha;
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -61,30 +51,6 @@ public class Usuario implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
 	}
 
 	public String getSenha() {
@@ -117,7 +83,7 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
 		return result;
 	}
@@ -131,10 +97,10 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (login == null) {
-			if (other.login != null)
+		if (email == null) {
+			if (other.email != null)
 				return false;
-		} else if (!login.equals(other.login))
+		} else if (!email.equals(other.email))
 			return false;
 		if (senha == null) {
 			if (other.senha != null)
@@ -147,7 +113,7 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email
-				+ ", login=" + login + "]";
+				+ "]";
 	}
 
 	public String getConfirmacaoSenha() {

@@ -120,7 +120,7 @@ a:focus {
   text-shadow: 0 3px rgba(0, 0, 0, 0.1);
   color: #fff;
 }
-#contact .box {
+#sobrenos .box {
   background-color: #222;
   color: #999;
 }
@@ -174,7 +174,7 @@ a:focus {
   margin-bottom: 30px;
   font-size: 48px;
 }
-#portfolio .box {
+#projetos .box {
   background: #f3f3f3;
 }
 .portfolio-items,
@@ -308,7 +308,7 @@ a:focus {
   -o-transition: none;
   transition: none;
 }
-#pricing .box {
+#noticias .box {
   background-color: #f9f9f9;
 }
 #pricing .plan {
@@ -472,9 +472,9 @@ a:focus {
   border-radius: 0 0 0 5px;
 }
 .navbar-default .navbar-brand {
-  margin-right: 50px;
-  margin-left: 20px;
-  width: 200px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 170px;
   height: 78px;
   background: url(../images/logo.png) no-repeat 0 50%;
 }

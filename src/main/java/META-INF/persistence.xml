@@ -5,9 +5,13 @@
 	<persistence-unit name="ocupelago" transaction-type="RESOURCE_LOCAL">
 		<!-- provedor/implementacao do JPA -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<class>br.entidades.Localizacao</class>
+		<class>br.entidades.Local</class>
 		<class>br.entidades.Usuario</class>
 		<class>br.entidades.Alerta</class>
+		<class>br.entidades.Noticia</class>
+		<class>br.entidades.Esporte</class>
+		<class>br.entidades.Projeto</class>
+		<class>br.entidades.Evento</class>
 
 		<properties>
 			<!-- propriedades do hibernate -->

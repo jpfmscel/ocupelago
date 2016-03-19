@@ -20,15 +20,16 @@
 	<!-- Custom Fonts -->
 	<link href="bower_components/font-awesome/css/font-awesome.min.css"
 		rel="stylesheet" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
 	<!-- DataTables CSS -->
-<!-- 	<link -->
-<!-- 		href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" -->
-<!-- 		rel="stylesheet" /> -->
+	<!-- 	<link -->
+	<!-- 		href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" -->
+	<!-- 		rel="stylesheet" /> -->
 	<!-- DataTables Responsive CSS -->
-<!-- 	<link -->
-<!-- 		href="../bower_components/datatables-responsive/css/dataTables.responsive.css" -->
-<!-- 		rel="stylesheet" /> -->
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
+	<!-- 	<link -->
+	<!-- 		href="../bower_components/datatables-responsive/css/dataTables.responsive.css" -->
+	<!-- 		rel="stylesheet" /> -->
 </h:head>
 <h:body>
 	<div id="wrapper">
@@ -237,28 +238,30 @@
 					<li><a href="#"><i class="fa fa-fw fa-book" /> Cadastrar<span
 							class="fa arrow" /></a>
 						<ul class="nav nav-second-level">
-							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-list" /> Evento </h:link></li>
-							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-book" /> Esporte </h:link></li>
-							<li>
-								<li><h:link outcome="index">
-										<i class="fa fa-fw fa-graduation-cap" /> Local </h:link></li>
-							</li>
+							<li><h:link outcome="cadastroProjeto.xhtml">
+									<i class="fa fa-fw fa-lightbulb-o" style="margin-right: 5%;"/> Projeto </h:link></li>
+							<li><h:link outcome="cadastroEsporte.xhtml">
+									<i class="fa fa-fw fa-futbol-o" style="margin-right: 5%;"/> Esporte </h:link></li>
+							<li><h:link outcome="cadastroNoticia.xhtml">
+									<i class="fa fa-fw fa-newspaper-o" style="margin-right: 5%;"/> Notícia </h:link></li>
+							<li><h:link outcome="cadastroLocal.xhtml">
+									<i class="fa fa-fw fa-location-arrow" style="margin-right: 5%;"/> Local </h:link></li>
 							<li><h:link outcome="mapa">
-									<i class="fa fa-fw fa-plus" /> Denúncia </h:link></li>
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;"/> Alerta </h:link></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-institution fa-fw" />
 							Consultar<span class="fa arrow" /></a>
 						<ul class="nav nav-second-level">
 							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-cc" /> Local </h:link></li>
+									<i class="fa fa-fw fa-lightbulb-o" style="margin-right: 5%;"/> Projeto </h:link></li>
 							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-user" /> Esporte </h:link></li>
+									<i class="fa fa-fw fa-futbol-o" style="margin-right: 5%;"/> Esporte </h:link></li>
 							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-building" /> Local </h:link></li>
+									<i class="fa fa-fw fa-newspaper-o" style="margin-right: 5%;"/> Notícia </h:link></li>
 							<li><h:link outcome="index">
-									<i class="fa fa-fw fa-building" /> Denúncia </h:link></li>
+									<i class="fa fa-fw fa-location-arrow" style="margin-right: 5%;"/> Local </h:link></li>
+							<li><h:link outcome="index">
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;"/> Alerta </h:link></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -286,24 +289,12 @@
 	</div>
 	<!-- /#wrapper -->
 	<!-- jQuery -->
-<!-- 	<script src="bower_components/jquery/dist/jquery.min.js"></script> -->
+	<!-- 	<script src="bower_components/jquery/dist/jquery.min.js"></script> -->
 	<!-- Bootstrap Core JavaScript -->
 	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 	<!-- Metis Menu Plugin JavaScript -->
 	<script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
 	<!-- Custom Theme JavaScript -->
 	<script src="dist/js/sb-admin-2.js"></script>
-	<!-- DataTables JavaScript -->
-	<script
-		src="/bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
-	<script
-		src="/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#dataTables').DataTable({
-				responsive : true
-			});
-		});
-	</script>
 </h:body>
 </html>

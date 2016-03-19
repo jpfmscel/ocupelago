@@ -14,7 +14,6 @@ import org.primefaces.model.map.Marker;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
-import br.entidades.Localizacao;
 
 @ManagedBean(name = "mapBean")
 @ViewScoped
@@ -38,8 +37,7 @@ public class MapBean implements Serializable {
 			setEmptyModel(new DefaultMapModel());
 
 			for (Alerta a : getAlertaDAO().getListaInicial()) {
-				LatLng coord = new LatLng(a.getLocalizacao().getLatitude(), a
-						.getLocalizacao().getLongitude());
+				LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
 				getEmptyModel().addOverlay(new Marker(coord, a.getTitulo()));
 			}
 		}
@@ -87,11 +85,9 @@ public class MapBean implements Serializable {
 		AlertaDAO aDAO = new AlertaDAO();
 		Alerta a = new Alerta();
 
-		Localizacao loc = new Localizacao();
-		loc.setLatitude(lat);
-		loc.setLongitude(lng);
-
-		a.setLocalizacao(loc);
+		a.setLatitude(lat);
+		a.setLongitude(lng);
+//		a.setDescricao(getDescricao());
 		a.setTitulo(getTitle());
 
 		aDAO.iniciarTransacao();
@@ -129,4 +125,5 @@ public class MapBean implements Serializable {
 	public void setEmptyModel(MapModel emptyModel) {
 		this.emptyModel = emptyModel;
 	}
+
 }

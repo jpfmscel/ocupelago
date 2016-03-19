@@ -8,9 +8,6 @@
 	<name>Ocupe o Lago Webapp</name>
 
 	<dependencies>
-
-
-
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -41,13 +38,13 @@
 			<artifactId>javax.faces</artifactId>
 			<version>2.2.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.el</groupId>
 			<artifactId>javax.el-api</artifactId>
 			<version>2.2.4</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

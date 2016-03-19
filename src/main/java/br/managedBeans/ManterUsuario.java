@@ -27,7 +27,7 @@ public class ManterUsuario implements Serializable{
 			return "addUsuario.xhtml";
 		}
 		
-		Usuario userDB = getDao().buscarUsuario(getUsuarioAdd().getLogin(), getUsuarioAdd().getEmail());
+		Usuario userDB = getDao().buscarUsuario(getUsuarioAdd().getEmail());
 		
 		if(userDB != null){
 			FacesContext.getCurrentInstance().addMessage(null,

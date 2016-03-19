@@ -20,7 +20,7 @@ public class LoginBean implements Serializable{
 
 	public String login(){
 		
-		Usuario user = getDao().logarUsuario(getUsuarioLogado().getLogin(), getUsuarioLogado().getSenha());
+		Usuario user = getDao().logarUsuario(getUsuarioLogado().getEmail(), getUsuarioLogado().getSenha());
 		if(user!=null && user.equals(getUsuarioLogado())){
 			setUsuarioLogado(user);
 			return "index";

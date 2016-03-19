@@ -32,7 +32,7 @@
 				<br></br>
 				<label for="inputEmail" class="sr-only">Login</label>
 				<h:inputText id="inputEmail" class="form-control" autofocus="true"
-					value="#{loginBean.usuarioLogado.login}" 
+					value="#{loginBean.usuarioLogado.email}" 
 					required="true" requiredMessage="Digite seu login!" />
 
 				<label for="inputPassword" class="sr-only">Password</label>
@@ -42,7 +42,7 @@
 				<br></br>
 
 				<h:commandButton value="Login"
-					styleClass="btn btn-lg btn-primary btn-block" action="index"/>
+					styleClass="btn btn-lg btn-primary btn-block" action="indexadm"/>
 				<h:commandButton value="Registrar" immediate="true"
 					styleClass="btn btn-lg btn-success btn-block" action="addUsuario" />
 			</h:form>
