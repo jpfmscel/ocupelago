@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Local</ui:define>
+	<ui:define name="body">
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
+		<h:form id="adduser">
+			<div class="row">
+				<div class="col-md-12">
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<br></br>
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+					<br></br>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="nome" value="Nome" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Nome do local"
+							requiredMessage="Digite o nome do local."
+							value="#{cadastrarLocal.local.nome}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="descrição" value="Descrição" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Descrição do local"
+							requiredMessage="Digite a descrição do local."
+							value="#{cadastrarLocal.local.descricao}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="responsa" value="Responsável" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Nome do responsável"
+							requiredMessage="Digite o nome do responsável."
+							value="#{cadastrarLocal.local.responsavel}" />
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="email" value="E-mail" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="exemple@gmail.com"
+							requiredMessage="Digite o e-mail."
+							value="#{cadastrarLocal.local.email}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="endereco" value="Endereço" />
+						<h:inputText class="form-control" required="true"
+							requiredMessage="Digite o endereço."
+							value="#{cadastrarLocal.local.endereco}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="fone" value="Telefone" />
+						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
+							required="true" requiredMessage="Digite o telefone."
+							value="#{cadastrarLocal.local.telefone}" />
+					</div>
+
+					<h:inputHidden id="lat" value="#{cadastrarLocal.local.latitude}" />
+					<h:inputHidden id="lng" value="#{cadastrarLocal.local.longitude}" />
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP" streetView="true"
+							id="mapa" style="width:98%;height:450px"
+							model="#{cadastrarLocal.mapModel}">
+							<p:ajax event="pointSelect"
+								listener="#{cadastrarLocal.onPointSelect}" update="mapa" />
+						</p:gmap>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="categoria" value="Categoria" />
+						<br />
+						<h:selectOneMenu value="#{cadastrarLocal.local.categoria}">
+							<f:selectItem itemLabel="Restaurante" itemValue="Restaurante" />
+							<f:selectItem itemLabel="Clube" itemValue="Clube" />
+							<f:selectItem itemLabel="Parque" itemValue="Restaurante" />
+							<f:selectItem itemLabel="Área Privativa"
+								itemValue="Área Privativa" />
+							<f:selectItem itemLabel="Centro Esportivo"
+								itemValue="Centro Esportivo" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel id="panelFoto">
+							<h:outputLabel id="foto" value="Foto" />
+							<br></br>
+							<p:fileUpload rendered="#{cadastrarLocal.local.foto == null}"
+								label="Selecionar" cancelLabel="Cancelar"
+								fileUploadListener="#{cadastrarLocal.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="1048576"
+								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+							<p:commandLink rendered="#{cadastrarLocal.local.foto != null}"
+								immediate="true" process="panelFoto"
+								actionListener="#{cadastrarLocal.removerImagem}"
+								update="panelFoto">
+								<i class="glyphicon glyphicon-remove" style="color: red;" />
+							</p:commandLink>
+							<p:spacer width="2%" />
+							<h:outputLabel value="#{cadastrarLocal.foto.fileName}"
+								rendered="#{cadastrarLocal.local.foto != null}" />
+
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+
+						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-youtube" /></span>
+							<h:inputText class="form-control" id="videoURL"
+								value="#{cadastrarLocal.local.videoURL}"
+								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
+								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
+									partialSubmit="true"
+									listener="#{cadastrarLocal.filtrarURLYoutube}" />
+							</h:inputText>
+						</div>
+						<p:outputPanel id="videoYou">
+							<p:media value="#{cadastrarLocal.local.videoURL}" width="700"
+								height="400" player="flash"
+								style="margin-top:2%; margin-left: 10%;"
+								rendered="#{cadastrarLocal.local.videoURL != null and cadastrarLocal.local.videoURL != ''}" />
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Facebook" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-facebook-square" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarLocal.local.URL_facebook}"
+								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-twitter" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarLocal.local.URL_twitter}"
+								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Site" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-globe" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarLocal.local.URL_site}"
+								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{cadastrarLocal.adicionarLocal}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="index.xhtml" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Projetos</ui:define>
+	<ui:define name="body">
+
+		<h:form id="addproject">
+			<!-- 			<p:growl id="messages" showDetail="true" /> -->
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="form-signin-heading text-center"></h2>
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="titulo" value="Título" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="título"
+							requiredMessage="Digite o título do projeto."
+							value="#{cadastrarProjeto.projeto.titulo}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="descricao" value="Descrição" />
+						<h:inputText class="form-control"
+							requiredMessage="Digite a descrição do projeto."
+							a:placeholder="Informe a descrição do projeto" required="true"
+							value="#{cadastrarProjeto.projeto.descricao}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel id="panelFoto">
+							<h:outputLabel id="foto" value="Foto" />
+							<br></br>
+							<p:fileUpload rendered="#{cadastrarProjeto.projeto.foto == null}" label="Selecionar" cancelLabel="Cancelar"
+								fileUploadListener="#{cadastrarProjeto.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="1048576"
+								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+							<p:commandLink
+								rendered="#{cadastrarProjeto.projeto.foto != null}"
+								immediate="true" process="panelFoto"
+								actionListener="#{cadastrarProjeto.removerImagem}"
+								update="panelFoto">
+								<i class="glyphicon glyphicon-remove" style="color: red;" />
+							</p:commandLink>
+							<p:spacer width="2%" />
+							<h:outputLabel value="#{cadastrarProjeto.foto.fileName}"
+								rendered="#{cadastrarProjeto.projeto.foto != null}" />
+
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+
+						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-youtube" /></span>
+							<h:inputText class="form-control" id="videoURL"
+								value="#{cadastrarProjeto.projeto.videoURL}"
+								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
+								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
+									partialSubmit="true"
+									listener="#{cadastrarProjeto.filtrarURLYoutube}" />
+							</h:inputText>
+						</div>
+						<p:outputPanel id="videoYou">
+							<p:media value="#{cadastrarProjeto.projeto.videoURL}" width="700"
+								height="400" player="flash" style="margin-top:2%; margin-left: 10%;"
+								rendered="#{cadastrarProjeto.projeto.videoURL != null and cadastrarProjeto.projeto.videoURL != ''}" />
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Facebook" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-facebook-square" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarProjeto.projeto.URL_facebook}"
+								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-twitter" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarProjeto.projeto.URL_twitter}"
+								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+<!-- 						<h:outputLabel value="Link Site" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-globe" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarProjeto.projeto.URL_site}"
+								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{cadastrarProjeto.adicionarProjeto}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="index.xhtml" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

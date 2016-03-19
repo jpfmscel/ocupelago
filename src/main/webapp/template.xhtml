@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta charset="iso-8859-1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Ocupe o Lago</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet" />
+        <link href="css/font-awesome.min.css" rel="stylesheet" />
+        <link href="css/prettyPhoto.css" rel="stylesheet" />
+        <link href="css/main.css" rel="stylesheet" />
+        <!--[if lt IE 9]>
+            <script src="js/html5shiv.js"></script>
+            <script src="js/respond.min.js"></script>
+            <![endif]-->
+        <link rel="shortcut icon" href="images/ico/ocupeolago.ico" />
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="144x144" -->
+        <!-- 	href="images/ico/apple-touch-icon-144-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="114x114" -->
+        <!-- 	href="images/ico/apple-touch-icon-114-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" sizes="72x72" -->
+        <!-- 	href="images/ico/apple-touch-icon-72-precomposed.png"> -->
+        <!-- <link rel="apple-touch-icon-precomposed" -->
+        <!-- 	href="images/ico/apple-touch-icon-57-precomposed.png"> -->
+        <!-- </head> -->
+        <!--/head-->
+    </h:head>
+    <h:body a:data-spy="scroll" a:data-target="#navbar" a:data-offset="0">
+        <header id="header" role="banner">
+            <div class="container">
+                <div id="navbar" class="navbar navbar-default">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span> <span
+                                class="icon-bar"></span> <span class="icon-bar"></span> <span
+                                class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="index.xhtml"></a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="index.xhtml"><i class="icon-home"></i></a></li>
+                            <ui:insert name="menu" />                                
+                            <li><a href="login.xhtml"><i class="glyphicon glyphicon-log-in"></i></a></li>
+                        </ul>                        
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--/#header-->
+        <ui:insert name="session" />
+        <!--/#contact-->
+
+        <footer id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        &copy; 2016 <a target="_blank" href="#">Ocupe o Lago</a>. Todos os direitos reservados.
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--/#footer-->
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.isotope.min.js"></script>
+        <script src="js/jquery.prettyPhoto.js"></script>
+        <script src="js/main.js"></script>
+    </h:body>
+</html>
