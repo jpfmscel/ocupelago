@@ -28,11 +28,24 @@ public abstract class BaseDao<T> implements Serializable {
 		return (List<T>) q.getResultList();
 	}
 
+	@SuppressWarnings({ "unchecked" })
+	public List<T> findAll() {
+		Query q = gerarQuery(getClasse());
+		return (List<T>) q.getResultList();
+	}
+
+	private Query gerarQuery(Class<T> classe) {
+		String nomeClasse = classe.getSimpleName();
+		StringBuffer sb = new StringBuffer();
+		sb.append("Select x from " + nomeClasse + " x ");
+		return getEntityManager().createQuery(sb.toString());
+	}
+
 	public T buscarSingle(T o) {
 		Query q = gerarQuery(o);
 		return (T) q.getSingleResult();
 	}
-	
+
 	public void iniciarTransacao() {
 		getEntityManager().getTransaction().begin();
 	}

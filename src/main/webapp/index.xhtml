@@ -1,514 +1,503 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"> 
-    <ui:composition template="template.xhtml">
-        <ui:define name="menu">
-            <li><a href="#vcnolago">Você no Lago</a></li>
-            <li><a href="#projetos">Projetos</a></li>
-            <li><a href="#noticias">Notícias</a></li>
-            <li><a href="#sigaolago">#SigaOLago</a></li>
-            <li><a href="sobrenos.xhtml">Sobre nós</a></li>                        
-            <li><a href="#">Denúncias</a></li>
-        </ui:define>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="template.xhtml">
+	<ui:define name="menu">
+		<li><a href="#vcnolago">Você no Lago</a></li>
+		<li><a href="#projetos">Projetos</a></li>
+		<li><a href="#noticias">Notícias</a></li>
+		<li><a href="#sigaolago">#SigaOLago</a></li>
+		<li><a href="sobrenos.xhtml">Sobre nós</a></li>
+		<li><a href="#">Denúncias</a></li>
+	</ui:define>
 
-        <ui:define name="session">
-            <section id="main-slider" class="carousel">
-                <div class="carousel-inner">
-                    <div class="item active">
-                        <div class="container">
-                            <div class="carousel-content">
-                                <h1>#vemprolago</h1>
-                                <p class="lead">Bem vindo ao maior portal digital do lago
-                                    Paranoá!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.item-->
-                    <div class="item">
-                        <div class="container">
-                            <div class="carousel-content">
-                                <h1>Praia de Brasília</h1>
-                                <p class="lead">Aqui você encontra tudo sobre o lago, e ainda
-                                    pode colaborar!</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/.item-->
-                </div>
-                <!--/.carousel-inner-->
-                <a class="prev" href="#main-slider" data-slide="prev"><i
-                        class="icon-angle-left"></i></a> <a class="next" href="#main-slider"
-                                                    data-slide="next"><i class="icon-angle-right"></i></a>
-            </section>
-            <!--/#main-slider-->
+	<ui:define name="session">
+		<section id="main-slider" class="carousel">
+		<div class="carousel-inner">
+			<div class="item active">
+				<div class="container">
+					<div class="carousel-content">
+						<h1>#vemprolago</h1>
+						<p class="lead">Bem vindo ao maior portal digital do lago
+							Paranoá!</p>
+					</div>
+				</div>
+			</div>
+			<!--/.item-->
+			<div class="item">
+				<div class="container">
+					<div class="carousel-content">
+						<h1>Praia de Brasília</h1>
+						<p class="lead">Aqui você encontra tudo sobre o lago, e ainda
+							pode colaborar!</p>
+					</div>
+				</div>
+			</div>
+			<!--/.item-->
+		</div>
+		<!--/.carousel-inner--> <a class="prev" href="#main-slider"
+			data-slide="prev"><i class="icon-angle-left"></i></a> <a class="next"
+			href="#main-slider" data-slide="next"><i class="icon-angle-right"></i></a>
+		</section>
+		<!--/#main-slider-->
 
-            <section id="vcnolago">
-                <div class="container">
-                    <div class="box first">
-                        <div class="row">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-apple icon-md icon-color1"></i>
-                                    <h4>iOS development</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-android icon-md icon-color2"></i>
-                                    <h4>Android development</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-windows icon-md icon-color3"></i>
-                                    <h4>Windows Phone development</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-html5 icon-md icon-color4"></i>
-                                    <h4>Ruby on Rails development</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-css3 icon-md icon-color5"></i>
-                                    <h4>Javascript development</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                            <div class="col-md-4 col-sm-6">
-                                <div class="center">
-                                    <i class="icon-thumbs-up icon-md icon-color6"></i>
-                                    <h4>Responsive web design</h4>
-                                    <p>Pellentesque habitant morbi tristique senectus et netus et
-                                        malesuada fames ac turpis egestas. Vestibulum tortor quam,
-                                        feugiat vitae.</p>
-                                </div>
-                            </div>
-                            <!--/.col-md-4-->
-                        </div>
-                        <!--/.row-->
-                    </div>
-                    <!--/.box-->
-                </div>
-                <!--/.container-->
-            </section>
-            <!--/#services-->
+		<section id="vcnolago">
+		<div class="container">
+			<div class="box first">
+				<div class="row">
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-apple icon-md icon-color1"></i>
+							<h4>iOS development</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-android icon-md icon-color2"></i>
+							<h4>Android development</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-windows icon-md icon-color3"></i>
+							<h4>Windows Phone development</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-html5 icon-md icon-color4"></i>
+							<h4>Ruby on Rails development</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-css3 icon-md icon-color5"></i>
+							<h4>Javascript development</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+					<div class="col-md-4 col-sm-6">
+						<div class="center">
+							<i class="icon-thumbs-up icon-md icon-color6"></i>
+							<h4>Responsive web design</h4>
+							<p>Pellentesque habitant morbi tristique senectus et netus et
+								malesuada fames ac turpis egestas. Vestibulum tortor quam,
+								feugiat vitae.</p>
+						</div>
+					</div>
+					<!--/.col-md-4-->
+				</div>
+				<!--/.row-->
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container--> </section>
+		<!--/#services-->
 
-            <section id="projetos">
-                <div class="container">
-                    <div class="box">
-                        <div class="center gap">
-                            <h2>Esportes</h2>
-                            <p class="lead">
-                                Confira aqui os esportes disponíveis no lago!<br />Sai do sofá
-                                e vem ocupar o lago com a gente!
-                            </p>
-                        </div>
-                        <!--/.center-->
-                        <ul class="portfolio-filter">
-                            <li><a class="btn btn-primary active" href="#" data-filter="*">Todos</a></li>
-                            <li><a class="btn btn-danger" href="#"
-                                   data-filter=".bootstrap">Remo</a></li>
-                            <li><a class="btn btn-success" href="#" data-filter=".html">Vento</a></li>
-                            <li><a class="btn btn-warning" href="#"
-                                   data-filter=".wordpress">Prancha</a></li>
-                        </ul>
-                        <!--/#portfolio-filter-->
-                        <ul class="portfolio-items col-4">
-                            <li class="portfolio-item apps">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item1.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item1.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item joomla bootstrap">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item2.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item2.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item bootstrap wordpress">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item3.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item3.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item joomla wordpress apps">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item4.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item4.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item joomla html">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item5.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item5.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item wordpress html">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item6.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item6.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item joomla html">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item5.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item5.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                            <li class="portfolio-item wordpress html">
-                                <div class="item-inner">
-                                    <div class="portfolio-image">
-                                        <img src="images/portfolio/thumb/item6.jpg" alt="" />
-                                        <div class="overlay">
-                                            <a class="preview btn btn-danger"
-                                               title="Lorem ipsum dolor sit amet"
-                                               href="images/portfolio/full/item6.jpg"><i
-                                                    class="icon-eye-open"></i></a>
-                                        </div>
-                                    </div>
-                                    <h5>Lorem ipsum dolor sit amet</h5>
-                                </div>
-                            </li>
-                            <!--/.portfolio-item-->
-                        </ul>
-                    </div>
-                    <!--/.box-->
-                </div>
-                <!--/.container-->
-            </section>
-            <!--/#portfolio-->
+		<section id="projetos">
+		<div class="container">
+			<div class="box">
+				<div class="center gap">
+					<h2>Esportes</h2>
+					<p class="lead">
+						Confira aqui os esportes disponíveis no lago!<br />Sai do sofá e
+						vem ocupar o lago com a gente!
+					</p>
+				</div>
+				<!--/.center-->
+				<ul class="portfolio-filter">
+					<li><a class="btn btn-primary active" href="#" data-filter="*">Todos</a></li>
+					<li><a class="btn btn-danger" href="#"
+						data-filter=".bootstrap">Remo</a></li>
+					<li><a class="btn btn-success" href="#" data-filter=".html">Vento</a></li>
+					<li><a class="btn btn-warning" href="#"
+						data-filter=".wordpress">Prancha</a></li>
+				</ul>
+				<!--/#portfolio-filter-->
+				<ul class="portfolio-items col-4">
+					<li class="portfolio-item apps">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item1.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item1.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item joomla bootstrap">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item2.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item2.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item bootstrap wordpress">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item3.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item3.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item joomla wordpress apps">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item4.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item4.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item joomla html">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item5.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item5.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item wordpress html">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item6.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item6.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item joomla html">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item5.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item5.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+					<li class="portfolio-item wordpress html">
+						<div class="item-inner">
+							<div class="portfolio-image">
+								<img src="images/portfolio/thumb/item6.jpg" alt="" />
+								<div class="overlay">
+									<a class="preview btn btn-danger"
+										title="Lorem ipsum dolor sit amet"
+										href="images/portfolio/full/item6.jpg"><i
+										class="icon-eye-open"></i></a>
+								</div>
+							</div>
+							<h5>Lorem ipsum dolor sit amet</h5>
+						</div>
+					</li>
+					<!--/.portfolio-item-->
+				</ul>
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container--> </section>
+		<!--/#portfolio-->
 
-            <section id="noticias">
-                <div class="container">
-                    <div class="box">
-                        <div class="center">
-                            <h2>Notícias</h2>
-                        </div>
-                        <!--/.center-->
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia1</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
+		<section id="noticias">
+		<div class="container">
+			<div class="box">
+				<div class="center">
+					<h2>Notícias</h2>
+				</div>
+				<!--/.center-->
+				<ui:repeat var="noticia" value="#{consultarNoticia.noticias}">
+					<div class="row">
+						<div class="col-md-7">
+							<a href="#"> <img class="img-responsive"
+								src="http://placehold.it/700x300" alt="" />
+							</a>
+						</div>
+						<div class="col-md-5">
+							<h3>#{noticia.titulo}</h3>
+							<h4>
+								<span class="glyphicon glyphicon-time"></span>
+								#{noticia.dataCriadaFormatada}
+							</h4>
+							<p>#{noticia.descricao}</p>
+							<h:commandButton styleClass="btn btn-primary" action="noticias"
+								value="Continue lendo">
+								<f:setPropertyActionListener value="#{noticia}"
+									target="#{consultarNoticia.noticiaSelected}" />
+							</h:commandButton>
+							<span class="glyphicon glyphicon-chevron-right"></span>
+						</div>
+					</div>
+					<!-- /.row -->
+					<hr />
 
-                        <hr />
+				</ui:repeat>
 
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 2</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 3</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
+				<br />
+				<div class="row text-center">
+					<div class="col-lg-12">
+						<a class="btn btn-primary" href="consultaNoticias.xhtml">Todas
+							as notícias<span class="glyphicon glyphicon-chevron-right"></span>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		</section>
+		<!--/#pricing-->
 
-                        <br />
-                        <div class="row text-center">
-                            <div class="col-lg-12">
-                                <a class="btn btn-primary" href="noticias.xhtml">Todas as notícias<span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </section>
-            <!--/#pricing-->
+		<section id="sigaolago">
+		<div class="container">
+			<div class="box">
+				<div class="center">
+					<h2>Quem Somos</h2>
+					<p class="lead">Conheça-nos e compartilhe seu carinho pelo
+						lago.</p>
+				</div>
+				<div class="gap"></div>
+				<div id="team-scroller" class="carousel scale">
+					<div class="carousel-inner">
+						<div class="item active">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team1.jpg" alt="" />
+										</p>
+										<h3>
+											Agnes Smith<small class="designation">CEO
+												&amp;Founder</small>
+										</h3>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team2.jpg" alt="" />
+										</p>
+										<h3>
+											Donald Ford<small class="designation">Senior Vice
+												President</small>
+										</h3>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team3.jpg" alt="" />
+										</p>
+										<h3>
+											Karen Richardson<small class="designation">Assitant
+												Vice President</small>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="item">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team3.jpg" alt="" />
+										</p>
+										<h3>
+											David Robbins<small class="designation">Co-Founder</small>
+										</h3>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team1.jpg" alt="" />
+										</p>
+										<h3>
+											Philip Mejia<small class="designation">Marketing
+												Manager</small>
+										</h3>
+									</div>
+								</div>
+								<div class="col-sm-4">
+									<div class="member">
+										<p>
+											<img class="img-responsive img-thumbnail img-circle"
+												src="images/team2.jpg" alt="" />
+										</p>
+										<h3>
+											Charles Erickson<small class="designation">Support
+												Manager</small>
+										</h3>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<a class="left-arrow" href="#team-scroller" data-slide="prev">
+						<i class="icon-angle-left icon-4x"></i>
+					</a> <a class="right-arrow" href="#team-scroller" data-slide="next">
+						<i class="icon-angle-right icon-4x"></i>
+					</a>
+				</div>
+				<!--/.carousel-->
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container--> </section>
+		<!--/#about-us-->
 
-            <section id="sigaolago">
-                <div class="container">
-                    <div class="box">
-                        <div class="center">
-                            <h2>Quem Somos</h2>
-                            <p class="lead">Conheça-nos e compartilhe seu carinho pelo
-                                lago.</p>
-                        </div>
-                        <div class="gap"></div>
-                        <div id="team-scroller" class="carousel scale">
-                            <div class="carousel-inner">
-                                <div class="item active">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle"
-                                                         src="images/team1.jpg" alt="" />
-                                                </p>
-                                                <h3>Agnes Smith<small class="designation">CEO &amp;Founder</small></h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle" src="images/team2.jpg" alt="" />
-                                                </p>
-                                                <h3>Donald Ford<small class="designation">Senior Vice President</small></h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle"
-                                                         src="images/team3.jpg" alt="" />
-                                                </p>
-                                                <h3>Karen Richardson<small class="designation">Assitant Vice President</small></h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle"
-                                                         src="images/team3.jpg" alt="" />
-                                                </p>
-                                                <h3>David Robbins<small class="designation">Co-Founder</small></h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle"
-                                                         src="images/team1.jpg" alt="" />
-                                                </p>
-                                                <h3>
-                                                    Philip Mejia<small class="designation">Marketing
-                                                        Manager</small>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div class="member">
-                                                <p>
-                                                    <img class="img-responsive img-thumbnail img-circle"
-                                                         src="images/team2.jpg" alt="" />
-                                                </p>
-                                                <h3>
-                                                    Charles Erickson<small class="designation">Support
-                                                        Manager</small>
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <a class="left-arrow" href="#team-scroller" data-slide="prev">
-                                <i class="icon-angle-left icon-4x"></i>
-                            </a> 
-                            <a class="right-arrow" href="#team-scroller" data-slide="next">
-                                <i class="icon-angle-right icon-4x"></i>
-                            </a>
-                        </div>
-                        <!--/.carousel-->
-                    </div>
-                    <!--/.box-->
-                </div>
-                <!--/.container-->
-            </section>
-            <!--/#about-us-->
-
-            <section id="sobrenos">
-                <div class="container">
-                    <div class="box last">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Contato</h1>
-                                <div class="status alert alert-success" style="display: none"></div>
-                                <form id="main-contact-form" class="contact-form"
-                                      name="contact-form" method="post" action="sendemail.php"
-                                      role="form">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" required="required"
-                                                       placeholder="Name"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control" required="required"
-                                                       placeholder="Email address"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <textarea name="message" id="message" required="required"
-                                                          class="form-control" rows="8" placeholder="Message"></textarea>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-danger btn-lg">Enviar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <!--/.col-sm-6-->
-                            <div class="col-sm-6">
-                                <h1>Nossos Endereços</h1>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <address>
-                                            <strong>Ocupe o Lago</strong><br /> Rua dos Bobos, nº 0<br />
-                                            Brasília, DF 12345<br /> <abbr title="Phone">Tel:</abbr>
-                                            (061) 3333-6969
-                                        </address>
-                                    </div>
-                                    <!--                             <div class="col-md-6"> -->
-                                </div>
-                                <h1>Encontre-nos nas redes sociais</h1>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <ul class="social">
-                                            <li><a href="#"><i class="icon-facebook icon-social"></i>
-                                                    Facebook</a></li>
-                                            <li><a href="#"><i
-                                                        class="icon-google-plus icon-social"></i> Google Plus</a></li>
-                                            <li><a href="#"><i class="icon-pinterest icon-social"></i>
-                                                    Pinterest</a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <ul class="social">
-                                            <li><a href="#"><i class="icon-linkedin icon-social"></i>
-                                                    Linkedin</a></li>
-                                            <li><a href="#"><i class="icon-twitter icon-social"></i>
-                                                    Twitter</a></li>
-                                            <li><a href="#"><i class="icon-youtube icon-social"></i>
-                                                    Youtube</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/.col-sm-6-->
-                        </div>
-                        <!--/.row-->
-                    </div>
-                    <!--/.box-->
-                </div>
-                <!--/.container-->
-            </section>
-        </ui:define>
-    </ui:composition>
+		<section id="sobrenos">
+		<div class="container">
+			<div class="box last">
+				<div class="row">
+					<div class="col-sm-6">
+						<h1>Contato</h1>
+						<div class="status alert alert-success" style="display: none"></div>
+						<form id="main-contact-form" class="contact-form"
+							name="contact-form" method="post" action="sendemail.php"
+							role="form">
+							<div class="row">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input type="text" class="form-control" required="required"
+											placeholder="Name" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<input type="text" class="form-control" required="required"
+											placeholder="Email address" />
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-12">
+									<div class="form-group">
+										<textarea name="message" id="message" required="required"
+											class="form-control" rows="8" placeholder="Message"></textarea>
+									</div>
+									<div class="form-group">
+										<button type="submit" class="btn btn-danger btn-lg">Enviar</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+					<!--/.col-sm-6-->
+					<div class="col-sm-6">
+						<h1>Nossos Endereços</h1>
+						<div class="row">
+							<div class="col-md-6">
+								<address>
+									<strong>Ocupe o Lago</strong><br /> Rua dos Bobos, nº 0<br />
+									Brasília, DF 12345<br /> <abbr title="Phone">Tel:</abbr> (061)
+									3333-6969
+								</address>
+							</div>
+							<!--                             <div class="col-md-6"> -->
+						</div>
+						<h1>Encontre-nos nas redes sociais</h1>
+						<div class="row">
+							<div class="col-md-6">
+								<ul class="social">
+									<li><a href="#"><i class="icon-facebook icon-social"></i>
+											Facebook</a></li>
+									<li><a href="#"><i
+											class="icon-google-plus icon-social"></i> Google Plus</a></li>
+									<li><a href="#"><i class="icon-pinterest icon-social"></i>
+											Pinterest</a></li>
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<ul class="social">
+									<li><a href="#"><i class="icon-linkedin icon-social"></i>
+											Linkedin</a></li>
+									<li><a href="#"><i class="icon-twitter icon-social"></i>
+											Twitter</a></li>
+									<li><a href="#"><i class="icon-youtube icon-social"></i>
+											Youtube</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--/.col-sm-6-->
+				</div>
+				<!--/.row-->
+			</div>
+			<!--/.box-->
+		</div>
+		<!--/.container--> </section>
+	</ui:define>
+</ui:composition>
 </html>

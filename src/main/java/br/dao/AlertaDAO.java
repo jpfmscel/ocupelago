@@ -19,7 +19,7 @@ public class AlertaDAO extends BaseDao<Alerta> {
 	@SuppressWarnings("unchecked")
 	public List<Alerta> getListaInicial() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + Alerta.class.getSimpleName());
+		sb.append("Select x from " + Alerta.class.getSimpleName() +" x");
 		sb.append(" where 1=1");
 		sb.append(" and latitude between -15.8880217 and -15.6880217");
 		sb.append(" and longitude between -47.9390782 and -47.7390782");

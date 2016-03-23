@@ -15,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEsporte")
@@ -26,12 +27,12 @@ public class CadastrarEsporte implements Serializable {
 	private Esporte esporte;
 	private EsporteDAO esporteDAO;
 	private String tipoEsporte;
+	private String messageSuccess;
 
 	public String adicionarEsporte() {
 		try {
 			atualizaTipoEsporte();
 			atualizaFilePath();
-			getEsporte().setFoto(getBytesFromFile(getFoto()));
 			getEsporteDAO().iniciarTransacao();
 			getEsporteDAO().inserir(getEsporte());
 			getEsporteDAO().comitarTransacao();
@@ -47,28 +48,32 @@ public class CadastrarEsporte implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage("messages",
-				new FacesMessage("Esporte cadastrado com sucesso!"));
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Esporte cadastrado com sucesso!", null));
 
-		return "cadastroEsporte.xhtml";
+		return "consultaEsporte.xhtml";
 	}
-	
+
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getEsporte().setFoto(getBytesFromFile(getFoto()));
-			String filepath = "/Users/jpfms/imagensOcupeLago/"
+			String filepath = Util.getFilePath() + ""
 					+ getFoto().getFileName();
 			getEsporte().setFilePath(filepath);
 		}
 	}
-	
+
 	private void gravarFotoDisco(String filepath) throws IOException {
-		FileOutputStream fos = null;
-		fos = new FileOutputStream(filepath);
-		fos.write(getEsporte().getFoto());
-		fos.close();
+		if (getFoto() != null) {
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(filepath);
+			fos.write(getEsporte().getFoto());
+			fos.close();
+		}
 	}
-	
+
 	private void atualizaTipoEsporte() {
 		getEsporte().setAereo(false);
 		getEsporte().setTerrestre(false);
@@ -143,6 +148,14 @@ public class CadastrarEsporte implements Serializable {
 
 	public void setTipoEsporte(String tipoEsporte) {
 		this.tipoEsporte = tipoEsporte;
+	}
+
+	public String getMessageSuccess() {
+		return messageSuccess;
+	}
+
+	public void setMessageSuccess(String messageSuccess) {
+		this.messageSuccess = messageSuccess;
 	}
 
 }

@@ -25,49 +25,47 @@
 					</p:outputPanel>
 					<br></br>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="nome" value="Nome" />
+						<h:outputLabel value="Nome" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Nome do local"
+							a:placeholder="Nome do local" id="nome"
 							requiredMessage="Digite o nome do local."
 							value="#{cadastrarLocal.local.nome}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="descrição" value="Descrição" />
-						<h:inputText class="form-control" required="true"
-							a:placeholder="Descrição do local"
+						<h:outputLabel value="Descrição" />
+						<h:inputText class="form-control" required="true" 
+							a:placeholder="Descrição do local" id="descricao"
 							requiredMessage="Digite a descrição do local."
 							value="#{cadastrarLocal.local.descricao}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="responsa" value="Responsável" />
+						<h:outputLabel value="Responsável" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Nome do responsável"
+							a:placeholder="Nome do responsável" id="responsavel"
 							requiredMessage="Digite o nome do responsável."
 							value="#{cadastrarLocal.local.responsavel}" />
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="email" value="E-mail" />
+						<h:outputLabel value="E-mail" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="exemple@gmail.com"
+							a:placeholder="exemple@gmail.com" id="email"
 							requiredMessage="Digite o e-mail."
 							value="#{cadastrarLocal.local.email}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="endereco" value="Endereço" />
+						<h:outputLabel value="Endereço" />
 						<h:inputText class="form-control" required="true"
-							requiredMessage="Digite o endereço."
+							requiredMessage="Digite o endereço." id="endereco"
 							value="#{cadastrarLocal.local.endereco}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="fone" value="Telefone" />
+						<h:outputLabel value="Telefone" />
 						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
-							required="true" requiredMessage="Digite o telefone."
+							required="true" requiredMessage="Digite o telefone." id="telefone"
 							value="#{cadastrarLocal.local.telefone}" />
 					</div>
 
-					<h:inputHidden id="lat" value="#{cadastrarLocal.local.latitude}" />
-					<h:inputHidden id="lng" value="#{cadastrarLocal.local.longitude}" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP" streetView="true"
 							id="mapa" style="width:98%;height:450px"
@@ -78,14 +76,14 @@
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="categoria" value="Categoria" />
+						<h:outputLabel value="Categoria" />
 						<br />
-						<h:selectOneMenu value="#{cadastrarLocal.local.categoria}">
+						<h:selectOneMenu value="#{cadastrarLocal.local.categoria}" id="categoria" >
 							<f:selectItem itemLabel="Restaurante" itemValue="Restaurante" />
 							<f:selectItem itemLabel="Clube" itemValue="Clube" />
 							<f:selectItem itemLabel="Parque" itemValue="Restaurante" />
 							<f:selectItem itemLabel="Área Privativa"
-								itemValue="Área Privativa" />
+								itemValue="Area Privativa" />
 							<f:selectItem itemLabel="Centro Esportivo"
 								itemValue="Centro Esportivo" />
 						</h:selectOneMenu>
@@ -95,7 +93,7 @@
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
 							<p:fileUpload rendered="#{cadastrarLocal.local.foto == null}"
-								label="Selecionar" cancelLabel="Cancelar"
+								label="Selecionar" cancelLabel="Cancelar" id="fotoUpload"
 								fileUploadListener="#{cadastrarLocal.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="1048576"
 								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
@@ -139,7 +137,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" id="linkFacebook"
 								value="#{cadastrarLocal.local.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
@@ -149,7 +147,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" id="linkTwitter"
 								value="#{cadastrarLocal.local.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
@@ -160,7 +158,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarLocal.local.URL_site}"
+								value="#{cadastrarLocal.local.URL_site}" id="linkSite"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>

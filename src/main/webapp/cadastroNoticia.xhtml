@@ -23,25 +23,21 @@
 						</ui:repeat>
 					</p:outputPanel>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<div class="col-md-5">
-							<h:outputLabel id="titulo" value="Título" />
-							<h:inputText class="form-control" required="true"
-								a:placeholder="Título"
-								requiredMessage="Digite o título da notícia."
-								value="#{cadastrarNoticia.noticia.titulo}" />
-						</div>
+						<h:outputLabel id="titulo" value="Título" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Título"
+							requiredMessage="Digite o título da notícia."
+							value="#{cadastrarNoticia.noticia.titulo}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<div class="col-md-5">
-							<h:outputLabel id="subtitulo" value="Subtítulo" />
-							<h:inputText class="form-control" required="true"
-								a:placeholder="Subtítulo"
-								requiredMessage="Digite o subtítulo da notícia."
-								value="#{cadastrarNoticia.noticia.subtitulo}" />
-						</div>
+						<h:outputLabel id="subtitulo" value="Subtítulo" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Subtítulo"
+							requiredMessage="Digite o subtítulo da notícia."
+							value="#{cadastrarNoticia.noticia.subtitulo}" />
 					</div>
 					<br></br>
-					<div class="col-md-10" style="margin-top: 2%;">
+					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
 							value="#{cadastrarNoticia.noticia.descricao}"

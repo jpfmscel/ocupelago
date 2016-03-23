@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Notícias</ui:define>
+	<ui:define name="body">
+		<h:form id="consultaprojeto">
+			<div class="row">
+				<div class="col-md-12">
+					<p:outputPanel rendered="#{dashboardView.hasInfoMessage()}">
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-success"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="col-md-4">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+
+					<p:outputPanel id="tabelaProjetos">
+						<div class="col-md-12">
+							<table class="table table-hover table-striped">
+								<thead>
+									<tr>
+										<th style="width: 25%">Nome</th>
+										<th style="width: 55%">Descrição</th>
+										<th style="width: 15%;">Operações</th>
+									</tr>
+								</thead>
+								<tbody>
+									<ui:repeat var="projeto" value="#{consultarProjeto.projetos}">
+										<tr>
+											<td style="width: 25%">#{projeto.nome}</td>
+											<td style="width: 55%">#{projeto.descricao}</td>
+											<td style="width: 15%;">
+												<div style="margin-left: 10%;">
+													<a href="login.xhtml"><i
+														class="glyphicon glyphicon-pencil"
+														style="color: darkgoldenrod;"></i></a>
+													<p:spacer width="20%" />
+													<a href="login.xhtml"><i
+														class="glyphicon glyphicon glyphicon-remove"
+														style="color: red;"></i></a>
+												</div>
+											</td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+						</div>
+					</p:outputPanel>
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="indexadm" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
+
+

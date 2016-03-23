@@ -18,6 +18,7 @@ import org.primefaces.model.UploadedFile;
 
 import br.dao.NoticiaDAO;
 import br.entidades.Noticia;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarNoticia")
@@ -48,10 +49,12 @@ public class CadastrarNoticia implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage("messages",
-				new FacesMessage("Notícia cadastrada com sucesso!"));
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Notícia cadastrada com sucesso!", null));
 
-		return "cadastroNoticia.xhtml";
+		return "consultaNoticia.xhtml";
 	}
 
 	private Date getNovaDataByLocale() {
@@ -63,7 +66,7 @@ public class CadastrarNoticia implements Serializable {
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getNoticia().setFoto(getBytesFromFile(getFoto()));
-			String filepath = "/Users/jpfms/imagensOcupeLago/"
+			String filepath = Util.getFilePath() + ""
 					+ getFoto().getFileName();
 			getNoticia().setFilePath(filepath);
 		}
@@ -90,10 +93,12 @@ public class CadastrarNoticia implements Serializable {
 	}
 
 	private void gravarFotoDisco(String filepath) throws IOException {
-		FileOutputStream fos = null;
-		fos = new FileOutputStream(filepath);
-		fos.write(getNoticia().getFoto());
-		fos.close();
+		if (getFoto() != null) {
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(filepath);
+			fos.write(getNoticia().getFoto());
+			fos.close();
+		}
 	}
 
 	public Noticia getNoticia() {

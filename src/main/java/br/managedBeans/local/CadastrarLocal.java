@@ -20,6 +20,7 @@ import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
 import br.entidades.Local;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarLocal")
@@ -35,26 +36,26 @@ public class CadastrarLocal implements Serializable {
 	public String adicionarLocal() {
 		try {
 			atualizaFilePath();
-			getLocal().setFoto(getBytesFromFile(getFoto()));
 			getLocalDAO().iniciarTransacao();
 			getLocalDAO().inserir(getLocal());
 			getLocalDAO().comitarTransacao();
 			gravarFotoDisco(getLocal().getFilePath());
+			setFoto(null);
 			setLocal(null);
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro ao inserir o local : "
-									+ e.getCause().getMessage(), e.getCause()
-									.getMessage()));
+							"Erro ao inserir o local!", null));
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage("messages",
-				new FacesMessage("Local cadastrado com sucesso!"));
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Local cadastrado com sucesso!", null));
 
-		return "cadastroLocal.xhtml";
+		return "consultaLocal.xhtml";
 	}
 
 	public void onPointSelect(PointSelectEvent event) {
@@ -69,17 +70,19 @@ public class CadastrarLocal implements Serializable {
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getLocal().setFoto(getBytesFromFile(getFoto()));
-			String filepath = "/Users/jpfms/imagensOcupeLago/"
+			String filepath = Util.getFilePath() + ""
 					+ getFoto().getFileName();
 			getLocal().setFilePath(filepath);
 		}
 	}
 
 	private void gravarFotoDisco(String filepath) throws IOException {
-		FileOutputStream fos = null;
-		fos = new FileOutputStream(filepath);
-		fos.write(getLocal().getFoto());
-		fos.close();
+		if (getFoto() != null) {
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(filepath);
+			fos.write(getLocal().getFoto());
+			fos.close();
+		}
 	}
 
 	public void filtrarURLYoutube() {

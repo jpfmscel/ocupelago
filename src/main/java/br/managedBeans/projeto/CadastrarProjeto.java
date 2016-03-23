@@ -15,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 
 import br.dao.ProjetoDAO;
 import br.entidades.Projeto;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarProjeto")
@@ -44,10 +45,12 @@ public class CadastrarProjeto implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage("messages",
-				new FacesMessage("Projeto cadastrado com sucesso!"));
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO,
+						"Projeto cadastrado com sucesso!", null));
 
-		return "cadastroProjeto.xhtml";
+		return "consultaProjeto.xhtml";
 	}
 
 	public void filtrarURLYoutube() {
@@ -69,17 +72,19 @@ public class CadastrarProjeto implements Serializable {
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getProjeto().setFoto(getBytesFromFile(getFoto()));
-			String filepath = "/Users/jpfms/imagensOcupeLago/"
+			String filepath = Util.getFilePath() + ""
 					+ getFoto().getFileName();
 			getProjeto().setFilePath(filepath);
 		}
 	}
-	
+
 	private void gravarFotoDisco(String filepath) throws IOException {
-		FileOutputStream fos = null;
-		fos = new FileOutputStream(filepath);
-		fos.write(getProjeto().getFoto());
-		fos.close();
+		if (getFoto() != null) {
+			FileOutputStream fos = null;
+			fos = new FileOutputStream(filepath);
+			fos.write(getProjeto().getFoto());
+			fos.close();
+		}
 	}
 
 	public byte[] getBytesFromFile(UploadedFile f) {
