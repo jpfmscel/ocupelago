@@ -7,7 +7,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="main.xhtml">
-	<ui:define name="title">Cadastro de Notícias</ui:define>
+	<ui:define name="title">Consultar Projetos</ui:define>
 	<ui:define name="body">
 		<h:form id="consultaprojeto">
 			<div class="row">
@@ -42,17 +42,21 @@
 								<tbody>
 									<ui:repeat var="projeto" value="#{consultarProjeto.projetos}">
 										<tr>
-											<td style="width: 25%">#{projeto.nome}</td>
+											<td style="width: 25%">#{projeto.titulo}</td>
 											<td style="width: 55%">#{projeto.descricao}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
-													<a href="login.xhtml"><i
-														class="glyphicon glyphicon-pencil"
-														style="color: darkgoldenrod;"></i></a>
+													<h:commandLink
+														action="#{consultarProjeto.editarProjeto(projeto)}">
+														<i class="glyphicon glyphicon-pencil"
+															style="color: darkgoldenrod;"></i>
+													</h:commandLink>
 													<p:spacer width="20%" />
-													<a href="login.xhtml"><i
-														class="glyphicon glyphicon glyphicon-remove"
-														style="color: red;"></i></a>
+													<h:commandLink
+														action="#{consultarProjeto.excluirProjeto(projeto)}">
+														<i class="glyphicon glyphicon glyphicon-remove"
+															style="color: red;"></i>
+													</h:commandLink>
 												</div>
 											</td>
 										</tr>
@@ -62,12 +66,6 @@
 						</div>
 					</p:outputPanel>
 
-					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="indexadm" immediate="true">
-							<i class="fa fa-fw fa-remove" />
-						</h:commandLink>
-					</div>
 				</div>
 				<div class="col-lg-4" />
 			</div>

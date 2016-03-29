@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.dao.LocalDAO;
 import br.entidades.Local;
@@ -25,6 +27,41 @@ public class ConsultarLocal {
 		getLocais().addAll(getLocalDAO().findAll());
 	}
 
+	public String editarLocal(Local e) {
+		setLocalSelected(e);
+		return "editarLocal.xhtml";
+	}
+
+	public String excluirLocal(Local e) {
+		try {
+			setLocalSelected(e);
+			getLocalSelected().setAtivo(false);
+			updateLocal();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local excluído com sucesso!", null));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			return null;
+		}
+		setLocalSelected(null);
+		return "consultaLocal.xhtml";
+	}
+
+	public String updateLocal() {
+		try {
+			getLocalDAO().iniciarTransacao();
+			getLocalDAO().update(getLocalSelected());
+			getLocalDAO().comitarTransacao();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			return null;
+		}
+		setLocalSelected(null);
+		return "consultaLocal.xhtml";
+	}
+	
 	public List<Local> getLocais() {
 		if (locais == null) {
 			locais = new ArrayList<Local>();

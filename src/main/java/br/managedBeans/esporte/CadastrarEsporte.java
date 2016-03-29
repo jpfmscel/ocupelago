@@ -27,7 +27,6 @@ public class CadastrarEsporte implements Serializable {
 	private Esporte esporte;
 	private EsporteDAO esporteDAO;
 	private String tipoEsporte;
-	private String messageSuccess;
 
 	public String adicionarEsporte() {
 		try {
@@ -39,19 +38,11 @@ public class CadastrarEsporte implements Serializable {
 			gravarFotoDisco(getEsporte().getFilePath());
 			setEsporte(null);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro ao inserir o esporte : "
-									+ e.getCause().getMessage(), e.getCause()
-									.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Esporte cadastrado com sucesso!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte cadastrado com sucesso!", null));
 
 		return "consultaEsporte.xhtml";
 	}
@@ -59,8 +50,7 @@ public class CadastrarEsporte implements Serializable {
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getEsporte().setFoto(getBytesFromFile(getFoto()));
-			String filepath = Util.getFilePath() + ""
-					+ getFoto().getFileName();
+			String filepath = Util.getFilePath() + "" + getFoto().getFileName();
 			getEsporte().setFilePath(filepath);
 		}
 	}
@@ -89,8 +79,7 @@ public class CadastrarEsporte implements Serializable {
 	}
 
 	public void filtrarURLYoutube() {
-		String urlFinal = getEsporte().getVideoURL().replace("watch?", "")
-				.replace("v=", "v/");
+		String urlFinal = getEsporte().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getEsporte().setVideoURL(urlFinal);
 	}
 
@@ -148,14 +137,6 @@ public class CadastrarEsporte implements Serializable {
 
 	public void setTipoEsporte(String tipoEsporte) {
 		this.tipoEsporte = tipoEsporte;
-	}
-
-	public String getMessageSuccess() {
-		return messageSuccess;
-	}
-
-	public void setMessageSuccess(String messageSuccess) {
-		this.messageSuccess = messageSuccess;
 	}
 
 }

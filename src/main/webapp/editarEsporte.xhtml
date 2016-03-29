@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Esportes</ui:define>
+	<ui:define name="body">
+		<h:form id="adduser">
+<!-- 			<p:growl id="messages" showDetail="true" /> -->
+			<div class="row">
+				<div class="col-md-12">
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="nome" value="Nome" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Nome do esporte"
+							requiredMessage="Digite o nome do esporte."
+							value="#{consultarEsporte.esporteSelected.nome}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="descrição" value="Descrição" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Descrição do esporte"
+							requiredMessage="Digite a descrição do esporte."
+							value="#{consultarEsporte.esporteSelected.descricao}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="categoria" value="Categoria" />
+						<h:selectOneRadio value="#{consultarEsporte.tipoEsporte}">
+							<f:selectItem itemLabel="Aéreo" itemValue="aereo" />
+							<f:selectItem itemLabel="Terrestre" itemValue="terrestre" />
+							<f:selectItem itemLabel="Aquático" itemValue="aquatico" />
+						</h:selectOneRadio>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="recomenda" value="Recomendações" />
+						<br />
+						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
+							a:placeholder="Informe as recomendações do esporte"
+							value="#{consultarEsporte.esporteSelected.recomendacoes}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel id="panelFoto">
+							<h:outputLabel id="foto" value="Foto" />
+							<br></br>
+							<p:fileUpload rendered="#{consultarEsporte.esporteSelected.foto == null}"
+								label="Selecionar" cancelLabel="Cancelar"
+								fileUploadListener="#{consultarEsporte.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="1048576"
+								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+							<p:commandLink
+								rendered="#{consultarEsporte.esporteSelected.foto != null}"
+								immediate="true" process="panelFoto"
+								actionListener="#{consultarEsporte.removerImagem}"
+								update="panelFoto">
+								<i class="glyphicon glyphicon-remove" style="color: red;" />
+							</p:commandLink>
+							<p:spacer width="2%" />
+							<h:outputLabel value="#{consultarEsporte.foto.fileName}"
+								rendered="#{consultarEsporte.esporteSelected.foto != null}" />
+
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+
+						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-youtube" /></span>
+							<h:inputText class="form-control" id="videoURL"
+								value="#{consultarEsporte.esporteSelected.videoURL}"
+								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
+								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
+									partialSubmit="true"
+									listener="#{consultarEsporte.filtrarURLYoutube}" />
+							</h:inputText>
+						</div>
+						<p:outputPanel id="videoYou">
+							<p:media value="#{consultarEsporte.esporteSelected.videoURL}" width="700"
+								height="400" player="flash"
+								style="margin-top:2%; margin-left: 10%;"
+								rendered="#{consultarEsporte.esporteSelected.videoURL != null and consultarEsporte.esporteSelected.videoURL != ''}" />
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Facebook" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-facebook-square" /></span>
+							<h:inputText class="form-control"
+								value="#{consultarEsporte.esporteSelected.URL_facebook}"
+								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-twitter" /></span>
+							<h:inputText class="form-control"
+								value="#{consultarEsporte.esporteSelected.URL_twitter}"
+								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Site" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-globe" /></span>
+							<h:inputText class="form-control"
+								value="#{consultarEsporte.esporteSelected.URL_site}"
+								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{consultarEsporte.updateEsporte}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="consultaEsporte.xhtml" immediate="true"/>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

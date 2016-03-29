@@ -8,7 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
+
 @Entity
+@SQLDelete(sql = "UPDATE Local SET ativo=0 WHERE id=?")
+@Where(clause = "ativo <> 0")
 public class Local implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -63,6 +69,10 @@ public class Local implements Serializable{
 	@Column(nullable = true, length = 1000)
 	private String filePath;
 
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
+	
 	public int getId() {
 		return id;
 	}
@@ -189,6 +199,14 @@ public class Local implements Serializable{
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

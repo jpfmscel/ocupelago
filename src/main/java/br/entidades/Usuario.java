@@ -3,14 +3,21 @@ package br.entidades;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
+
 @Entity
+@Where(clause = "ativo <> 0")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,6 +32,14 @@ public class Usuario implements Serializable {
 	private String email;
 	@Column(nullable = false)
 	private String senha;
+
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
+
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataCriado;
 
 	@Transient
 	private String confirmacaoSenha;
@@ -79,12 +94,44 @@ public class Usuario implements Serializable {
 		return sb.toString();
 	}
 
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = getHexString(confirmacaoSenha);
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Date getDataCriado() {
+		return dataCriado;
+	}
+
+	public void setDataCriado(Date dataCriado) {
+		this.dataCriado = dataCriado;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email + "]";
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (ativo ? 1231 : 1237);
+		result = prime * result + ((dataCriado == null) ? 0 : dataCriado.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + ((senha == null) ? 0 : senha.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		return result;
 	}
 
@@ -97,31 +144,26 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
+		if (ativo != other.ativo)
+			return false;
+		if (dataCriado == null) {
+			if (other.dataCriado != null)
+				return false;
+		} else if (!dataCriado.equals(other.dataCriado))
+			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
 		} else if (!email.equals(other.email))
 			return false;
-		if (senha == null) {
-			if (other.senha != null)
+		if (id != other.id)
+			return false;
+		if (nome == null) {
+			if (other.nome != null)
 				return false;
-		} else if (!senha.equals(other.senha))
+		} else if (!nome.equals(other.nome))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Usuario [id=" + id + ", nome=" + nome + ", email=" + email
-				+ "]";
-	}
-
-	public String getConfirmacaoSenha() {
-		return confirmacaoSenha;
-	}
-
-	public void setConfirmacaoSenha(String confirmacaoSenha) {
-		this.confirmacaoSenha = getHexString(confirmacaoSenha);
 	}
 
 }

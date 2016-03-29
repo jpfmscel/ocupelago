@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Projeto implements Serializable {
 
@@ -45,6 +47,10 @@ public class Projeto implements Serializable {
 
 	@Column(nullable = true, length = 1000)
 	private String filePath;
+	
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
 	
 	public int getId() {
 		return id;
@@ -157,6 +163,14 @@ public class Projeto implements Serializable {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

@@ -1,5 +1,9 @@
 package br.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -8,8 +12,6 @@ import java.util.Random;
 import java.util.TimeZone;
 
 public class Util {
-
-	public static String[] locais = { "Quarto", "Sala", "Cozinha", "Garagem" };
 
 	public static int getIntAleatorio(int min, int max) {
 		Random rand = new Random();
@@ -27,6 +29,11 @@ public class Util {
 
 	public static String getTimestampFromDate(Date data) {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		return sdf.format(data);
+	}
+
+	public static String getTimestampFromDateForFile(Date data) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy_HH.mm.ss");
 		return sdf.format(data);
 	}
 
@@ -62,9 +69,38 @@ public class Util {
 		if (System.getProperty("os.name").contains("Mac")) {
 			return "/Users/jpfms/imagensOcupeLago/";
 		} else if (System.getProperty("os.name").contains("Windows")) {
-			return "C:/imagens";
+			return "C:\\imagens";
 		}
 		return null;
+	}
+
+	public static String getNomeArquivo(String nomeArquivo) {
+		return getFilePath().concat(getTimestampFromDateForFile(new Date()).concat(nomeArquivo));
+	}
+
+	// Inserir:
+	// get file > get bytes > insert bytes into blob
+
+	// Consultar:
+	// get bytes > write temp file > use temp file
+
+	public static byte[] readBytesFromFile(String filePath) throws IOException {
+		File inputFile = new File(filePath);
+		FileInputStream inputStream = new FileInputStream(inputFile);
+
+		byte[] fileBytes = new byte[(int) inputFile.length()];
+		inputStream.read(fileBytes);
+		inputStream.close();
+
+		return fileBytes;
+	}
+
+	public static String saveBytesToFile(String nomeArquivo, byte[] fileBytes) throws IOException {
+		String nomeArquivo2 = getNomeArquivo(nomeArquivo);
+		FileOutputStream outputStream = new FileOutputStream(nomeArquivo2);
+		outputStream.write(fileBytes);
+		outputStream.close();
+		return nomeArquivo2;
 	}
 
 }

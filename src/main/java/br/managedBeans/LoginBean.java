@@ -12,23 +12,22 @@ import br.entidades.Usuario;
 
 @ManagedBean(name = "loginBean")
 @SessionScoped
-public class LoginBean implements Serializable{
+public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Usuario usuarioLogado;
 	private UsuarioDAO dao;
 
-	public String login(){
-		
+	public String login() {
+
 		Usuario user = getDao().logarUsuario(getUsuarioLogado().getEmail(), getUsuarioLogado().getSenha());
-		if(user!=null && user.equals(getUsuarioLogado())){
+		if (user != null && user.equals(getUsuarioLogado())) {
 			setUsuarioLogado(user);
-			return "index";
+			return "indexadm";
 		}
-		
-		if(getUsuarioLogado().getId()==0){
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado!", ""));
+
+		if (getUsuarioLogado().getId() == 0) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado!", ""));
 		}
 		return "login";
 	}
@@ -62,7 +61,7 @@ public class LoginBean implements Serializable{
 	}
 
 	public boolean isLogged() {
-		return getUsuarioLogado().getId()!=0;
+		return getUsuarioLogado().getId() != 0;
 	}
 
 }

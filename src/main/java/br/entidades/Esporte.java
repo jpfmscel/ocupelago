@@ -43,8 +43,7 @@ public class Esporte implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean terrestre;
 
-//	@Column(nullable = true, length = 10000, columnDefinition = "blob")
-	@Transient
+	@Column(nullable = true, length = 100000, columnDefinition = "blob")
 	private byte[] foto;
 
 	@Column(nullable = true, length = 1000)
@@ -62,8 +61,12 @@ public class Esporte implements Serializable {
 	@Column(nullable = true, length = 1000)
 	private String URL_site;
 
-	@Column(nullable = true, length = 1000)
+	@Transient
 	private String filePath;
+	
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
 	
 	public int getId() {
 		return id;
@@ -223,6 +226,14 @@ public class Esporte implements Serializable {
 
 	public void setFilePath(String filePath) {
 		this.filePath = filePath;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

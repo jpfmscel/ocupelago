@@ -57,6 +57,10 @@ public abstract class BaseDao<T> implements Serializable {
 	public void inserir(T obj) {
 		getEntityManager().persist(obj);
 	}
+	
+	public void update(T obj) {
+		getEntityManager().merge(obj);
+	}
 
 	private Query gerarQuery(T obj) {
 

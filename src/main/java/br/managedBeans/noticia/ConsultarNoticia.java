@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.dao.NoticiaDAO;
 import br.entidades.Noticia;
@@ -27,6 +29,41 @@ public class ConsultarNoticia implements Serializable{
 		getNoticias().addAll(getNoticiaDAO().findAll());
 	}
 
+	public String editarNoticia(Noticia e) {
+		setNoticiaSelected(e);
+		return "editarNoticia.xhtml";
+	}
+
+	public String excluirNoticia(Noticia e) {
+		try {
+			setNoticiaSelected(e);
+			getNoticiaSelected().setAtivo(false);
+			updateNoticia();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia excluída com sucesso!", null));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a noticia : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			return null;
+		}
+		setNoticiaSelected(null);
+		return "consultaNoticia.xhtml";
+	}
+
+	public String updateNoticia() {
+		try {
+			getNoticiaDAO().iniciarTransacao();
+			getNoticiaDAO().update(getNoticiaSelected());
+			getNoticiaDAO().comitarTransacao();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia atualizada com sucesso!", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a noticia : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			return null;
+		}
+		setNoticiaSelected(null);
+		return "consultaNoticia.xhtml";
+	}
+	
 	public List<Noticia> getNoticias() {
 		if (noticias == null) {
 			noticias = new ArrayList<Noticia>();

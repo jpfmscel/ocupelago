@@ -1,13 +1,20 @@
 package br.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.Where;
 
 @Entity
+@Where(clause = "ativo <> 0")
 public class Alerta implements Serializable {
 
 	private static final long serialVersionUID = -5198508373841343025L;
@@ -28,6 +35,14 @@ public class Alerta implements Serializable {
 
 	@Column(nullable = false)
 	private double longitude;
+
+	@Column(nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dataCriado;
+
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
 
 	public String getDescricao() {
 		return descricao;
@@ -104,6 +119,22 @@ public class Alerta implements Serializable {
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	public Date getDataCriado() {
+		return dataCriado;
+	}
+
+	public void setDataCriado(Date dataCriado) {
+		this.dataCriado = dataCriado;
 	}
 
 }

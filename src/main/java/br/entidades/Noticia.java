@@ -12,6 +12,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 public class Noticia implements Serializable {
 
@@ -57,6 +59,10 @@ public class Noticia implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date criadoEm;
 
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean ativo = true;
+	
 	public int getId() {
 		return id;
 	}
@@ -189,6 +195,14 @@ public class Noticia implements Serializable {
 
 	public String getDataCriadaFormatada() {
 		return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(getCriadoEm()) + " h de Brasília";
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

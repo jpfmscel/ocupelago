@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
@@ -27,6 +29,41 @@ public class ConsultarAlerta implements Serializable{
 		getAlertas().addAll(getAlertaDAO().findAll());
 	}
 
+	public String editarAlerta(Alerta e) {
+		setAlertaSelected(e);
+		return "editarAlerta.xhtml";
+	}
+
+	public String excluirAlerta(Alerta e) {
+		try {
+			setAlertaSelected(e);
+			getAlertaSelected().setAtivo(false);
+			updateAlerta();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta excluída com sucesso!", null));
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a alerta : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			return null;
+		}
+		setAlertaSelected(null);
+		return "consultaAlerta.xhtml";
+	}
+
+	public String updateAlerta() {
+		try {
+			getAlertaDAO().iniciarTransacao();
+			getAlertaDAO().update(getAlertaSelected());
+			getAlertaDAO().comitarTransacao();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta atualizada com sucesso!", null));
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a alerta : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			return null;
+		}
+		setAlertaSelected(null);
+		return "consultaAlerta.xhtml";
+	}
+	
 	public List<Alerta> getAlertas() {
 		if (alertas == null) {
 			alertas = new ArrayList<Alerta>();

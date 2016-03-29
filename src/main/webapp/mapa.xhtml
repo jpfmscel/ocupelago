@@ -11,7 +11,7 @@
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
 		<div class="col-md-12" style="margin-top: 5%; padding-bottom: 10%;">
-			<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
+			<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP" id="mapaAlerta"
 				style="width:98%;height:450px" model="#{mapBean.emptyModel}"
 				onPointClick="handlePointClick(event);" widgetVar="map">
 				<p:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}" />

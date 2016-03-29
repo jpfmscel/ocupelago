@@ -7,21 +7,22 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Login iSave</title>
+	<title>Login Ocupe o Lago</title>
 
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
 	<link href="css/login.css" rel="stylesheet" />
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </h:head>
 <h:body>
-	<div class="row" style="margin-top:5%">
+	<div class="row" style="margin-top: 5%">
 		<div
 			class="col-lg-4 col-sm-6 col-xs-8 col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
 			<h:form styleClass="form-signin">
 				<h2 class="form-signin-heading text-center">Ocupe o Lago</h2>
 
+
 				<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-				<br></br>
+					<br></br>
 					<ui:repeat value="#{facesContext.messageList}" var="message">
 						<div class="row" style="margin-left: 1%">
 							<span class="label label-danger"><h:outputText
@@ -32,19 +33,18 @@
 				<br></br>
 				<label for="inputEmail" class="sr-only">Login</label>
 				<h:inputText id="inputEmail" class="form-control" autofocus="true"
-					value="#{loginBean.usuarioLogado.email}" 
-					required="true" requiredMessage="Digite seu login!" />
+					value="#{loginBean.usuarioLogado.email}" required="true"
+					requiredMessage="Digite seu login!" />
 
 				<label for="inputPassword" class="sr-only">Password</label>
 				<h:inputSecret id="inputPassword" class="form-control"
-					value="#{loginBean.usuarioLogado.senha}" 
-					required="true" requiredMessage="Digite sua senha!" />
+					value="#{loginBean.usuarioLogado.senha}" required="true"
+					requiredMessage="Digite sua senha!" />
 				<br></br>
 
 				<h:commandButton value="Login"
-					styleClass="btn btn-lg btn-primary btn-block" action="indexadm"/>
-				<h:commandButton value="Registrar" immediate="true"
-					styleClass="btn btn-lg btn-success btn-block" action="addUsuario" />
+					styleClass="btn btn-lg btn-primary btn-block"
+					action="#{loginBean.login}" />
 			</h:form>
 		</div>
 		<div class="col-lg-4" />

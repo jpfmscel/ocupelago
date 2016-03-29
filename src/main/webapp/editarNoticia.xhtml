@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Notícias</ui:define>
+	<ui:define name="body">
+		<h:form id="addnoticia">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="text-center"></h2>
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="col-md-4">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="titulo" value="Título" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Título"
+							requiredMessage="Digite o título da notícia."
+							value="#{cadastrarNoticia.noticia.titulo}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="subtitulo" value="Subtítulo" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Subtítulo"
+							requiredMessage="Digite o subtítulo da notícia."
+							value="#{cadastrarNoticia.noticia.subtitulo}" />
+					</div>
+					<br></br>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="descricao" value="Descrição" />
+						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
+							value="#{cadastrarNoticia.noticia.descricao}"
+							requiredMessage="Digite a descrição da notícia."
+							a:placeholder="Informe a descrição da notícia" required="true" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel id="panelFoto">
+							<h:outputLabel id="foto" value="Foto" />
+							<br></br>
+							<p:fileUpload rendered="#{cadastrarNoticia.noticia.foto == null}"
+								label="Selecionar" cancelLabel="Cancelar"
+								fileUploadListener="#{cadastrarNoticia.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="1048576"
+								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+							<p:commandLink
+								rendered="#{cadastrarNoticia.noticia.foto != null}"
+								immediate="true" process="panelFoto"
+								actionListener="#{cadastrarNoticia.removerImagem}"
+								update="panelFoto">
+								<i class="glyphicon glyphicon-remove" style="color: red;" />
+							</p:commandLink>
+							<p:spacer width="2%" />
+							<h:outputLabel value="#{cadastrarNoticia.foto.fileName}"
+								rendered="#{cadastrarNoticia.noticia.foto != null}" />
+
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-youtube" /></span>
+							<h:inputText class="form-control" id="videoURL"
+								value="#{cadastrarNoticia.noticia.videoURL}"
+								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
+								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
+									partialSubmit="true"
+									listener="#{cadastrarNoticia.filtrarURLYoutube}" />
+							</h:inputText>
+						</div>
+						<p:outputPanel id="videoYou">
+							<p:media value="#{cadastrarNoticia.noticia.videoURL}" width="700"
+								height="400" player="flash"
+								style="margin-top:2%; margin-left: 10%;"
+								rendered="#{cadastrarNoticia.noticia.videoURL != null and cadastrarNoticia.noticia.videoURL != ''}" />
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Facebook" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-facebook-square" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarNoticia.noticia.URL_facebook}"
+								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-twitter" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarNoticia.noticia.URL_twitter}"
+								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<!-- 						<h:outputLabel value="Link Site" /> -->
+						<div class="input-group">
+							<span class="input-group-addon" id="sizing-addon2"><i
+								class="fa fa-globe" /></span>
+							<h:inputText class="form-control"
+								value="#{cadastrarNoticia.noticia.URL_site}"
+								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
+						</div>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{cadastrarNoticia.adicionarNoticia}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="login" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>
