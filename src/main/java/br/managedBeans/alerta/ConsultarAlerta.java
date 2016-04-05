@@ -1,8 +1,6 @@
 package br.managedBeans.alerta;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -18,15 +16,12 @@ import br.entidades.Alerta;
 public class ConsultarAlerta implements Serializable{
 
 	private static final long serialVersionUID = -2236749237134308778L;
-	private List<Alerta> alertas;
 	private Alerta alertaSelected;
 	private AlertaDAO alertaDAO;
 
 	@PostConstruct
 	public void atualizarAlertas() {
-		setAlertas(null);
 		setAlertaSelected(null);
-		getAlertas().addAll(getAlertaDAO().findAll());
 	}
 
 	public String editarAlerta(Alerta e) {
@@ -64,17 +59,6 @@ public class ConsultarAlerta implements Serializable{
 		return "consultaAlerta.xhtml";
 	}
 	
-	public List<Alerta> getAlertas() {
-		if (alertas == null) {
-			alertas = new ArrayList<Alerta>();
-		}
-		return alertas;
-	}
-
-	public void setAlertas(List<Alerta> alertas) {
-		this.alertas = alertas;
-	}
-
 	public Alerta getAlertaSelected() {
 		if (alertaSelected == null) {
 			alertaSelected = new Alerta();

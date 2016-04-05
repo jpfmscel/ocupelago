@@ -3,6 +3,7 @@ package br.managedBeans.projeto;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,33 +30,25 @@ public class CadastrarProjeto implements Serializable {
 
 	public String adicionarProjeto() {
 		try {
-			atualizaFilePath();
+//			atualizaFilePath();
+			getProjeto().setCriadoEm(new Date());
 			getProjetoDAO().iniciarTransacao();
 			getProjetoDAO().inserir(getProjeto());
 			getProjetoDAO().comitarTransacao();
-			gravarFotoDisco(getProjeto().getFilePath());
+//			gravarFotoDisco(getProjeto().getFilePath());
 			setProjeto(null);
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro ao inserir o projeto : "
-									+ e.getCause().getMessage(), e.getCause()
-									.getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Projeto cadastrado com sucesso!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto cadastrado com sucesso!", null));
 
 		return "consultaProjeto.xhtml";
 	}
 
 	public void filtrarURLYoutube() {
-		String urlFinal = getProjeto().getVideoURL().replace("watch?", "")
-				.replace("v=", "v/");
+		String urlFinal = getProjeto().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getProjeto().setVideoURL(urlFinal);
 	}
 
@@ -72,9 +65,8 @@ public class CadastrarProjeto implements Serializable {
 	private void atualizaFilePath() {
 		if (getFoto() != null) {
 			getProjeto().setFoto(getBytesFromFile(getFoto()));
-			String filepath = Util.getFilePath() + ""
-					+ getFoto().getFileName();
-			getProjeto().setFilePath(filepath);
+			String filepath = Util.getFilePath() + "" + getFoto().getFileName();
+//			getProjeto().setFilePath(filepath);
 		}
 	}
 

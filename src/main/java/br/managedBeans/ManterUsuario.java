@@ -1,6 +1,7 @@
 package br.managedBeans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -32,7 +33,7 @@ public class ManterUsuario implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Já existe um registro com esse login ou e-mail!", ""));
 			return "addUsuario.xhtml";
 		} else {
-
+			getUsuarioAdd().setDataCriado(new Date());
 			getDao().iniciarTransacao();
 			getDao().inserir(getUsuarioAdd());
 			getDao().comitarTransacao();

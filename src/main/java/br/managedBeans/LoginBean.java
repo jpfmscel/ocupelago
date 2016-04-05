@@ -21,12 +21,10 @@ public class LoginBean implements Serializable {
 	public String login() {
 
 		Usuario user = getDao().logarUsuario(getUsuarioLogado().getEmail(), getUsuarioLogado().getSenha());
-		if (user != null && user.equals(getUsuarioLogado())) {
+		if (user != null) {
 			setUsuarioLogado(user);
-			return "indexadm";
-		}
-
-		if (getUsuarioLogado().getId() == 0) {
+			return "mapa";
+		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado!", ""));
 		}
 		return "login";

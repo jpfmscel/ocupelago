@@ -1,7 +1,5 @@
 package br.managedBeans.local;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 
 import javax.faces.application.FacesMessage;
@@ -20,7 +18,6 @@ import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
 import br.entidades.Local;
-import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarLocal")
@@ -35,11 +32,11 @@ public class CadastrarLocal implements Serializable {
 
 	public String adicionarLocal() {
 		try {
-			atualizaFilePath();
+//			atualizaFilePath();
 			getLocalDAO().iniciarTransacao();
 			getLocalDAO().inserir(getLocal());
 			getLocalDAO().comitarTransacao();
-			gravarFotoDisco(getLocal().getFilePath());
+//			gravarFotoDisco(getLocal().getFilePath());
 			setFoto(null);
 			setLocal(null);
 		} catch (Exception e) {
@@ -67,23 +64,23 @@ public class CadastrarLocal implements Serializable {
 		getMapModel().addOverlay(marker);
 	}
 
-	private void atualizaFilePath() {
-		if (getFoto() != null) {
-			getLocal().setFoto(getBytesFromFile(getFoto()));
-			String filepath = Util.getFilePath() + ""
-					+ getFoto().getFileName();
-			getLocal().setFilePath(filepath);
-		}
-	}
+//	private void atualizaFilePath() {
+//		if (getFoto() != null) {
+//			getLocal().setFoto(getBytesFromFile(getFoto()));
+//			String filepath = Util.getFilePath() + ""
+//					+ getFoto().getFileName();
+//			getLocal().setFilePath(filepath);
+//		}
+//	}
 
-	private void gravarFotoDisco(String filepath) throws IOException {
-		if (getFoto() != null) {
-			FileOutputStream fos = null;
-			fos = new FileOutputStream(filepath);
-			fos.write(getLocal().getFoto());
-			fos.close();
-		}
-	}
+//	private void gravarFotoDisco(String filepath) throws IOException {
+//		if (getFoto() != null) {
+//			FileOutputStream fos = null;
+//			fos = new FileOutputStream(filepath);
+//			fos.write(getLocal().getFoto());
+//			fos.close();
+//		}
+//	}
 
 	public void filtrarURLYoutube() {
 		String urlFinal = getLocal().getVideoURL().replace("watch?", "")
@@ -97,12 +94,12 @@ public class CadastrarLocal implements Serializable {
 
 	public void removerImagem(ActionEvent actionEvent) {
 		setFoto(null);
-		getLocal().setFoto(null);
+//		getLocal().setFoto(null);
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
 		setFoto(event.getFile());
-		getLocal().setFoto(getBytesFromFile(event.getFile()));
+//		getLocal().setFoto(getBytesFromFile(event.getFile()));
 	}
 
 	public UploadedFile getFoto() {

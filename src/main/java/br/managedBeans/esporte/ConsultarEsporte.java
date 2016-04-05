@@ -2,6 +2,7 @@ package br.managedBeans.esporte;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,8 +11,11 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
+
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
+import br.entidades.Imagem;
 
 @SessionScoped
 @ManagedBean(name = "consultarEsporte")
@@ -44,7 +48,7 @@ public class ConsultarEsporte implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir o esporte : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setEsporteSelected(null);
@@ -59,7 +63,7 @@ public class ConsultarEsporte implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte atualizado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
 		setEsporteSelected(null);
@@ -74,6 +78,26 @@ public class ConsultarEsporte implements Serializable {
 		} else if (getEsporteSelected().isTerrestre()) {
 			setTipoEsporte("terrestre");
 		}
+	}
+
+	public void filtrarURLYoutube() {
+		String urlFinal = getEsporteSelected().getVideoURL().replace("watch?", "").replace("v=", "v/");
+		getEsporteSelected().setVideoURL(urlFinal);
+	}
+
+	public void removerImagem(Imagem i) {
+		if (getEsporteSelected().getImagens().contains(i)) {
+			getEsporteSelected().getImagens().remove(i);
+		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setEsporte(getEsporteSelected());
+		i.setDataCriado(new Date());
+		getEsporteSelected().getImagens().add(i);
 	}
 
 	public List<Esporte> getEsportes() {

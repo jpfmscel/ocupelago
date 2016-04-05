@@ -1,6 +1,7 @@
 package br.managedBeans.alerta;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -29,9 +30,9 @@ public class CadastrarAlerta implements Serializable {
 	private double lat;
 	private double lng;
 
-	@ManagedProperty(value="#{consultarAlerta}")
-	private ConsultarAlerta consultarAlerta; 
-	
+	@ManagedProperty(value = "#{consultarAlerta}")
+	private ConsultarAlerta consultarAlerta;
+
 	private Alerta alerta;
 	private AlertaDAO alertaDAO;
 
@@ -91,8 +92,9 @@ public class CadastrarAlerta implements Serializable {
 
 		a.setLatitude(lat);
 		a.setLongitude(lng);
-//		a.setDescricao(getDescricao());
+		// a.setDescricao(getDescricao());
 		a.setTitulo(getTitle());
+		a.setDataCriado(new Date());
 
 		aDAO.iniciarTransacao();
 		aDAO.inserir(a);

@@ -2,6 +2,7 @@ package br.managedBeans.noticia;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,7 +11,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
+
 import br.dao.NoticiaDAO;
+import br.entidades.Imagem;
 import br.entidades.Noticia;
 
 @ViewScoped
@@ -63,6 +67,22 @@ public class ConsultarNoticia implements Serializable{
 		setNoticiaSelected(null);
 		return "consultaNoticia.xhtml";
 	}
+	
+	public void removerImagem(Imagem i) {
+		if (getNoticiaSelected().getImagens().contains(i)) {
+			getNoticiaSelected().getImagens().remove(i);
+		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setNoticia(getNoticiaSelected());
+		i.setDataCriado(new Date());
+		getNoticiaSelected().getImagens().add(i);
+	}
+
 	
 	public List<Noticia> getNoticias() {
 		if (noticias == null) {

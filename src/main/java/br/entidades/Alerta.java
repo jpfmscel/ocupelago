@@ -11,10 +11,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.Where;
 
 @Entity
-@Where(clause = "ativo <> 0")
 public class Alerta implements Serializable {
 
 	private static final long serialVersionUID = -5198508373841343025L;

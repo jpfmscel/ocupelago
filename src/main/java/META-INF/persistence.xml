@@ -12,6 +12,8 @@
 		<class>br.entidades.Esporte</class>
 		<class>br.entidades.Projeto</class>
 		<class>br.entidades.Evento</class>
+		<class>br.entidades.Avaliacao</class>
+		<class>br.entidades.Imagem</class>
 
 		<properties>
 			<!-- propriedades do hibernate -->

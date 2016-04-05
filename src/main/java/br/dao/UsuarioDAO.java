@@ -18,7 +18,7 @@ public class UsuarioDAO extends BaseDao<Usuario> implements Serializable {
 	public Usuario logarUsuario(String email, String senha) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Select x from " + Usuario.class.getSimpleName() + " x where 1=1");
-		sb.append(" and senha = '"+senha+"' and email ='"+email+"'");
+		sb.append(" and senha = '"+senha+"' and email ='"+email+"' and ativo <> 0 ");
 		Usuario u = null;
 		try{
 			 u = (Usuario) getEntityManager().createQuery(sb.toString()).getSingleResult();
@@ -29,7 +29,7 @@ public class UsuarioDAO extends BaseDao<Usuario> implements Serializable {
 	public Usuario buscarUsuario(String email) {
 		StringBuffer sb = new StringBuffer();
 		sb.append("Select x from " + Usuario.class.getSimpleName() + " x where 1=1");
-		sb.append(" and email = '"+email+"'");
+		sb.append(" and email = '"+email+"' and ativo <> 0 ");
 		Usuario u = null;
 		try{
 			 u = (Usuario) getEntityManager().createQuery(sb.toString()).getSingleResult();

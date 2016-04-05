@@ -17,7 +17,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
 
 @Entity
-@Where(clause = "ativo <> 0")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -128,7 +127,6 @@ public class Usuario implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (ativo ? 1231 : 1237);
-		result = prime * result + ((dataCriado == null) ? 0 : dataCriado.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -145,11 +143,6 @@ public class Usuario implements Serializable {
 			return false;
 		Usuario other = (Usuario) obj;
 		if (ativo != other.ativo)
-			return false;
-		if (dataCriado == null) {
-			if (other.dataCriado != null)
-				return false;
-		} else if (!dataCriado.equals(other.dataCriado))
 			return false;
 		if (email == null) {
 			if (other.email != null)

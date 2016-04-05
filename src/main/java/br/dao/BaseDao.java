@@ -37,7 +37,7 @@ public abstract class BaseDao<T> implements Serializable {
 	private Query gerarQuery(Class<T> classe) {
 		String nomeClasse = classe.getSimpleName();
 		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + nomeClasse + " x ");
+		sb.append("Select x from " + nomeClasse + " x where ativo <> 0");
 		return getEntityManager().createQuery(sb.toString());
 	}
 
