@@ -1,14 +1,12 @@
 package br.managedBeans.noticia;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
@@ -17,20 +15,17 @@ import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "consultarNoticia")
-public class ConsultarNoticia implements Serializable{
+public class ConsultarNoticia implements Serializable {
 
 	private static final long serialVersionUID = -2333684779244788471L;
-	private List<Noticia> noticias;
 	private Noticia noticiaSelected;
 	private NoticiaDAO noticiaDAO;
 
 	@PostConstruct
 	public void atualizarNoticias() {
-		setNoticias(null);
 		setNoticiaSelected(null);
-		getNoticias().addAll(getNoticiaDAO().findAll());
 	}
 
 	public String editarNoticia(Noticia e) {
@@ -67,6 +62,11 @@ public class ConsultarNoticia implements Serializable{
 		setNoticiaSelected(null);
 		return "consultaNoticia.xhtml";
 	}
+
+	public void filtrarURLYoutube() {
+		String urlFinal = getNoticiaSelected().getVideoURL().replace("watch?", "").replace("v=", "v/");
+		getNoticiaSelected().setVideoURL(urlFinal);
+	}
 	
 	public void removerImagem(Imagem i) {
 		if (getNoticiaSelected().getImagens().contains(i)) {
@@ -81,18 +81,6 @@ public class ConsultarNoticia implements Serializable{
 		i.setNoticia(getNoticiaSelected());
 		i.setDataCriado(new Date());
 		getNoticiaSelected().getImagens().add(i);
-	}
-
-	
-	public List<Noticia> getNoticias() {
-		if (noticias == null) {
-			noticias = new ArrayList<Noticia>();
-		}
-		return noticias;
-	}
-
-	public void setNoticias(List<Noticia> noticias) {
-		this.noticias = noticias;
 	}
 
 	public Noticia getNoticiaSelected() {

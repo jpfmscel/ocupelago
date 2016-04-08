@@ -27,20 +27,20 @@
 						<h:inputText class="form-control" required="true"
 							a:placeholder="Título"
 							requiredMessage="Digite o título da notícia."
-							value="#{cadastrarNoticia.noticia.titulo}" />
+							value="#{consultarNoticia.noticiaSelected.titulo}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="subtitulo" value="Subtítulo" />
 						<h:inputText class="form-control" required="true"
 							a:placeholder="Subtítulo"
 							requiredMessage="Digite o subtítulo da notícia."
-							value="#{cadastrarNoticia.noticia.subtitulo}" />
+							value="#{consultarNoticia.noticiaSelected.subtitulo}" />
 					</div>
 					<br></br>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							value="#{cadastrarNoticia.noticia.descricao}"
+							value="#{consultarNoticia.noticiaSelected.descricao}"
 							requiredMessage="Digite a descrição da notícia."
 							a:placeholder="Informe a descrição da notícia" required="true" />
 					</div>
@@ -48,84 +48,83 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload rendered="#{cadastrarNoticia.noticia.foto == null}"
-								label="Selecionar" cancelLabel="Cancelar"
-								fileUploadListener="#{cadastrarNoticia.handleFileUpload}"
-								mode="advanced" update="panelFoto" sizeLimit="1048576"
-								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
+								fileUploadListener="#{consultarNoticia.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="5000000"
+								fileLimit="5"
+								fileLimitMessage="O número máximo de arquivos é 5!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<p:commandLink
-								rendered="#{cadastrarNoticia.noticia.foto != null}"
-								immediate="true" process="panelFoto"
-								actionListener="#{cadastrarNoticia.removerImagem}"
-								update="panelFoto">
-								<i class="glyphicon glyphicon-remove" style="color: red;" />
-							</p:commandLink>
-							<p:spacer width="2%" />
-							<h:outputLabel value="#{cadastrarNoticia.foto.fileName}"
-								rendered="#{cadastrarNoticia.noticia.foto != null}" />
+							<ui:repeat var="ima"
+								value="#{consultarNoticia.noticiaSelected.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addnoticia:panelFoto"
+									action="#{consultarNoticia.removerImagem(ima)}">
+									<i class="glyphicon glyphicon-remove" style="color: red;" />
+								</p:commandLink>
+								<p:spacer width="2%" />
+								<h:outputLabel value="#{ima.nomeArquivo}" />
+								<br></br>
+							</ui:repeat>
 
 						</p:outputPanel>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{cadastrarNoticia.noticia.videoURL}"
+								value="#{consultarNoticia.noticiaSelected.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
-									listener="#{cadastrarNoticia.filtrarURLYoutube}" />
+									listener="#{consultarNoticia.filtrarURLYoutube}" />
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
-							<p:media value="#{cadastrarNoticia.noticia.videoURL}" width="700"
-								height="400" player="flash"
+							<p:media value="#{consultarNoticia.noticiaSelected.videoURL}"
+								width="700" height="400" player="flash"
 								style="margin-top:2%; margin-left: 10%;"
-								rendered="#{cadastrarNoticia.noticia.videoURL != null and cadastrarNoticia.noticia.videoURL != ''}" />
+								rendered="#{consultarNoticia.noticiaSelected.videoURL != null and consultarNoticia.noticiaSelected.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<!-- 						<h:outputLabel value="Link Facebook" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarNoticia.noticia.URL_facebook}"
+								value="#{consultarNoticia.noticiaSelected.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<!-- 						<h:outputLabel value="Link Twitter" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarNoticia.noticia.URL_twitter}"
+								value="#{consultarNoticia.noticiaSelected.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-						<!-- 						<h:outputLabel value="Link Site" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarNoticia.noticia.URL_site}"
+								value="#{consultarNoticia.noticiaSelected.URL_site}"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
 						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
-							action="#{cadastrarNoticia.adicionarNoticia}">
+							action="#{consultarNoticia.updateNoticia}">
 							<i class="fa fa-fw fa-save" />
 						</h:commandLink>
 						<h:outputText value=" " />
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="login" immediate="true">
+							action="consultaNoticia.xhtml" immediate="true">
 							<i class="fa fa-fw fa-remove" />
 						</h:commandLink>
 					</div>

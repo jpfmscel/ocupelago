@@ -8,12 +8,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="main.xhtml">
-	<ui:define name="title">Cadastro de Esportes</ui:define>
+	<ui:define name="title">Cadastro de Eventos</ui:define>
 	<ui:define name="body">
-		<h:form id="addesporte">
-			<!-- 			<p:growl id="messages" showDetail="true" /> -->
+
+		<h:form id="addevento">
 			<div class="row">
 				<div class="col-md-12">
+					<h2 class="form-signin-heading text-center"></h2>
 					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
 						<ui:repeat value="#{facesContext.messageList}" var="message">
 							<div class="row" style="margin-left: 1%">
@@ -25,47 +26,83 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="nome" value="Nome" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Nome do esporte"
-							requiredMessage="Digite o nome do esporte."
-							value="#{cadastrarEsporte.esporte.nome}" />
+							a:placeholder="nome do evento"
+							requiredMessage="Digite o nome do evento."
+							value="#{cadastrarEvento.evento.nome}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="descrição" value="Descrição" />
-						<h:inputText class="form-control" required="true"
-							a:placeholder="Descrição do esporte"
-							requiredMessage="Digite a descrição do esporte."
-							value="#{cadastrarEsporte.esporte.descricao}" />
+
+					<div class="col-md-6" style="margin-top: 2%;">
+						<h:outputLabel id="dataIni" value="Data e hora de início" />
+						<br></br>
+						<p:calendar value="#{cadastrarEvento.evento.dataInicio}"
+							requiredMessage="Digite a data inicial do evento."
+							pattern="dd/MM/yyyy HH:mm" required="true" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="categoria" value="Categoria" />
-						<h:selectOneRadio value="#{cadastrarEsporte.tipoEsporte}">
-							<f:selectItem itemLabel="Aéreo" itemValue="aereo" />
-							<f:selectItem itemLabel="Terrestre" itemValue="terrestre" />
-							<f:selectItem itemLabel="Aquático" itemValue="aquatico" />
-						</h:selectOneRadio>
+
+					<div class="col-md-6" style="margin-top: 2%;">
+						<h:outputLabel id="dataFim" value="Data e hora de término" />
+						<br></br>
+						<p:calendar value="#{cadastrarEvento.evento.dataFim}"
+							pattern="dd/MM/yyyy HH:mm"
+							requiredMessage="Digite a data final do evento." required="true" />
 					</div>
+
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="recomenda" value="Recomendações" />
-						<br />
+						<h:outputLabel id="informacoes" value="Informações" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							a:placeholder="Informe as recomendações do esporte"
-							value="#{cadastrarEsporte.esporte.recomendacoes}" />
+							value="#{cadastrarEvento.evento.informacoes}"
+							requiredMessage="Digite as informações do evento."
+							a:placeholder="Informe as informações do evento" required="true" />
 					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="telefone" value="Telefone" />
+						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
+							a:placeholder="telefone do evento"
+							requiredMessage="Digite o telefone do evento."
+							value="#{cadastrarEvento.evento.telefone}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="empresa" value="Empresa Organizadora" />
+						<h:inputText class="form-control"
+							a:placeholder="nome da empresa organizadora"
+							value="#{cadastrarEvento.evento.nomeEmpresaOrganizadora}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="email" value="E-mail" />
+						<h:inputText class="form-control" a:placeholder="e-mail do evento"
+							value="#{cadastrarEvento.evento.email}" />
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="localLab" value="Local" />
+						<br></br>
+						<p:autoComplete id="local" value="#{cadastrarEvento.evento.local}"
+							itemLabel="#{loc.nome}" itemValue="#{loc}" var="loc"
+							completeMethod="#{cadastrarEvento.completeText}" converter="localConverter"
+							forceSelection="true" minQueryLength="3" maxResults="10"
+							required="true" requiredMessage="Selecione um local!">
+							<p:ajax event="itemSelect"
+								listener="#{cadastrarEvento.onItemSelect}" />
+						</p:autoComplete>
+					</div>
+
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
-								fileUploadListener="#{cadastrarEsporte.handleFileUpload}"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
+								fileUploadListener="#{cadastrarEvento.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{cadastrarEsporte.esporte.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="addesporte:panelFoto"
-									action="#{cadastrarEsporte.removerImagem(ima)}">
+							<ui:repeat var="ima" value="#{cadastrarEvento.evento.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addevento:panelFoto"
+									action="#{cadastrarEvento.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
 								<p:spacer width="2%" />
@@ -77,22 +114,23 @@
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 
+						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{cadastrarEsporte.esporte.videoURL}"
+								value="#{cadastrarEvento.evento.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
-									listener="#{cadastrarEsporte.filtrarURLYoutube}" />
+									listener="#{cadastrarEvento.filtrarURLYoutube}" />
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
-							<p:media value="#{cadastrarEsporte.esporte.videoURL}" width="700"
+							<p:media value="#{cadastrarEvento.evento.videoURL}" width="700"
 								height="400" player="flash"
 								style="margin-top:2%; margin-left: 10%;"
-								rendered="#{cadastrarEsporte.esporte.videoURL != null and cadastrarEsporte.esporte.videoURL != ''}" />
+								rendered="#{cadastrarEvento.evento.videoURL != null and cadastrarEvento.evento.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -101,7 +139,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarEsporte.esporte.URL_facebook}"
+								value="#{cadastrarEvento.evento.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -111,7 +149,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarEsporte.esporte.URL_twitter}"
+								value="#{cadastrarEvento.evento.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -121,20 +159,19 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarEsporte.esporte.URL_site}"
+								value="#{cadastrarEvento.evento.URL_site}"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 
-
 					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
 						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
-							action="#{cadastrarEsporte.adicionarEsporte}">
+							action="#{cadastrarEvento.adicionarEvento}">
 							<i class="fa fa-fw fa-save" />
 						</h:commandLink>
 						<h:outputText value=" " />
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="index.xhtml" immediate="true">
+							action="mapa.xhtml" immediate="true">
 							<i class="fa fa-fw fa-remove" />
 						</h:commandLink>
 					</div>

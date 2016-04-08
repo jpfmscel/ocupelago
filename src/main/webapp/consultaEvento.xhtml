@@ -7,9 +7,9 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="main.xhtml">
-	<ui:define name="title">Consultar Projetos</ui:define>
+	<ui:define name="title">Consultar Eventos</ui:define>
 	<ui:define name="body">
-		<h:form id="consultaprojeto">
+		<h:form id="consultaevento">
 			<div class="row">
 				<div class="col-md-12">
 					<p:outputPanel rendered="#{dashboardView.hasInfoMessage()}">
@@ -29,31 +29,31 @@
 						</ui:repeat>
 					</p:outputPanel>
 
-					<p:outputPanel id="tabelaProjetos">
+					<p:outputPanel id="tabelaEventos">
 						<div class="col-md-12">
 							<table class="table table-hover table-striped">
 								<thead>
 									<tr>
 										<th style="width: 25%">Nome</th>
-										<th style="width: 55%">Descrição</th>
+										<th style="width: 55%">Local</th>
 										<th style="width: 15%;">Operações</th>
 									</tr>
 								</thead>
 								<tbody>
-									<ui:repeat var="projeto" value="#{listFactory.listaProjeto}">
+									<ui:repeat var="evento" value="#{listFactory.listaEvento}">
 										<tr>
-											<td style="width: 25%">#{projeto.titulo}</td>
-											<td style="width: 55%">#{projeto.descricao}</td>
+											<td style="width: 25%">#{evento.nome}</td>
+											<td style="width: 55%">#{evento.local.nome}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
 													<h:commandLink
-														action="#{consultarProjeto.editarProjeto(projeto)}">
+														action="#{consultarEvento.editarEvento(evento)}">
 														<i class="glyphicon glyphicon-pencil"
 															style="color: darkgoldenrod;"></i>
 													</h:commandLink>
 													<p:spacer width="20%" />
 													<h:commandLink
-														action="#{consultarProjeto.excluirProjeto(projeto)}">
+														action="#{consultarEvento.excluirEvento(evento)}">
 														<i class="glyphicon glyphicon glyphicon-remove"
 															style="color: red;"></i>
 													</h:commandLink>
@@ -68,12 +68,11 @@
 
 				</div>
 				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-					<h:commandLink value="Cadastrar Projeto" class="btn btn-lg btn-success"
-						action="cadastroProjeto.xhtml">
+					<h:commandLink value="Cadastrar Evento"
+						class="btn btn-lg btn-success" action="cadastroEvento.xhtml">
 					</h:commandLink>
 					<h:outputText value=" " />
 				</div>
-
 				<div class="col-lg-4" />
 			</div>
 		</h:form>

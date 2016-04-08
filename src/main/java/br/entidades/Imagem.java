@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 @Entity
 public class Imagem implements Serializable {
@@ -43,8 +42,7 @@ public class Imagem implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Noticia noticia;
 
-	// @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Transient
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Evento evento;
 
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

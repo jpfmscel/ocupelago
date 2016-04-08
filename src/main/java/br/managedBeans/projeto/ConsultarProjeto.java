@@ -1,32 +1,31 @@
 package br.managedBeans.projeto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.FileUploadEvent;
+
 import br.dao.ProjetoDAO;
+import br.entidades.Imagem;
 import br.entidades.Projeto;
 
-@ViewScoped
+@SessionScoped
 @ManagedBean(name = "consultarProjeto")
-public class ConsultarProjeto implements Serializable{
+public class ConsultarProjeto implements Serializable {
 
 	private static final long serialVersionUID = -1803143075277938111L;
-	private List<Projeto> projetos;
 	private Projeto projetoSelected;
 	private ProjetoDAO projetoDAO;
 
 	@PostConstruct
 	public void atualizarProjetos() {
-		setProjetos(null);
 		setProjetoSelected(null);
-		getProjetos().addAll(getProjetoDAO().findAll());
 	}
 
 	public String editarProjeto(Projeto e) {
@@ -64,16 +63,24 @@ public class ConsultarProjeto implements Serializable{
 		return "consultaProjeto.xhtml";
 	}
 
-	
-	public List<Projeto> getProjetos() {
-		if (projetos == null) {
-			projetos = new ArrayList<Projeto>();
-		}
-		return projetos;
+	public void filtrarURLYoutube() {
+		String urlFinal = getProjetoSelected().getVideoURL().replace("watch?", "").replace("v=", "v/");
+		getProjetoSelected().setVideoURL(urlFinal);
 	}
 
-	public void setProjetos(List<Projeto> projetos) {
-		this.projetos = projetos;
+	public void removerImagem(Imagem i) {
+		if (getProjetoSelected().getImagens().contains(i)) {
+			getProjetoSelected().getImagens().remove(i);
+		}
+	}
+
+	public void handleFileUpload(FileUploadEvent event) {
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setProjeto(getProjetoSelected());
+		i.setDataCriado(new Date());
+		getProjetoSelected().getImagens().add(i);
 	}
 
 	public Projeto getProjetoSelected() {

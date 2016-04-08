@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -14,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
+import br.managedBeans.ListFactory;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEsporte")
@@ -25,6 +27,9 @@ public class CadastrarEsporte implements Serializable {
 	private EsporteDAO esporteDAO;
 	private String tipoEsporte;
 
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
+	
 	public String adicionarEsporte() {
 		try {
 			atualizaTipoEsporte();
@@ -32,8 +37,9 @@ public class CadastrarEsporte implements Serializable {
 			getEsporteDAO().inserir(getEsporte());
 			getEsporteDAO().comitarTransacao();
 			setEsporte(null);
+			getListFactory().atualizarLista(new EsporteDAO(), new Date());
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause(), null));
 			e.printStackTrace();
 			return null;
 		}
@@ -112,6 +118,14 @@ public class CadastrarEsporte implements Serializable {
 
 	public void setTipoEsporte(String tipoEsporte) {
 		this.tipoEsporte = tipoEsporte;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }

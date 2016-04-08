@@ -14,7 +14,7 @@ public abstract class BaseDao<T> implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@PersistenceContext
-	private EntityManager entityManager;
+	private static EntityManager entityManager;
 
 	public T buscarPorId(int id) {
 		return (T) getEntityManager().find(getClasse(), id);
@@ -41,6 +41,7 @@ public abstract class BaseDao<T> implements Serializable {
 		return getEntityManager().createQuery(sb.toString());
 	}
 
+	@SuppressWarnings("unchecked")
 	public T buscarSingle(T o) {
 		Query q = gerarQuery(o);
 		return (T) q.getSingleResult();

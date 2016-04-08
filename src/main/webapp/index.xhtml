@@ -145,8 +145,7 @@
 									<h:graphicImage value="/image/#{esporte.imagens[0].id}" />
 									<div class="overlay">
 										<a class="preview btn btn-danger"
-											title="Lorem ipsum dolor sit amet"
-											href="/image/#{esporte.imagens[0].id}"><i
+											title="Lorem ipsum dolor sit amet" href="#"><i
 											class="icon-eye-open"></i></a>
 									</div>
 								</div>
@@ -169,7 +168,7 @@
 					<h2>Notícias</h2>
 				</div>
 				<!--/.center-->
-				<ui:repeat var="noticia" value="#{consultarNoticia.noticias}">
+				<ui:repeat var="noticia" value="#{listFactory.listaNoticia}">
 					<div class="row">
 						<div class="col-md-7">
 							<h:graphicImage value="/image/#{noticia.imagens[0].id}"

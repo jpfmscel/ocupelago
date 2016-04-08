@@ -11,7 +11,7 @@
 	<ui:define name="title">Cadastro de Local</ui:define>
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
-		<h:form id="adduser">
+		<h:form id="addlocal">
 			<div class="row">
 				<div class="col-md-12">
 					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
@@ -92,22 +92,23 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload rendered="#{cadastrarLocal.local.foto == null}"
-								label="Selecionar" cancelLabel="Cancelar" id="fotoUpload"
+							<p:fileUpload
+								label="Selecionar" cancelLabel="Cancelar" auto="true"
 								fileUploadListener="#{cadastrarLocal.handleFileUpload}"
-								mode="advanced" update="panelFoto" sizeLimit="1048576"
-								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+								mode="advanced" update="panelFoto" sizeLimit="5000000"
+								fileLimit="5"
+								fileLimitMessage="O número máximo de arquivos é 5!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
 
-							<p:commandLink rendered="#{cadastrarLocal.local.foto != null}"
-								immediate="true" process="panelFoto"
-								actionListener="#{cadastrarLocal.removerImagem}"
-								update="panelFoto">
-								<i class="glyphicon glyphicon-remove" style="color: red;" />
-							</p:commandLink>
-							<p:spacer width="2%" />
-							<h:outputLabel value="#{cadastrarLocal.foto.fileName}"
-								rendered="#{cadastrarLocal.local.foto != null}" />
+							<ui:repeat var="ima" value="#{cadastrarLocal.local.imagens}" varStatus="stat">
+								<p:commandLink immediate="true" id="link" update="addlocal:panelFoto"
+									action="#{cadastrarLocal.removerImagem(ima)}">
+									<i class="glyphicon glyphicon-remove" style="color: red;" />
+								</p:commandLink>
+								<p:spacer width="2%" />
+								<h:outputLabel value="#{ima.nomeArquivo}" />
+								<br></br>
+							</ui:repeat>
 
 						</p:outputPanel>
 					</div>

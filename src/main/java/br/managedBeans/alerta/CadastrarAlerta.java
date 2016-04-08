@@ -16,6 +16,7 @@ import org.primefaces.model.map.Marker;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
+import br.managedBeans.ListFactory;
 
 @ManagedBean(name = "mapBean")
 @ViewScoped
@@ -30,11 +31,11 @@ public class CadastrarAlerta implements Serializable {
 	private double lat;
 	private double lng;
 
-	@ManagedProperty(value = "#{consultarAlerta}")
-	private ConsultarAlerta consultarAlerta;
-
 	private Alerta alerta;
 	private AlertaDAO alertaDAO;
+
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
 
 	@PostConstruct
 	public void init() {
@@ -46,6 +47,24 @@ public class CadastrarAlerta implements Serializable {
 				getEmptyModel().addOverlay(new Marker(coord, a.getTitulo()));
 			}
 		}
+	}
+
+	public void addMarker() {
+		Marker marker = new Marker(new LatLng(lat, lng), title);
+		getEmptyModel().addOverlay(marker);
+		AlertaDAO aDAO = new AlertaDAO();
+		Alerta a = new Alerta();
+
+		a.setLatitude(lat);
+		a.setLongitude(lng);
+		// a.setDescricao(getDescricao());
+		a.setTitulo(getTitle());
+		a.setDataCriado(new Date());
+
+		aDAO.iniciarTransacao();
+		aDAO.inserir(a);
+		aDAO.comitarTransacao();
+		getListFactory().atualizarLista(new AlertaDAO(), new Date());
 	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
@@ -84,25 +103,6 @@ public class CadastrarAlerta implements Serializable {
 		this.lng = lng;
 	}
 
-	public void addMarker() {
-		Marker marker = new Marker(new LatLng(lat, lng), title);
-		getEmptyModel().addOverlay(marker);
-		AlertaDAO aDAO = new AlertaDAO();
-		Alerta a = new Alerta();
-
-		a.setLatitude(lat);
-		a.setLongitude(lng);
-		// a.setDescricao(getDescricao());
-		a.setTitulo(getTitle());
-		a.setDataCriado(new Date());
-
-		aDAO.iniciarTransacao();
-		aDAO.inserir(a);
-		aDAO.comitarTransacao();
-
-		getConsultarAlerta().atualizarAlertas();
-	}
-
 	public void setMarker(Marker marker) {
 		this.marker = marker;
 	}
@@ -133,15 +133,12 @@ public class CadastrarAlerta implements Serializable {
 		this.emptyModel = emptyModel;
 	}
 
-	public ConsultarAlerta getConsultarAlerta() {
-		if (consultarAlerta == null) {
-			consultarAlerta = new ConsultarAlerta();
-		}
-		return consultarAlerta;
+	public ListFactory getListFactory() {
+		return listFactory;
 	}
 
-	public void setConsultarAlerta(ConsultarAlerta consultarAlerta) {
-		this.consultarAlerta = consultarAlerta;
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }

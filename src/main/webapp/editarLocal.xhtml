@@ -29,21 +29,21 @@
 						<h:inputText class="form-control" required="true"
 							a:placeholder="Nome do local" id="nome"
 							requiredMessage="Digite o nome do local."
-							value="#{cadastrarLocal.local.nome}" />
+							value="#{consultarLocal.localSelected.nome}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Descrição" />
-						<h:inputText class="form-control" required="true" 
+						<h:inputText class="form-control" required="true"
 							a:placeholder="Descrição do local" id="descricao"
 							requiredMessage="Digite a descrição do local."
-							value="#{cadastrarLocal.local.descricao}" />
+							value="#{consultarLocal.localSelected.descricao}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Responsável" />
 						<h:inputText class="form-control" required="true"
 							a:placeholder="Nome do responsável" id="responsavel"
 							requiredMessage="Digite o nome do responsável."
-							value="#{cadastrarLocal.local.responsavel}" />
+							value="#{consultarLocal.localSelected.responsavel}" />
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -51,34 +51,33 @@
 						<h:inputText class="form-control" required="true"
 							a:placeholder="exemple@gmail.com" id="email"
 							requiredMessage="Digite o e-mail."
-							value="#{cadastrarLocal.local.email}" />
+							value="#{consultarLocal.localSelected.email}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Endereço" />
 						<h:inputText class="form-control" required="true"
 							requiredMessage="Digite o endereço." id="endereco"
-							value="#{cadastrarLocal.local.endereco}" />
+							value="#{consultarLocal.localSelected.endereco}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Telefone" />
 						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
-							required="true" requiredMessage="Digite o telefone." id="telefone"
-							value="#{cadastrarLocal.local.telefone}" />
+							required="true" requiredMessage="Digite o telefone."
+							id="telefone" value="#{consultarLocal.localSelected.telefone}" />
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
-						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP" streetView="true"
-							id="mapa" style="width:98%;height:450px"
-							model="#{cadastrarLocal.mapModel}">
-							<p:ajax event="pointSelect"
-								listener="#{cadastrarLocal.onPointSelect}" update="mapa" />
+						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
+							streetView="true" id="mapa" style="width:98%;height:450px"
+							model="#{consultarLocal.mapModel}">
 						</p:gmap>
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Categoria" />
 						<br />
-						<h:selectOneMenu value="#{cadastrarLocal.local.categoria}" id="categoria" >
+						<h:selectOneMenu value="#{consultarLocal.localSelected.categoria}"
+							id="categoria">
 							<f:selectItem itemLabel="Restaurante" itemValue="Restaurante" />
 							<f:selectItem itemLabel="Clube" itemValue="Clube" />
 							<f:selectItem itemLabel="Parque" itemValue="Restaurante" />
@@ -92,22 +91,25 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload rendered="#{cadastrarLocal.local.foto == null}"
-								label="Selecionar" cancelLabel="Cancelar" id="fotoUpload"
-								fileUploadListener="#{cadastrarLocal.handleFileUpload}"
-								mode="advanced" update="panelFoto" sizeLimit="1048576"
-								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
+								fileUploadListener="#{consultarLocal.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="5000000"
+								fileLimit="5"
+								fileLimitMessage="O número máximo de arquivos é 5!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<p:commandLink rendered="#{cadastrarLocal.local.foto != null}"
-								immediate="true" process="panelFoto"
-								actionListener="#{cadastrarLocal.removerImagem}"
-								update="panelFoto">
-								<i class="glyphicon glyphicon-remove" style="color: red;" />
-							</p:commandLink>
-							<p:spacer width="2%" />
-							<h:outputLabel value="#{cadastrarLocal.foto.fileName}"
-								rendered="#{cadastrarLocal.local.foto != null}" />
+							<ui:repeat var="ima"
+								value="#{consultarLocal.localSelected.imagens}" varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="adduser:panelFoto"
+									action="#{consultarLocal.removerImagem(ima)}">
+									<i class="glyphicon glyphicon-remove" style="color: red;" />
+								</p:commandLink>
+								<p:spacer width="2%" />
+								<h:outputLabel value="#{ima.nomeArquivo}" />
+								<br></br>
+							</ui:repeat>
 
 						</p:outputPanel>
 					</div>
@@ -118,18 +120,18 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{cadastrarLocal.local.videoURL}"
+								value="#{consultarLocal.localSelected.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
-									listener="#{cadastrarLocal.filtrarURLYoutube}" />
+									listener="#{consultarLocal.filtrarURLYoutube}" />
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
-							<p:media value="#{cadastrarLocal.local.videoURL}" width="700"
-								height="400" player="flash"
+							<p:media value="#{consultarLocal.localSelected.videoURL}"
+								width="700" height="400" player="flash"
 								style="margin-top:2%; margin-left: 10%;"
-								rendered="#{cadastrarLocal.local.videoURL != null and cadastrarLocal.local.videoURL != ''}" />
+								rendered="#{consultarLocal.localSelected.videoURL != null and consultarLocal.localSelected.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -138,7 +140,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
 							<h:inputText class="form-control" id="linkFacebook"
-								value="#{cadastrarLocal.local.URL_facebook}"
+								value="#{consultarLocal.localSelected.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -148,7 +150,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
 							<h:inputText class="form-control" id="linkTwitter"
-								value="#{cadastrarLocal.local.URL_twitter}"
+								value="#{consultarLocal.localSelected.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -158,19 +160,19 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarLocal.local.URL_site}" id="linkSite"
+								value="#{consultarLocal.localSelected.URL_site}" id="linkSite"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
 						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
-							action="#{cadastrarLocal.adicionarLocal}">
+							action="#{consultarLocal.updateLocal}">
 							<i class="fa fa-fw fa-save" />
 						</h:commandLink>
 						<h:outputText value=" " />
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="index.xhtml" immediate="true">
+							action="consultaLocal.xhtml" immediate="true">
 							<i class="fa fa-fw fa-remove" />
 						</h:commandLink>
 					</div>

@@ -1,9 +1,7 @@
 package br.entidades;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,9 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
@@ -34,10 +29,6 @@ public class Projeto implements Serializable {
 	@Column(nullable = false, length = 3000)
 	private String descricao;
 
-//	@Column(nullable = true, length = 10000, columnDefinition = "blob")
-	@Transient
-	private byte[] foto;
-
 	@Column(nullable = true, length = 1000)
 	private String videoURL;
 
@@ -56,11 +47,7 @@ public class Projeto implements Serializable {
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
-	
-	@Column(nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date criadoEm;
-	
+
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="projeto")
 	private List<Imagem> imagens;
 	
@@ -88,13 +75,6 @@ public class Projeto implements Serializable {
 		this.descricao = descricao;
 	}
 
-	public byte[] getFoto() {
-		return foto;
-	}
-
-	public void setFoto(byte[] foto) {
-		this.foto = foto;
-	}
 
 	public String getVideoURL() {
 		return videoURL;
@@ -177,18 +157,6 @@ public class Projeto implements Serializable {
 		this.ativo = ativo;
 	}
 
-	public Date getCriadoEm() {
-		return criadoEm;
-	}
-
-	public void setCriadoEm(Date criadoEm) {
-		this.criadoEm = criadoEm;
-	}
-
-	public String getDataCriadaFormatada() {
-		return new SimpleDateFormat("dd/MM/yyyy - HH:mm").format(getCriadoEm()) + " h de Brasília";
-	}
-
 	public List<Imagem> getImagens() {
 		if (imagens == null) {
 			imagens = new ArrayList<>();
@@ -199,4 +167,5 @@ public class Projeto implements Serializable {
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
 	}
+
 }

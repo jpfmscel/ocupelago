@@ -1,12 +1,11 @@
 package br.managedBeans.noticia;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -16,6 +15,7 @@ import org.primefaces.model.UploadedFile;
 import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
+import br.managedBeans.ListFactory;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarNoticia")
@@ -25,25 +25,25 @@ public class CadastrarNoticia implements Serializable {
 
 	private Noticia noticia;
 	private NoticiaDAO noticiaDAO;
+	
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
 
 	public String adicionarNoticia() {
 		try {
-			getNoticia().setCriadoEm(getNovaDataByLocale());
+			getNoticia().setCriadoEm(new Date());
 			getNoticiaDAO().iniciarTransacao();
 			getNoticiaDAO().inserir(getNoticia());
 			getNoticiaDAO().comitarTransacao();
 			setNoticia(null);
+			getListFactory().atualizarLista(new NoticiaDAO(), new Date());
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause(), null));
 			e.printStackTrace();
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Notícia cadastrada com sucesso!", null));
 		return "consultaNoticia.xhtml";
-	}
-
-	private Date getNovaDataByLocale() {
-		return Calendar.getInstance(new Locale(System.getProperty("user.language.format"), System.getProperty("user.country.format"))).getTime();
 	}
 
 	public byte[] getBytesFromFile(UploadedFile f) {
@@ -90,6 +90,14 @@ public class CadastrarNoticia implements Serializable {
 
 	public void setNoticiaDAO(NoticiaDAO noticiaDAO) {
 		this.noticiaDAO = noticiaDAO;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }

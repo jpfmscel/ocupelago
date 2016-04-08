@@ -1,11 +1,13 @@
 package br.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -67,6 +69,9 @@ public class Local implements Serializable{
 	
 	@OneToMany(cascade=CascadeType.ALL, mappedBy="local")
 	private List<Imagem> imagens;
+	
+	@OneToMany(cascade=CascadeType.ALL, mappedBy="local", fetch=FetchType.LAZY)
+	private List<Evento> eventos;
 	
 	public int getId() {
 		return id;
@@ -186,6 +191,28 @@ public class Local implements Serializable{
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public List<Imagem> getImagens() {
+		if (imagens == null) {
+			imagens = new ArrayList<>();
+		}
+		return imagens;
+	}
+
+	public void setImagens(List<Imagem> imagens) {
+		this.imagens = imagens;
+	}
+
+	public List<Evento> getEventos() {
+		if (eventos == null) {
+			eventos = new ArrayList<>();
+		}
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
 	}
 
 }

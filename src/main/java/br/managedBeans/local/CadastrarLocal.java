@@ -1,12 +1,13 @@
 package br.managedBeans.local;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -17,7 +18,9 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
+import br.entidades.Imagem;
 import br.entidades.Local;
+import br.managedBeans.ListFactory;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarLocal")
@@ -25,32 +28,26 @@ public class CadastrarLocal implements Serializable {
 
 	private static final long serialVersionUID = 734069129117081739L;
 
-	private UploadedFile foto;
 	private Local local;
 	private LocalDAO localDAO;
 	private MapModel mapModel;
+	
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
 
 	public String adicionarLocal() {
 		try {
-//			atualizaFilePath();
 			getLocalDAO().iniciarTransacao();
 			getLocalDAO().inserir(getLocal());
 			getLocalDAO().comitarTransacao();
-//			gravarFotoDisco(getLocal().getFilePath());
-			setFoto(null);
 			setLocal(null);
+			getListFactory().atualizarLista(new LocalDAO(), new Date());
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Erro ao inserir o local!", null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local!" + e.getCause(), null));
 			e.printStackTrace();
 			return null;
 		}
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO,
-						"Local cadastrado com sucesso!", null));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local cadastrado com sucesso!", null));
 
 		return "consultaLocal.xhtml";
 	}
@@ -64,27 +61,8 @@ public class CadastrarLocal implements Serializable {
 		getMapModel().addOverlay(marker);
 	}
 
-//	private void atualizaFilePath() {
-//		if (getFoto() != null) {
-//			getLocal().setFoto(getBytesFromFile(getFoto()));
-//			String filepath = Util.getFilePath() + ""
-//					+ getFoto().getFileName();
-//			getLocal().setFilePath(filepath);
-//		}
-//	}
-
-//	private void gravarFotoDisco(String filepath) throws IOException {
-//		if (getFoto() != null) {
-//			FileOutputStream fos = null;
-//			fos = new FileOutputStream(filepath);
-//			fos.write(getLocal().getFoto());
-//			fos.close();
-//		}
-//	}
-
 	public void filtrarURLYoutube() {
-		String urlFinal = getLocal().getVideoURL().replace("watch?", "")
-				.replace("v=", "v/");
+		String urlFinal = getLocal().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getLocal().setVideoURL(urlFinal);
 	}
 
@@ -92,22 +70,19 @@ public class CadastrarLocal implements Serializable {
 		return f.getContents();
 	}
 
-	public void removerImagem(ActionEvent actionEvent) {
-		setFoto(null);
-//		getLocal().setFoto(null);
+	public void removerImagem(Imagem i) {
+		if (getLocal().getImagens().contains(i)) {
+			getLocal().getImagens().remove(i);
+		}
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-		setFoto(event.getFile());
-//		getLocal().setFoto(getBytesFromFile(event.getFile()));
-	}
-
-	public UploadedFile getFoto() {
-		return foto;
-	}
-
-	public void setFoto(UploadedFile foto) {
-		this.foto = foto;
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setLocal(getLocal());
+		i.setDataCriado(new Date());
+		getLocal().getImagens().add(i);
 	}
 
 	public Local getLocal() {
@@ -141,6 +116,14 @@ public class CadastrarLocal implements Serializable {
 
 	public void setMapModel(MapModel mapModel) {
 		this.mapModel = mapModel;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }

@@ -1,22 +1,21 @@
 package br.managedBeans.projeto;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.dao.ProjetoDAO;
+import br.entidades.Imagem;
 import br.entidades.Projeto;
-import br.util.Util;
+import br.managedBeans.ListFactory;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarProjeto")
@@ -28,17 +27,18 @@ public class CadastrarProjeto implements Serializable {
 	private Projeto projeto;
 	private ProjetoDAO projetoDAO;
 
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
+
 	public String adicionarProjeto() {
 		try {
-//			atualizaFilePath();
-			getProjeto().setCriadoEm(new Date());
 			getProjetoDAO().iniciarTransacao();
 			getProjetoDAO().inserir(getProjeto());
 			getProjetoDAO().comitarTransacao();
-//			gravarFotoDisco(getProjeto().getFilePath());
 			setProjeto(null);
+			getListFactory().atualizarLista(new ProjetoDAO(), new Date());
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause(), null));
 			e.printStackTrace();
 			return null;
 		}
@@ -52,31 +52,19 @@ public class CadastrarProjeto implements Serializable {
 		getProjeto().setVideoURL(urlFinal);
 	}
 
-	public void removerImagem(ActionEvent actionEvent) {
-		setFoto(null);
-		getProjeto().setFoto(null);
+	public void removerImagem(Imagem i) {
+		if (getProjeto().getImagens().contains(i)) {
+			getProjeto().getImagens().remove(i);
+		}
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-		setFoto(event.getFile());
-		getProjeto().setFoto(getBytesFromFile(event.getFile()));
-	}
-
-	private void atualizaFilePath() {
-		if (getFoto() != null) {
-			getProjeto().setFoto(getBytesFromFile(getFoto()));
-			String filepath = Util.getFilePath() + "" + getFoto().getFileName();
-//			getProjeto().setFilePath(filepath);
-		}
-	}
-
-	private void gravarFotoDisco(String filepath) throws IOException {
-		if (getFoto() != null) {
-			FileOutputStream fos = null;
-			fos = new FileOutputStream(filepath);
-			fos.write(getProjeto().getFoto());
-			fos.close();
-		}
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setProjeto(getProjeto());
+		i.setDataCriado(new Date());
+		getProjeto().getImagens().add(i);
 	}
 
 	public byte[] getBytesFromFile(UploadedFile f) {
@@ -111,6 +99,14 @@ public class CadastrarProjeto implements Serializable {
 
 	public void setProjetoDAO(ProjetoDAO projetoDAO) {
 		this.projetoDAO = projetoDAO;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }

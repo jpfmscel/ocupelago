@@ -11,7 +11,7 @@
 	<ui:define name="title">Cadastro de Projetos</ui:define>
 	<ui:define name="body">
 
-		<h:form id="addproject">
+		<h:form id="addprojeto">
 			<div class="row">
 				<div class="col-md-12">
 					<h2 class="form-signin-heading text-center"></h2>
@@ -41,22 +41,23 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload rendered="#{cadastrarProjeto.projeto.foto == null}" label="Selecionar" cancelLabel="Cancelar"
+							<p:fileUpload
+								label="Selecionar" cancelLabel="Cancelar" auto="true"
 								fileUploadListener="#{cadastrarProjeto.handleFileUpload}"
-								mode="advanced" update="panelFoto" sizeLimit="1048576"
-								fileLimit="1" fileLimitMessage="Somente um arquivo é permitido!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+								mode="advanced" update="panelFoto" sizeLimit="5000000"
+								fileLimit="5"
+								fileLimitMessage="O número máximo de arquivos é 5!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
 
-							<p:commandLink
-								rendered="#{cadastrarProjeto.projeto.foto != null}"
-								immediate="true" process="panelFoto"
-								actionListener="#{cadastrarProjeto.removerImagem}"
-								update="panelFoto">
-								<i class="glyphicon glyphicon-remove" style="color: red;" />
-							</p:commandLink>
-							<p:spacer width="2%" />
-							<h:outputLabel value="#{cadastrarProjeto.foto.fileName}"
-								rendered="#{cadastrarProjeto.projeto.foto != null}" />
+							<ui:repeat var="ima" value="#{cadastrarProjeto.projeto.imagens}" varStatus="stat">
+								<p:commandLink immediate="true" id="link" update="addprojeto:panelFoto"
+									action="#{cadastrarProjeto.removerImagem(ima)}">
+									<i class="glyphicon glyphicon-remove" style="color: red;" />
+								</p:commandLink>
+								<p:spacer width="2%" />
+								<h:outputLabel value="#{ima.nomeArquivo}" />
+								<br></br>
+							</ui:repeat>
 
 						</p:outputPanel>
 					</div>
@@ -118,7 +119,7 @@
 						</h:commandLink>
 						<h:outputText value=" " />
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="index.xhtml" immediate="true">
+							action="consultaProjeto.xhtml" immediate="true">
 							<i class="fa fa-fw fa-remove" />
 						</h:commandLink>
 					</div>
