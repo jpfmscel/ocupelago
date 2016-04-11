@@ -77,7 +77,6 @@ public class CadastrarEsporte implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setEsporte(getEsporte());
 		i.setDataCriado(new Date());
 		getEsporte().getImagens().add(i);
 	}

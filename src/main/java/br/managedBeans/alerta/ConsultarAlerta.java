@@ -5,11 +5,13 @@ import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
+import br.managedBeans.ListFactory;
 
 @SessionScoped
 @ManagedBean(name = "consultarAlerta")
@@ -19,6 +21,12 @@ public class ConsultarAlerta implements Serializable{
 	private Alerta alertaSelected;
 	private AlertaDAO alertaDAO;
 
+	@ManagedProperty(value="#{mapBean}")
+	private CadastrarAlerta cadastrarAlerta;
+	
+	@ManagedProperty(value = "#{listFactory}")
+	private ListFactory listFactory;
+	
 	@PostConstruct
 	public void atualizarAlertas() {
 		setAlertaSelected(null);
@@ -33,22 +41,21 @@ public class ConsultarAlerta implements Serializable{
 		try {
 			setAlertaSelected(e);
 			getAlertaSelected().setAtivo(false);
-			updateAlerta();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta excluída com sucesso!", null));
+			getCadastrarAlerta().setAlerta(null);
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a alerta : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir a alerta : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setAlertaSelected(null);
-		return "consultaAlerta.xhtml";
+		return "mapa.xhtml";
 	}
 
 	public String updateAlerta() {
 		try {
-			getAlertaDAO().iniciarTransacao();
-			getAlertaDAO().update(getAlertaSelected());
-			getAlertaDAO().comitarTransacao();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta atualizada com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -57,6 +64,12 @@ public class ConsultarAlerta implements Serializable{
 		}
 		setAlertaSelected(null);
 		return "consultaAlerta.xhtml";
+	}
+
+	private void update() {
+		getAlertaDAO().iniciarTransacao();
+		getAlertaDAO().update(getAlertaSelected());
+		getAlertaDAO().comitarTransacao();
 	}
 	
 	public Alerta getAlertaSelected() {
@@ -79,5 +92,21 @@ public class ConsultarAlerta implements Serializable{
 
 	public void setAlertaDAO(AlertaDAO alertaDAO) {
 		this.alertaDAO = alertaDAO;
+	}
+
+	public CadastrarAlerta getCadastrarAlerta() {
+		return cadastrarAlerta;
+	}
+
+	public void setCadastrarAlerta(CadastrarAlerta cadastrarAlerta) {
+		this.cadastrarAlerta = cadastrarAlerta;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 }

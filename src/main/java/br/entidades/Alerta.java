@@ -2,15 +2,20 @@ package br.entidades;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+import org.primefaces.model.map.Marker;
 
 @Entity
 public class Alerta implements Serializable {
@@ -42,6 +47,12 @@ public class Alerta implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Imagem> imagens;
+
+	@Transient
+	private Marker marker;
+
 	public String getDescricao() {
 		return descricao;
 	}
@@ -60,8 +71,7 @@ public class Alerta implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Alerta [id=" + id + ", titulo=" + titulo + ", latitude="
-				+ getLatitude() + ", longitude=" + getLongitude() + "]";
+		return "Alerta [id=" + id + ", titulo=" + titulo + ", latitude=" + getLatitude() + ", longitude=" + getLongitude() + "]";
 	}
 
 	@Override
@@ -89,11 +99,9 @@ public class Alerta implements Serializable {
 		Alerta other = (Alerta) obj;
 		if (id != other.id)
 			return false;
-		if (Double.doubleToLongBits(getLatitude()) != Double
-				.doubleToLongBits(other.getLatitude()))
+		if (Double.doubleToLongBits(getLatitude()) != Double.doubleToLongBits(other.getLatitude()))
 			return false;
-		if (Double.doubleToLongBits(getLongitude()) != Double
-				.doubleToLongBits(other.getLongitude()))
+		if (Double.doubleToLongBits(getLongitude()) != Double.doubleToLongBits(other.getLongitude()))
 			return false;
 		if (titulo == null) {
 			if (other.titulo != null)
@@ -133,6 +141,14 @@ public class Alerta implements Serializable {
 
 	public void setDataCriado(Date dataCriado) {
 		this.dataCriado = dataCriado;
+	}
+
+	public Marker getMarker() {
+		return marker;
+	}
+
+	public void setMarker(Marker marker) {
+		this.marker = marker;
 	}
 
 }

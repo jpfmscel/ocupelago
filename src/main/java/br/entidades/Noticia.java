@@ -59,7 +59,7 @@ public class Noticia implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "noticia")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 
 	public int getId() {

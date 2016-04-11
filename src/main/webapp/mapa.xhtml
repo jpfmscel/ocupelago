@@ -11,8 +11,9 @@
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
 		<div class="col-md-12" style="margin-top: 5%; padding-bottom: 10%;">
-			<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP" id="mapaAlerta"
-				style="width:98%;height:450px" model="#{mapBean.emptyModel}"
+			<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
+				id="mapaAlerta" style="width:98%;height:450px"
+				model="#{mapBean.emptyModel}"
 				onPointClick="handlePointClick(event);" widgetVar="map">
 				<p:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}" />
 
@@ -69,13 +70,11 @@
 												#{alerta.longitude}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
-													<a href="login.xhtml"><i
-														class="glyphicon glyphicon-pencil"
-														style="color: darkgoldenrod;"></i></a>
-													<p:spacer width="20%" />
-													<a href="login.xhtml"><i
-														class="glyphicon glyphicon glyphicon-remove"
-														style="color: red;"></i></a>
+													<p:commandLink update="@all"
+														action="#{consultarAlerta.excluirAlerta(alerta)}">
+														<i class="glyphicon glyphicon glyphicon-remove"
+															style="color: red;"></i>
+													</p:commandLink>
 												</div>
 											</td>
 
@@ -98,7 +97,7 @@
 		</h:form>
 
 
-		<p:dialog widgetVar="dlg" showEffect="fade">
+		<p:dialog widgetVar="dlg" showEffect="fade" closable="false">
 			<h:form prependId="false">
 				<h:panelGrid columns="2">
 					<h:outputLabel for="title" value="Title:" />

@@ -3,13 +3,10 @@ package br.entidades;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -33,24 +30,6 @@ public class Imagem implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataCriado;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Projeto projeto;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Alerta alerta;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Noticia noticia;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Evento evento;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Esporte esporte;
-
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Local local;
-
 	public int getId() {
 		return id;
 	}
@@ -73,54 +52,6 @@ public class Imagem implements Serializable {
 
 	public void setData(byte[] data) {
 		this.data = data;
-	}
-
-	public Projeto getProjeto() {
-		return projeto;
-	}
-
-	public void setProjeto(Projeto projeto) {
-		this.projeto = projeto;
-	}
-
-	public Alerta getAlerta() {
-		return alerta;
-	}
-
-	public void setAlerta(Alerta alerta) {
-		this.alerta = alerta;
-	}
-
-	public Noticia getNoticia() {
-		return noticia;
-	}
-
-	public void setNoticia(Noticia noticia) {
-		this.noticia = noticia;
-	}
-
-	public Evento getEvento() {
-		return evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
-
-	public Esporte getEsporte() {
-		return esporte;
-	}
-
-	public void setEsporte(Esporte esporte) {
-		this.esporte = esporte;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
 	}
 
 	@Override

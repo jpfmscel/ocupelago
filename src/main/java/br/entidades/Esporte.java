@@ -58,14 +58,14 @@ public class Esporte implements Serializable {
 
 	@Column(nullable = true, length = 1000)
 	private String URL_site;
-	
+
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="esporte")
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -156,12 +156,8 @@ public class Esporte implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Esporte [id=" + id + ", nome=" + nome + ", descricao="
-				+ descricao + ", aereo=" + aereo + ", aquatico=" + aquatico
-				+ ", terrestre=" + terrestre + ", foto="
-				+ ", URL_facebook=" + URL_facebook + ", URL_youtube="
-				+ URL_youtube + ", URL_twitter=" + URL_twitter + ", URL_site="
-				+ URL_site + "]";
+		return "Esporte [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", aereo=" + aereo + ", aquatico=" + aquatico + ", terrestre=" + terrestre + ", foto=" + ", URL_facebook=" + URL_facebook + ", URL_youtube=" + URL_youtube
+				+ ", URL_twitter=" + URL_twitter + ", URL_site=" + URL_site + "]";
 	}
 
 	@Override
@@ -228,14 +224,14 @@ public class Esporte implements Serializable {
 		this.imagens = imagens;
 	}
 
-	public String getTipoEsporteClass(){
-		if(aquatico){
+	public String getTipoEsporteClass() {
+		if (aquatico) {
 			return "aquatico";
-		}else if(aereo){
+		} else if (aereo) {
 			return "aereo";
-		}else{
+		} else {
 			return "terrestre";
 		}
 	}
-	
+
 }

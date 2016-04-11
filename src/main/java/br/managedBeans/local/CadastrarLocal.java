@@ -80,7 +80,6 @@ public class CadastrarLocal implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setLocal(getLocal());
 		i.setDataCriado(new Date());
 		getLocal().getImagens().add(i);
 	}

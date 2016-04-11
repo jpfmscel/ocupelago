@@ -37,7 +37,7 @@ public class ConsultarEvento implements Serializable {
 		try {
 			setEventoSelected(e);
 			getEventoSelected().setAtivo(false);
-			updateEvento();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento excluída com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -50,9 +50,7 @@ public class ConsultarEvento implements Serializable {
 
 	public String updateEvento() {
 		try {
-			getEventoDAO().iniciarTransacao();
-			getEventoDAO().update(getEventoSelected());
-			getEventoDAO().comitarTransacao();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento atualizada com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,6 +59,12 @@ public class ConsultarEvento implements Serializable {
 		}
 		setEventoSelected(null);
 		return "consultaEvento.xhtml";
+	}
+
+	private void update() {
+		getEventoDAO().iniciarTransacao();
+		getEventoDAO().update(getEventoSelected());
+		getEventoDAO().comitarTransacao();
 	}
 
 	public void removerImagem(Imagem i) {
@@ -73,11 +77,10 @@ public class ConsultarEvento implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setEvento(getEventoSelected());
 		i.setDataCriado(new Date());
 		getEventoSelected().getImagens().add(i);
 	}
-	
+
 	public void filtrarURLYoutube() {
 		String urlFinal = getEventoSelected().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getEventoSelected().setVideoURL(urlFinal);

@@ -65,7 +65,6 @@ public class CadastrarNoticia implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setNoticia(getNoticia());
 		i.setDataCriado(new Date());
 		getNoticia().getImagens().add(i);
 	}

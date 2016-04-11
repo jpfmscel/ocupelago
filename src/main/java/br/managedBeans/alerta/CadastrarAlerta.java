@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -19,7 +19,7 @@ import br.entidades.Alerta;
 import br.managedBeans.ListFactory;
 
 @ManagedBean(name = "mapBean")
-@ViewScoped
+@SessionScoped
 public class CadastrarAlerta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -39,13 +39,12 @@ public class CadastrarAlerta implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		if (getEmptyModel() == null) {
-			setEmptyModel(new DefaultMapModel());
-
-			for (Alerta a : getAlertaDAO().getListaInicial()) {
-				LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
-				getEmptyModel().addOverlay(new Marker(coord, a.getTitulo()));
-			}
+		setEmptyModel(new DefaultMapModel());
+		for (Alerta a : getAlertaDAO().getListaInicial()) {
+			LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
+			Marker overlay = new Marker(coord, a.getTitulo());
+			emptyModel.addOverlay(overlay);
+			a.setMarker(overlay);
 		}
 	}
 
@@ -65,6 +64,7 @@ public class CadastrarAlerta implements Serializable {
 		aDAO.inserir(a);
 		aDAO.comitarTransacao();
 		getListFactory().atualizarLista(new AlertaDAO(), new Date());
+		setTitle("");
 	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
@@ -76,6 +76,13 @@ public class CadastrarAlerta implements Serializable {
 	}
 
 	public MapModel getEmptyModel() {
+		setEmptyModel(new DefaultMapModel());
+		for (Alerta a : getListFactory().getListaAlerta()) {
+			LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
+			Marker overlay = new Marker(coord, a.getTitulo());
+			emptyModel.addOverlay(overlay);
+			a.setMarker(overlay);
+		}
 		return emptyModel;
 	}
 

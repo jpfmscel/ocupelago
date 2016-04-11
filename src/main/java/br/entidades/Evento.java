@@ -8,7 +8,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -39,14 +38,14 @@ public class Evento implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataFim;
 
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Local local;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private transient Local local;
 
 	@Column(nullable = false, length = 15)
 	private String telefone;
 
 	@Column(nullable = true, length = 100)
-	private String nomeEmpresaOrganizadora;
+	private String nomeEmpresaOrganizadora; // (Opcional)
 
 	@Column(nullable = false, length = 1000)
 	private String informacoes;
@@ -76,7 +75,7 @@ public class Evento implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Esporte> listaEsporte;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "evento")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 
 	public int getId() {

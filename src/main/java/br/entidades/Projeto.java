@@ -48,9 +48,9 @@ public class Projeto implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
 
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="projeto")
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -74,7 +74,6 @@ public class Projeto implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
 
 	public String getVideoURL() {
 		return videoURL;

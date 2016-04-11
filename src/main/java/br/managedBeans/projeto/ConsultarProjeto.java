@@ -37,7 +37,7 @@ public class ConsultarProjeto implements Serializable {
 		try {
 			setProjetoSelected(e);
 			getProjetoSelected().setAtivo(false);
-			updateProjeto();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -50,9 +50,7 @@ public class ConsultarProjeto implements Serializable {
 
 	public String updateProjeto() {
 		try {
-			getProjetoDAO().iniciarTransacao();
-			getProjetoDAO().update(getProjetoSelected());
-			getProjetoDAO().comitarTransacao();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto atualizado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -61,6 +59,12 @@ public class ConsultarProjeto implements Serializable {
 		}
 		setProjetoSelected(null);
 		return "consultaProjeto.xhtml";
+	}
+
+	private void update() {
+		getProjetoDAO().iniciarTransacao();
+		getProjetoDAO().update(getProjetoSelected());
+		getProjetoDAO().comitarTransacao();
 	}
 
 	public void filtrarURLYoutube() {
@@ -78,7 +82,6 @@ public class ConsultarProjeto implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setProjeto(getProjetoSelected());
 		i.setDataCriado(new Date());
 		getProjetoSelected().getImagens().add(i);
 	}

@@ -45,7 +45,7 @@ public class ConsultarLocal {
 		try {
 			setLocalSelected(e);
 			getLocalSelected().setAtivo(false);
-			updateLocal();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -58,9 +58,7 @@ public class ConsultarLocal {
 
 	public String updateLocal() {
 		try {
-			getLocalDAO().iniciarTransacao();
-			getLocalDAO().update(getLocalSelected());
-			getLocalDAO().comitarTransacao();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,6 +67,12 @@ public class ConsultarLocal {
 		}
 		setLocalSelected(null);
 		return "consultaLocal.xhtml";
+	}
+
+	private void update() {
+		getLocalDAO().iniciarTransacao();
+		getLocalDAO().update(getLocalSelected());
+		getLocalDAO().comitarTransacao();
 	}
 
 	public void filtrarURLYoutube() {
@@ -86,7 +90,6 @@ public class ConsultarLocal {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setLocal(getLocalSelected());
 		i.setDataCriado(new Date());
 		getLocalSelected().getImagens().add(i);
 	}

@@ -62,7 +62,6 @@ public class CadastrarProjeto implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setProjeto(getProjeto());
 		i.setDataCriado(new Date());
 		getProjeto().getImagens().add(i);
 	}

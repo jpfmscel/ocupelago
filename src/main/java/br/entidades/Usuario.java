@@ -14,7 +14,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.Where;
 
 @Entity
 public class Usuario implements Serializable {

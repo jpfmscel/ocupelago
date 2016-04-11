@@ -68,7 +68,6 @@ public class CadastrarEvento implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setEvento(getEvento());
 		i.setDataCriado(new Date());
 		getEvento().getImagens().add(i);
 	}

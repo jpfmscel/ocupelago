@@ -44,7 +44,7 @@ public class ConsultarEsporte implements Serializable {
 		try {
 			setEsporteSelected(e);
 			getEsporteSelected().setAtivo(false);
-			updateEsporte();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -57,9 +57,7 @@ public class ConsultarEsporte implements Serializable {
 
 	public String updateEsporte() {
 		try {
-			getEsporteDAO().iniciarTransacao();
-			getEsporteDAO().update(getEsporteSelected());
-			getEsporteDAO().comitarTransacao();
+			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte atualizado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,6 +66,12 @@ public class ConsultarEsporte implements Serializable {
 		}
 		setEsporteSelected(null);
 		return "consultaEsporte.xhtml";
+	}
+
+	private void update() {
+		getEsporteDAO().iniciarTransacao();
+		getEsporteDAO().update(getEsporteSelected());
+		getEsporteDAO().comitarTransacao();
 	}
 
 	private void atualizaTipoEsporte() {
@@ -95,7 +99,6 @@ public class ConsultarEsporte implements Serializable {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
 		i.setNomeArquivo(event.getFile().getFileName());
-		i.setEsporte(getEsporteSelected());
 		i.setDataCriado(new Date());
 		getEsporteSelected().getImagens().add(i);
 	}

@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -15,7 +14,7 @@ import javax.persistence.OneToMany;
 import org.hibernate.annotations.Type;
 
 @Entity
-public class Local implements Serializable{
+public class Local implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +31,7 @@ public class Local implements Serializable{
 
 	@Column(nullable = false, length = 50)
 	private String categoria;
-	
+
 	@Column(nullable = false, length = 150)
 	private String responsavel;
 
@@ -66,13 +65,13 @@ public class Local implements Serializable{
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="local")
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Avaliacao> avaliacoes;
+
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
-	
-	@OneToMany(cascade=CascadeType.ALL, mappedBy="local", fetch=FetchType.LAZY)
-	private List<Evento> eventos;
-	
+
 	public int getId() {
 		return id;
 	}
@@ -202,17 +201,6 @@ public class Local implements Serializable{
 
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
-	}
-
-	public List<Evento> getEventos() {
-		if (eventos == null) {
-			eventos = new ArrayList<>();
-		}
-		return eventos;
-	}
-
-	public void setEventos(List<Evento> eventos) {
-		this.eventos = eventos;
 	}
 
 }

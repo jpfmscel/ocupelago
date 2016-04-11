@@ -81,7 +81,7 @@ public class ListFactory {
 		} else if (b instanceof ProjetoDAO) {
 			setListaProjeto((List<Projeto>) b.findAll());
 		} else if (b instanceof AlertaDAO) {
-			setListaAlerta((List<Alerta>) b.findAll());
+			setListaAlerta((List<Alerta>) ((AlertaDAO)b).getListaInicial());
 		} else if (b instanceof EventoDAO) {
 			setListaEvento((List<Evento>) b.findAll());
 		}
@@ -89,9 +89,9 @@ public class ListFactory {
 	}
 
 	public List<Alerta> getListaAlerta() {
-		if (!(isSameMinute(dataAlerta) && !listaAlerta.isEmpty())) {
-			atualizarLista(new AlertaDAO(), dataAlerta);
-		}
+		// if (!(isSameMinute(dataAlerta) && !listaAlerta.isEmpty())) {
+		atualizarLista(new AlertaDAO(), dataAlerta);
+		// }
 		return listaAlerta;
 	}
 

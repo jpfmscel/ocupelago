@@ -3,13 +3,10 @@ package br.entidades;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -18,7 +15,7 @@ import org.hibernate.annotations.Type;
 @Entity
 public class Avaliacao implements Serializable {
 
-	private static final long serialVersionUID = -1308497454690221919L;
+	private static final long serialVersionUID = -632869959193994525L;
 
 	@Id
 	@GeneratedValue
@@ -42,9 +39,6 @@ public class Avaliacao implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date criadoEm;
 
-	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	private Local local;
-	
 	public int getId() {
 		return id;
 	}
@@ -128,14 +122,6 @@ public class Avaliacao implements Serializable {
 		} else if (!nota.equals(other.nota))
 			return false;
 		return true;
-	}
-
-	public Local getLocal() {
-		return local;
-	}
-
-	public void setLocal(Local local) {
-		this.local = local;
 	}
 
 }

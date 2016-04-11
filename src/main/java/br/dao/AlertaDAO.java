@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.NoResultException;
 
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.Marker;
+
 import br.entidades.Alerta;
 
 public class AlertaDAO extends BaseDao<Alerta> {
@@ -19,10 +22,10 @@ public class AlertaDAO extends BaseDao<Alerta> {
 	@SuppressWarnings("unchecked")
 	public List<Alerta> getListaInicial() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + Alerta.class.getSimpleName() +" x");
-		sb.append(" where 1=1");
-//		sb.append(" and latitude between -15.8880217 and -15.6880217");
-//		sb.append(" and longitude between -47.9390782 and -47.7390782");
+		sb.append("Select x from " + Alerta.class.getSimpleName() + " x");
+		sb.append(" where 1=1 and ativo <> 0");
+		// sb.append(" and latitude between -15.8880217 and -15.6880217");
+		// sb.append(" and longitude between -47.9390782 and -47.7390782");
 
 		// lat -15.8880217 and -15.6880217
 		// lng -47.7390782 and -47.9390782
@@ -30,8 +33,11 @@ public class AlertaDAO extends BaseDao<Alerta> {
 		List<Alerta> alertas = new ArrayList<>();
 
 		try {
-			alertas.addAll((List<Alerta>) getEntityManager().createQuery(
-					sb.toString()).getResultList());
+			alertas.addAll((List<Alerta>) getEntityManager().createQuery(sb.toString()).getResultList());
+			for (Alerta al : alertas) {
+				LatLng coord = new LatLng(al.getLatitude(), al.getLongitude());
+				al.setMarker(new Marker(coord, al.getTitulo()));
+			}
 		} catch (NoResultException e) {
 			System.out.println("Nenhum alerta encontrado.");
 		}
