@@ -6,6 +6,12 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{loginBean.isLoggedForward()}" />
+	</f:metadata>
+</h:head>
+
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Consultar Projetos</ui:define>
 	<ui:define name="body">
@@ -68,8 +74,8 @@
 
 				</div>
 				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-					<h:commandLink value="Cadastrar Projeto" class="btn btn-lg btn-success"
-						action="cadastroProjeto.xhtml">
+					<h:commandLink value="Cadastrar Projeto"
+						class="btn btn-lg btn-success" action="cadastroProjeto.xhtml">
 					</h:commandLink>
 					<h:outputText value=" " />
 				</div>

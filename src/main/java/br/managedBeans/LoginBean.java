@@ -17,13 +17,14 @@ public class LoginBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Usuario usuarioLogado;
 	private UsuarioDAO dao;
+	private boolean logado = false;
 
 	public String login() {
-
 		Usuario user = getDao().logarUsuario(getUsuarioLogado().getEmail(), getUsuarioLogado().getSenha());
 		if (user != null) {
 			setUsuarioLogado(user);
-			return "mapa";
+			setLogado(true);
+			return "indexadm";
 		} else {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado!", ""));
 		}
@@ -32,10 +33,19 @@ public class LoginBean implements Serializable {
 
 	public String logout() {
 		setUsuarioLogado(null);
+		setLogado(false);
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
 		return "login";
 	}
 
+	public String isLoggedForward() {
+        if (!isLogado()) {
+            return "login.xhtml?faces-redirect=true";
+        }
+
+        return null;
+    }
+	
 	public Usuario getUsuarioLogado() {
 		if (usuarioLogado == null) {
 			usuarioLogado = new Usuario();
@@ -58,8 +68,12 @@ public class LoginBean implements Serializable {
 		this.dao = dao;
 	}
 
-	public boolean isLogged() {
-		return getUsuarioLogado().getId() != 0;
+	public boolean isLogado() {
+		return logado;
+	}
+
+	public void setLogado(boolean logado) {
+		this.logado = logado;
 	}
 
 }
