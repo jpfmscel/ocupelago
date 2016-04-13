@@ -198,4 +198,19 @@ public class Noticia implements Serializable {
 		this.imagens = imagens;
 	}
 
+	public String getDescricaoTruncated() {
+		if (descricao != null && descricao.length() > 400) {
+			return descricao.substring(0, 400).concat("...");
+		}
+		return descricao;
+	}
+	
+	public String getFixedVideoURL(){
+		if(videoURL.contains("watch?v=")){
+			return videoURL.replace("watch?v=", "v/");
+		}
+		return null;
+	}
+
+
 }

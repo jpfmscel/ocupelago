@@ -6,14 +6,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
 import br.managedBeans.ListFactory;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean(name = "consultarAlerta")
 public class ConsultarAlerta implements Serializable{
 
@@ -32,11 +32,6 @@ public class ConsultarAlerta implements Serializable{
 		setAlertaSelected(null);
 	}
 
-	public String editarAlerta(Alerta e) {
-		setAlertaSelected(e);
-		return "editarAlerta.xhtml";
-	}
-
 	public String excluirAlerta(Alerta e) {
 		try {
 			setAlertaSelected(e);
@@ -44,13 +39,14 @@ public class ConsultarAlerta implements Serializable{
 			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta excluída com sucesso!", null));
 			getCadastrarAlerta().setAlerta(null);
+			getCadastrarAlerta().init();
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir a alerta : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setAlertaSelected(null);
-		return "mapa.xhtml";
+		return "consultarAlerta.xhtml";
 	}
 
 	public String updateAlerta() {

@@ -28,6 +28,11 @@ public class ConsultarProjeto implements Serializable {
 		setProjetoSelected(null);
 	}
 
+	public String detalharProjeto(Projeto e) {
+		setProjetoSelected(e);
+		return "detalheProjeto.xhtml";
+	}
+	
 	public String editarProjeto(Projeto e) {
 		setProjetoSelected(e);
 		return "editarProjeto.xhtml";

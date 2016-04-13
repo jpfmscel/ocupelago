@@ -16,6 +16,7 @@ import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
 import br.managedBeans.ListFactory;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEsporte")
@@ -33,6 +34,7 @@ public class CadastrarEsporte implements Serializable {
 	public String adicionarEsporte() {
 		try {
 			atualizaTipoEsporte();
+			fixURL();
 			getEsporteDAO().iniciarTransacao();
 			getEsporteDAO().inserir(getEsporte());
 			getEsporteDAO().comitarTransacao();
@@ -46,6 +48,13 @@ public class CadastrarEsporte implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte cadastrado com sucesso!", null));
 
 		return "consultaEsporte.xhtml";
+	}
+
+	private void fixURL() {
+		getEsporte().setURL_facebook(Util.fixExternalURL(getEsporte().getURL_facebook()));
+		getEsporte().setURL_twitter(Util.fixExternalURL(getEsporte().getURL_twitter()));
+		getEsporte().setURL_site(Util.fixExternalURL(getEsporte().getURL_site()));
+		getEsporte().setURL_youtube(Util.fixExternalURL(getEsporte().getURL_youtube()));
 	}
 
 	private void atualizaTipoEsporte() {

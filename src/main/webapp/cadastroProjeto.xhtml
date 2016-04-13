@@ -30,31 +30,33 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="titulo" value="Título" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="título"
+							a:placeholder="título" maxlength="100"
 							requiredMessage="Digite o título do projeto."
 							value="#{cadastrarProjeto.projeto.titulo}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
-						<h:inputText class="form-control"
+						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
 							requiredMessage="Digite a descrição do projeto."
-							a:placeholder="Informe a descrição do projeto" required="true"
-							value="#{cadastrarProjeto.projeto.descricao}" />
+							a:maxlength="3000" a:placeholder="Informe a descrição do projeto"
+							required="true" value="#{cadastrarProjeto.projeto.descricao}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
 								fileUploadListener="#{cadastrarProjeto.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{cadastrarProjeto.projeto.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="addprojeto:panelFoto"
+							<ui:repeat var="ima" value="#{cadastrarProjeto.projeto.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addprojeto:panelFoto"
 									action="#{cadastrarProjeto.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
@@ -71,7 +73,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
-							<h:inputText class="form-control" id="videoURL"
+							<h:inputText class="form-control" id="videoURL" maxlength="1000"
 								value="#{cadastrarProjeto.projeto.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
@@ -81,7 +83,8 @@
 						</div>
 						<p:outputPanel id="videoYou">
 							<p:media value="#{cadastrarProjeto.projeto.videoURL}" width="700"
-								height="400" player="flash" style="margin-top:2%; margin-left: 10%;"
+								height="400" player="flash"
+								style="margin-top:2%; margin-left: 10%;"
 								rendered="#{cadastrarProjeto.projeto.videoURL != null and cadastrarProjeto.projeto.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
@@ -90,27 +93,27 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarProjeto.projeto.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<!-- 						<h:outputLabel value="Link Twitter" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarProjeto.projeto.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-<!-- 						<h:outputLabel value="Link Site" /> -->
+						<!-- 						<h:outputLabel value="Link Site" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarProjeto.projeto.URL_site}"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>

@@ -16,6 +16,7 @@ import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
 import br.managedBeans.ListFactory;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarNoticia")
@@ -32,6 +33,7 @@ public class CadastrarNoticia implements Serializable {
 	public String adicionarNoticia() {
 		try {
 			getNoticia().setCriadoEm(new Date());
+			fixURL();
 			getNoticiaDAO().iniciarTransacao();
 			getNoticiaDAO().inserir(getNoticia());
 			getNoticiaDAO().comitarTransacao();
@@ -46,6 +48,13 @@ public class CadastrarNoticia implements Serializable {
 		return "consultaNoticia.xhtml";
 	}
 
+	private void fixURL() {
+		getNoticia().setURL_facebook(Util.fixExternalURL(getNoticia().getURL_facebook()));
+		getNoticia().setURL_twitter(Util.fixExternalURL(getNoticia().getURL_twitter()));
+		getNoticia().setURL_site(Util.fixExternalURL(getNoticia().getURL_site()));
+		getNoticia().setURL_youtube(Util.fixExternalURL(getNoticia().getURL_youtube()));
+	}
+	
 	public byte[] getBytesFromFile(UploadedFile f) {
 		return f.getContents();
 	}

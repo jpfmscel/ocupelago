@@ -1,47 +1,59 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"> 
-    <ui:composition template="template.xhtml">
-        <ui:define name="menu">
-            <li><a href="noticias.xhtml">Todas</a></li>
-            <li><a href="#maislidas">Mais Lidas</a></li>
-            <li><a href="#">Clipping</a></li>
-        </ui:define>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="template.xhtml">
+	<ui:define name="menu">
+		<li><a href="noticias.xhtml">Todas</a></li>
+		<li><a href="#maislidas">Mais Lidas</a></li>
+		<li><a href="#">Clipping</a></li>
+	</ui:define>
 
-        <ui:define name="session">            
-            <section id="todas">
-                <div class="container">
-                    <div class="box">
-                        <div>
-                            <br />
-                            <h1 class="page-header">Título da notícia </h1>
-                            <p class="lead">
-                                <span class="glyphicon glyphicon-time"></span> <small> Postado em 18 de Abril de 2016 as 22:30</small>
-                            </p>
-                            <hr />
+	<ui:define name="session">
+		<section id="todas"> <h:form>
+			<div class="container">
+				<div class="box">
+					<div>
+						<br />
+						<h1 class="page-header">#{indexBean.noticiaSel.titulo}</h1>
+						<p class="lead">
+							<span class="glyphicon glyphicon-time"></span> <small> Postado em <h:outputText
+									value="#{indexBean.noticiaSel.criadoEm}">
+									<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
+								</h:outputText>
+							</small>
+						</p>
+						<hr />
 
-                            <!-- Preview Image -->
-                            <img class="img-responsive" src="http://placehold.it/900x300" alt="" />
+						<p class="lead">#{indexBean.noticiaSel.subtitulo}</p>
+						<p>#{indexBean.noticiaSel.descricao}</p>
+						<hr />
 
-                            <hr />
-                            <p class="lead">Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                            <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia
-                                Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                            <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia
-                                Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                            <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia
-                                Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
+						<!-- Preview Image -->
+						<p:outputPanel
+							rendered="#{indexBean.noticiaSel.imagens.size() > 0}">
+							<h3>
+								<h:outputLabel id="fotos" value="Fotos" />
+							</h3>
+							<p:galleria value="#{indexBean.noticiaSel.imagens}" var="image"
+								panelWidth="900" panelHeight="300">
+								<h:graphicImage value="/image/#{image.id}" />
+							</p:galleria>
+						</p:outputPanel>
+					</div>
 
-                            <hr />                           
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </section>            
-        </ui:define>
-    </ui:composition>
+					<div style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="noticias.xhtml" immediate="true">
+						</h:commandLink>
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+		</h:form> </section>
+	</ui:define>
+</ui:composition>
 </html>

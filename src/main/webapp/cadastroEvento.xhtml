@@ -30,7 +30,7 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="nome" value="Nome" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="nome do evento"
+							a:placeholder="nome do evento" maxlength="100"
 							requiredMessage="Digite o nome do evento."
 							value="#{cadastrarEvento.evento.nome}" />
 					</div>
@@ -39,7 +39,7 @@
 						<h:outputLabel id="dataIni" value="Data e hora de início" />
 						<br></br>
 						<p:calendar value="#{cadastrarEvento.evento.dataInicio}"
-							requiredMessage="Digite a data inicial do evento."
+							requiredMessage="Digite a data inicial do evento." maxlength="16"
 							pattern="dd/MM/yyyy HH:mm" required="true" />
 					</div>
 
@@ -47,14 +47,14 @@
 						<h:outputLabel id="dataFim" value="Data e hora de término" />
 						<br></br>
 						<p:calendar value="#{cadastrarEvento.evento.dataFim}"
-							pattern="dd/MM/yyyy HH:mm"
+							pattern="dd/MM/yyyy HH:mm" maxlength="16"
 							requiredMessage="Digite a data final do evento." required="true" />
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="informacoes" value="Informações" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							value="#{cadastrarEvento.evento.informacoes}"
+							value="#{cadastrarEvento.evento.informacoes}" a:maxlength="1000"
 							requiredMessage="Digite as informações do evento."
 							a:placeholder="Informe as informações do evento" required="true" />
 					</div>
@@ -67,14 +67,18 @@
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="empresa" value="Empresa Organizadora" />
-						<h:inputText class="form-control"
+						<h:inputText class="form-control" maxlength="100"
 							a:placeholder="nome da empresa organizadora"
 							value="#{cadastrarEvento.evento.nomeEmpresaOrganizadora}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="email" value="E-mail" />
 						<h:inputText class="form-control" a:placeholder="e-mail do evento"
-							value="#{cadastrarEvento.evento.email}" />
+							maxlength="100" value="#{cadastrarEvento.evento.email}"
+							validatorMessage="E-mail não válido!">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -82,9 +86,10 @@
 						<br></br>
 						<p:autoComplete id="local" value="#{cadastrarEvento.evento.local}"
 							itemLabel="#{loc.nome}" itemValue="#{loc}" var="loc"
-							completeMethod="#{cadastrarEvento.completeText}" converter="localConverter"
-							forceSelection="true" minQueryLength="3" maxResults="10"
-							required="true" requiredMessage="Selecione um local!">
+							maxlength="150" completeMethod="#{cadastrarEvento.completeText}"
+							converter="localConverter" forceSelection="true"
+							minQueryLength="3" maxResults="10" required="true"
+							requiredMessage="Selecione um local!">
 							<p:ajax event="itemSelect"
 								listener="#{cadastrarEvento.onItemSelect}" />
 						</p:autoComplete>
@@ -123,7 +128,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{cadastrarEvento.evento.videoURL}"
+								value="#{cadastrarEvento.evento.videoURL}" maxlength="1000"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
@@ -143,7 +148,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarEvento.evento.URL_facebook}"
+								value="#{cadastrarEvento.evento.URL_facebook}" maxlength="1000"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -153,7 +158,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarEvento.evento.URL_twitter}"
+								value="#{cadastrarEvento.evento.URL_twitter}" maxlength="1000"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
@@ -162,7 +167,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarEvento.evento.URL_site}"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>

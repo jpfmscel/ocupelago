@@ -28,6 +28,11 @@ public class ConsultarEvento implements Serializable {
 		setEventoSelected(null);
 	}
 
+	public String detalharEvento(Evento e) {
+		setEventoSelected(e);
+		return "detalheEvento.xhtml";
+	}
+	
 	public String editarEvento(Evento e) {
 		setEventoSelected(e);
 		return "editarEvento.xhtml";

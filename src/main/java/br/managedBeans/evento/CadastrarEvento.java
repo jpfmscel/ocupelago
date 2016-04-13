@@ -20,6 +20,7 @@ import br.entidades.Evento;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.ListFactory;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEvento")
@@ -35,6 +36,7 @@ public class CadastrarEvento implements Serializable {
 
 	public String adicionarEvento() {
 		try {
+			fixURL();
 			getEventoDAO().iniciarTransacao();
 			getEventoDAO().update(getEvento());
 			getEventoDAO().comitarTransacao();
@@ -49,6 +51,13 @@ public class CadastrarEvento implements Serializable {
 		return "consultaEvento.xhtml";
 	}
 
+	private void fixURL() {
+		getEvento().setURL_facebook(Util.fixExternalURL(getEvento().getURL_facebook()));
+		getEvento().setURL_twitter(Util.fixExternalURL(getEvento().getURL_twitter()));
+		getEvento().setURL_site(Util.fixExternalURL(getEvento().getURL_site()));
+		getEvento().setURL_youtube(Util.fixExternalURL(getEvento().getURL_youtube()));
+	}
+	
 	public byte[] getBytesFromFile(UploadedFile f) {
 		return f.getContents();
 	}

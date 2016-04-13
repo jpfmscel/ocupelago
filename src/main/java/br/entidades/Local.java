@@ -202,5 +202,12 @@ public class Local implements Serializable {
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
 	}
+	
+	public String getFixedVideoURL(){
+		if(videoURL.contains("watch?v=")){
+			return videoURL.replace("watch?v=", "v/");
+		}
+		return null;
+	}
 
 }

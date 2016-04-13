@@ -234,4 +234,11 @@ public class Esporte implements Serializable {
 		}
 	}
 
+	public String getFixedVideoURL(){
+		if(videoURL.contains("watch?v=")){
+			return videoURL.replace("watch?v=", "v/");
+		}
+		return null;
+	}
+	
 }

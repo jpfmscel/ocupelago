@@ -33,22 +33,27 @@
 						</ui:repeat>
 					</p:outputPanel>
 
-					<p:outputPanel id="tabelaEsportes">
+					<p:outputPanel rendered="#{listFactory.listaEsporte.size() &lt; 1}">
+						<div class="col-md-12">
+							<h2>Nenhum esporte cadastrado.</h2>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel id="tabelaEsportes"
+						rendered="#{listFactory.listaEsporte.size() &gt; 0}">
 						<div class="col-md-12">
 							<table class="table table-hover table-striped">
 								<thead>
 									<tr>
 										<th style="width: 25%">Nome</th>
-										<th style="width: 55%">Descrição</th>
 										<th style="width: 5%">Tipo</th>
+										<th style="width: 55%">Descrição</th>
 										<th style="width: 15%;">Operações</th>
 									</tr>
 								</thead>
 								<tbody>
 									<ui:repeat var="esporte" value="#{listFactory.listaEsporte}">
 										<tr>
-											<td style="width: 25%">#{esporte.nome}</td>
-											<td style="width: 55%">#{esporte.descricao}</td>
+											<td style="width: 25%; padding-top: 1.5%;">#{esporte.nome}</td>
 											<td style="width: 5%"><h:graphicImage
 													rendered="#{esporte.aquatico}" value="images/agua.png"
 													style="height: 34px;width: 34px;" /> <h:graphicImage
@@ -56,8 +61,15 @@
 													style="height: 34px;width: 34px;" /> <h:graphicImage
 													rendered="#{esporte.terrestre}" value="images/terra.png"
 													style="height: 34px;width: 34px;" /></td>
+											<td style="width: 55%; padding-top: 1.5%;">#{esporte.descricao}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
+													<h:commandLink
+														action="#{consultarEsporte.detalharEsporte(esporte)}">
+														<i class="glyphicon glyphicon-eye-open"
+															style="color: green; margin-top: 8%;"></i>
+													</h:commandLink>
+													<p:spacer width="20%" />
 													<h:commandLink
 														action="#{consultarEsporte.editarEsporte(esporte)}">
 														<i class="glyphicon glyphicon-pencil"
@@ -75,6 +87,19 @@
 									</ui:repeat>
 								</tbody>
 							</table>
+						</div>
+						<div style="text-align: center;">
+							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagEsporte.pageIndex != 1}"
+								action="#{listFactory.pagEsporte.prev}" update="tableEsporte" />
+							<p:spacer width="3%" />
+							<h:outputText rendered="#{listFactory.pagEsporte.pages &gt; 1}"
+								value="#{listFactory.pagEsporte.pageIndex} / #{listFactory.pagEsporte.pages}" />
+							<p:spacer width="3%" />
+							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagEsporte.pageIndex &lt; listFactory.pagEsporte.pages}"
+								action="#{listFactory.pagEsporte.next}" update="tableEsporte" />
+							<h:inputHidden value="#{listFactory.pagEsporte.pageIndex}" />
 						</div>
 					</p:outputPanel>
 

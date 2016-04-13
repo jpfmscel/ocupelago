@@ -16,6 +16,7 @@ import br.dao.ProjetoDAO;
 import br.entidades.Imagem;
 import br.entidades.Projeto;
 import br.managedBeans.ListFactory;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarProjeto")
@@ -32,6 +33,7 @@ public class CadastrarProjeto implements Serializable {
 
 	public String adicionarProjeto() {
 		try {
+			fixURL();
 			getProjetoDAO().iniciarTransacao();
 			getProjetoDAO().inserir(getProjeto());
 			getProjetoDAO().comitarTransacao();
@@ -47,6 +49,13 @@ public class CadastrarProjeto implements Serializable {
 		return "consultaProjeto.xhtml";
 	}
 
+	private void fixURL() {
+		getProjeto().setURL_facebook(Util.fixExternalURL(getProjeto().getURL_facebook()));
+		getProjeto().setURL_twitter(Util.fixExternalURL(getProjeto().getURL_twitter()));
+		getProjeto().setURL_site(Util.fixExternalURL(getProjeto().getURL_site()));
+		getProjeto().setURL_youtube(Util.fixExternalURL(getProjeto().getURL_youtube()));
+	}
+	
 	public void filtrarURLYoutube() {
 		String urlFinal = getProjeto().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getProjeto().setVideoURL(urlFinal);

@@ -1,151 +1,75 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui"> 
-    <ui:composition template="template.xhtml">
-        <ui:define name="menu">
-            <li><a href="#todas">Todas</a></li>
-            <li><a href="#maislidas">Mais Lidas</a></li>
-            <li><a href="#">Clipping</a></li>
-        </ui:define>
-        
-        <ui:define name="session">            
-            <section id="todas">
-                <div class="container">
-                    <div class="box">
-                        <div>
-                            <h1 class="page-header">Notícias <small>Ocupe o Lago</small></h1>
-                        </div>
-                        <!--/.center-->
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>#{consultarNoticia.noticiaSelected.titulo}</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em #{consultarNoticia.noticiaSelected.dataCriadaFormatada}</h4>
-                                <p>#{consultarNoticia.noticiaSelected.subtitulo}</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="template.xhtml">
+	<ui:define name="menu">
+		<li><a href="#todas">Todas</a></li>
+		<li><a href="#maislidas">Mais Lidas</a></li>
+		<li><a href="#">Clipping</a></li>
+	</ui:define>
 
-                        <hr />
+	<ui:define name="session">
+		<section id="todas"> <h:form>
+			<div class="container">
+				<div class="box">
+					<div>
+						<h1 class="page-header">
+							Notícias <small>Ocupe o Lago</small>
+						</h1>
+					</div>
+					<!--/.center-->
+					<ui:repeat var="noticia" value="#{listFactory.listaNoticia}">
+						<div class="row">
+							<div class="col-md-7">
+								<a href="#"> <h:graphicImage
+										value="/image/#{noticia.imagens[0].id}" height="300"
+										width="700" /></a>
+							</div>
+							<div class="col-md-5">
+								<h3>#{noticia.titulo}</h3>
+								<h4>
+									<span class="glyphicon glyphicon-time"></span>
+									<p:spacer width="2%" />
+									Postado em
+									<h:outputText value="#{noticia.criadoEm}">
+										<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
+									</h:outputText>
+								</h4>
+								<p>
+									<h:outputText value="#{noticia.getDescricaoTruncated()}" />
+								</p>
 
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 2</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-                        <!-- /.row -->
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 3</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
+								<h:commandLink value="Continue lendo" class="btn btn-primary"
+									action="#{indexBean.detalhar(noticia)}">
+									<span class="glyphicon glyphicon-chevron-right"></span>
+								</h:commandLink>
+							</div>
+						</div>
+						<!-- /.row -->
+						<hr />
+					</ui:repeat>
 
-                        <br />
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 4</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-
-                        <br />
-
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 5</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-
-                        <hr />
-                        <div class="row">
-                            <div class="col-md-7">
-                                <a href="#">
-                                    <img class="img-responsive" src="http://placehold.it/700x300" alt="" />
-                                </a>
-                            </div>
-                            <div class="col-md-5">
-                                <h3>Título da notícia 6</h3>
-                                <h4><span class="glyphicon glyphicon-time"></span> Postado em 18 de Abril de 2016 as 22:30</h4>
-                                <p>Texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia texto da notícia</p>
-                                <a class="btn btn-primary" href="post.xhtml">Continue lendo <span class="glyphicon glyphicon-chevron-right"></span></a>
-                            </div>
-                        </div>
-
-                        <br />
-                        <div class="row text-center">
-                            <div class="col-lg-12">
-                                <ul class="pagination">
-                                    <li>
-                                        <a href="#">&laquo;</a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="#">1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">4</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">5</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">&raquo;</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </section>            
-        </ui:define>
-    </ui:composition>
+					<div style="text-align: center;">
+						<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
+							rendered="#{listFactory.pagNoticia.pageIndex != 1}"
+							action="#{listFactory.pagNoticia.prev}" update="tableNoticia" />
+						<p:spacer width="3%" />
+						<h:outputText rendered="#{listFactory.pagNoticia.pages &gt; 1}"
+							value="#{listFactory.pagNoticia.pageIndex} / #{listFactory.pagNoticia.pages}" />
+						<p:spacer width="3%" />
+						<p:commandLink value="next &gt;" styleClass="btn btn-primary"
+							rendered="#{listFactory.pagNoticia.pageIndex &lt; listFactory.pagNoticia.pages}"
+							action="#{listFactory.pagNoticia.next}" update="tableNoticia" />
+						<h:inputHidden value="#{listFactory.pagNoticia.pageIndex}" />
+					</div>
+				</div>
+				<!-- /.row -->
+			</div>
+		</h:form> </section>
+	</ui:define>
+</ui:composition>
 </html>

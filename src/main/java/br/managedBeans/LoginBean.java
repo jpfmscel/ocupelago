@@ -35,7 +35,7 @@ public class LoginBean implements Serializable {
 		setUsuarioLogado(null);
 		setLogado(false);
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap().clear();
-		return "login";
+		return "index";
 	}
 
 	public String isLoggedForward() {
@@ -44,6 +44,13 @@ public class LoginBean implements Serializable {
         }
 
         return null;
+    }
+
+	public String isLoggedForwardLogin() {
+        if (!isLogado()) {
+            return null;
+        }
+        return "consultaAlerta.xhtml";
     }
 	
 	public Usuario getUsuarioLogado() {

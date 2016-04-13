@@ -34,8 +34,13 @@
 							</div>
 						</ui:repeat>
 					</p:outputPanel>
+					<p:outputPanel rendered="#{listFactory.listaProjeto.size() &lt; 1}">
+						<div class="col-md-12">
+							<h2>Nenhum projeto cadastrado.</h2>
+						</div>
+					</p:outputPanel>
 
-					<p:outputPanel id="tabelaProjetos">
+					<p:outputPanel id="tabelaProjetos" rendered="#{listFactory.listaProjeto.size() &gt; 0}">
 						<div class="col-md-12">
 							<table class="table table-hover table-striped">
 								<thead>
@@ -53,6 +58,12 @@
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
 													<h:commandLink
+														action="#{consultarProjeto.detalharProjeto(projeto)}">
+														<i class="glyphicon glyphicon-eye-open"
+															style="color: green; margin-top: 8%;"></i>
+													</h:commandLink>
+													<p:spacer width="20%" />
+													<h:commandLink
 														action="#{consultarProjeto.editarProjeto(projeto)}">
 														<i class="glyphicon glyphicon-pencil"
 															style="color: darkgoldenrod;"></i>
@@ -69,6 +80,19 @@
 									</ui:repeat>
 								</tbody>
 							</table>
+						</div>
+						<div style="text-align: center;">
+							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagProjeto.pageIndex != 1}"
+								action="#{listFactory.pagProjeto.prev}" update="tabelaProjetos" />
+							<p:spacer width="3%" />
+							<h:outputText rendered="#{listFactory.pagProjeto.pages &gt; 1}"
+								value="#{listFactory.pagProjeto.pageIndex} / #{listFactory.pagProjeto.pages}" />
+							<p:spacer width="3%" />
+							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagProjeto.pageIndex &lt; listFactory.pagProjeto.pages}"
+								action="#{listFactory.pagProjeto.next}" update="tabelaProjetos" />
+							<h:inputHidden value="#{listFactory.pagProjeto.pageIndex}" />
 						</div>
 					</p:outputPanel>
 

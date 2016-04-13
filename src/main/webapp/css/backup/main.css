@@ -120,8 +120,8 @@ a:focus {
   text-shadow: 0 3px rgba(0, 0, 0, 0.1);
   color: #fff;
 }
-#sigaolago .row {
-  background-color: #f9f9f9;
+#sobrenos .box {
+  background-color: #222;
   color: #999;
 }
 #contact .box h1,
@@ -154,9 +154,7 @@ a:focus {
   box-shadow: none;
 }
 .box {
-  padding-top: 30px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 50px 30px;
   background: #fff;
   border-bottom: 1px solid #e9e9e9;
   position: relative;
@@ -169,10 +167,11 @@ a:focus {
   border-radius: 0 0 5px 5px;
 }
 .box h2 {
-  padding: 30px 30px;
+  padding: 10px 30px;
   display: inline-block;
   border-radius: 4px;
   position: relative;
+  margin-bottom: 30px;
   font-size: 48px;
 }
 #projetos .box {
@@ -444,8 +443,8 @@ a:focus {
 .icon-social.icon-google-plus:hover {
   background: #e36957;
 }
-.icon-social.icon-instagram {
-  background: #757575;
+.icon-social.icon-pinterest {
+  background: #cb2027;
 }
 .icon-social.icon-pinterest:hover {
   background: #e03e44;
@@ -483,7 +482,7 @@ a:focus {
   margin-left: 1px;
 }
 .navbar-default .navbar-nav > li > a {
-  padding: 30px 20px;
+  padding: 30px 25px;
   font-size: 16px;
   line-height: 18px;
   color: #999;

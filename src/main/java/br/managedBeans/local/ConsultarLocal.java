@@ -36,6 +36,11 @@ public class ConsultarLocal {
 		getLocais().addAll(getLocalDAO().findAll());
 	}
 
+	public String detalharLocal(Local e) {
+		setLocalSelected(e);
+		return "detalheLocal.xhtml";
+	}
+	
 	public String editarLocal(Local e) {
 		setLocalSelected(e);
 		return "editarLocal.xhtml";

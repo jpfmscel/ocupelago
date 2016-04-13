@@ -23,6 +23,7 @@ import br.entidades.Evento;
 import br.entidades.Local;
 import br.entidades.Noticia;
 import br.entidades.Projeto;
+import br.util.Paginator;
 
 @ApplicationScoped
 @ManagedBean(name = "listFactory")
@@ -41,6 +42,13 @@ public class ListFactory {
 	private static Date dataNoticia = new Date();
 	private static Date dataEsporte = new Date();
 	private static Date dataEvento = new Date();
+
+	private static Paginator pagLocal;
+	private static Paginator pagProjeto;
+	private static Paginator pagNoticia;
+	private static Paginator pagEsporte;
+	private static Paginator pagEvento;
+	private static Paginator pagAlerta;
 
 	public boolean isSamePeriod(Date d1) {
 		boolean retorno = false;
@@ -81,7 +89,7 @@ public class ListFactory {
 		} else if (b instanceof ProjetoDAO) {
 			setListaProjeto((List<Projeto>) b.findAll());
 		} else if (b instanceof AlertaDAO) {
-			setListaAlerta((List<Alerta>) ((AlertaDAO)b).getListaInicial());
+			setListaAlerta((List<Alerta>) ((AlertaDAO) b).getListaInicial());
 		} else if (b instanceof EventoDAO) {
 			setListaEvento((List<Evento>) b.findAll());
 		}
@@ -152,6 +160,72 @@ public class ListFactory {
 
 	public void setListaEvento(List<Evento> listaEvento) {
 		ListFactory.listaEvento = listaEvento;
+	}
+
+	public Paginator getPagLocal() {
+		if (pagLocal == null) {
+			pagLocal = new Paginator(listaLocal);
+		}
+		return pagLocal;
+	}
+
+	public static void setPagLocal(Paginator pagLocal) {
+		ListFactory.pagLocal = pagLocal;
+	}
+
+	public Paginator getPagProjeto() {
+		if (pagProjeto == null) {
+			pagProjeto = new Paginator(listaProjeto);
+		}
+		return pagProjeto;
+	}
+
+	public static void setPagProjeto(Paginator pagProjeto) {
+		ListFactory.pagProjeto = pagProjeto;
+	}
+
+	public Paginator getPagNoticia() {
+		if (pagNoticia == null) {
+			pagNoticia = new Paginator(listaNoticia);
+		}
+		return pagNoticia;
+	}
+
+	public void setPagNoticia(Paginator pagNoticia) {
+		ListFactory.pagNoticia = pagNoticia;
+	}
+
+	public Paginator getPagEsporte() {
+		if (pagEsporte == null) {
+			pagEsporte = new Paginator(listaEsporte);
+		}
+		return pagEsporte;
+	}
+
+	public static void setPagEsporte(Paginator pagEsporte) {
+		ListFactory.pagEsporte = pagEsporte;
+	}
+
+	public Paginator getPagEvento() {
+		if (pagEvento == null) {
+			pagEvento = new Paginator(listaEvento);
+		}
+		return pagEvento;
+	}
+
+	public static void setPagEvento(Paginator pagEvento) {
+		ListFactory.pagEvento = pagEvento;
+	}
+
+	public Paginator getPagAlerta() {
+		if (pagAlerta == null) {
+			pagAlerta = new Paginator(listaAlerta);
+		}
+		return pagAlerta;
+	}
+
+	public static void setPagAlerta(Paginator pagAlerta) {
+		ListFactory.pagAlerta = pagAlerta;
 	}
 
 }

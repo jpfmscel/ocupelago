@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{loginBean.isLoggedForward()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Detalhe do Local</ui:define>
+	<ui:define name="body">
+		<h:form id="addlocal">
+			<div class="row">
+				<div class="col-md-12">
+				<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="nome" value="Nome" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.nome}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="desc" value="Descrição" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.descricao}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="categoria" value="Categoria" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.categoria}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="responsavel" value="Responsável" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.responsavel}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="email" value="E-mail" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.email}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="endereco" value="Endereço" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.endereco}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="telefone" value="Telefone" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.telefone}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel
+							rendered="#{consultarLocal.localSelected.imagens.size() > 0}">
+							<h3>
+								<h:outputLabel id="fotos" value="Fotos" />
+							</h3>
+							<p:galleria value="#{consultarLocal.localSelected.imagens}"
+								var="image" panelWidth="500" panelHeight="313">
+								<h:graphicImage value="/image/#{image.id}"
+									title="#{image.nomeArquivo}" />
+							</p:galleria>
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel
+							rendered="#{consultarLocal.localSelected.videoURL != ''}">
+							<h3>
+								<i class="fa fa-youtube" />
+								<h:outputLink id="videoURL"
+									style="font-size: large; margin-left:1%;"
+									value="#{consultarLocal.localSelected.videoURL}">#{consultarLocal.localSelected.videoURL}</h:outputLink>
+							</h3>
+							<p:media
+								value="#{consultarLocal.localSelected.getFixedVideoURL()}"
+								width="700" height="400" player="flash" style="margin-top:2%;" />
+						</p:outputPanel>
+					</div>
+					<p:outputPanel
+						rendered="#{consultarLocal.localSelected.URL_facebook !=''}">
+						<div class="col-md-12">
+							<h3>
+								<i class="fa fa-facebook-square" />
+								<h:outputLink style="font-size: large; margin-left:1%;"
+									value="#{consultarLocal.localSelected.URL_facebook}">#{consultarLocal.localSelected.URL_facebook}</h:outputLink>
+							</h3>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel
+						rendered="#{consultarLocal.localSelected.URL_twitter !=''}">
+						<div class="col-md-12">
+							<h3>
+								<i class="fa fa-twitter" />
+								<h:outputLink style="font-size: large; margin-left:1%;"
+									value="#{consultarLocal.localSelected.URL_twitter}">#{consultarLocal.localSelected.URL_twitter}</h:outputLink>
+							</h3>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel
+						rendered="#{consultarLocal.localSelected.URL_site !=''}">
+						<div class="col-md-12">
+							<h3>
+								<i class="fa fa-globe" />
+								<h:outputLink style="font-size: large; margin-left:1%;"
+									value="#{consultarLocal.localSelected.URL_site}">#{consultarLocal.localSelected.URL_site}</h:outputLink>
+							</h3>
+						</div>
+					</p:outputPanel>
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="consultaLocal.xhtml" immediate="true">
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

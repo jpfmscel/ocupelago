@@ -39,7 +39,7 @@ public class Evento implements Serializable {
 	private Date dataFim;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	private transient Local local;
+	private Local local;
 
 	@Column(nullable = false, length = 15)
 	private String telefone;
@@ -266,4 +266,12 @@ public class Evento implements Serializable {
 		return true;
 	}
 
+	public String getFixedVideoURL(){
+		if(videoURL.contains("watch?v=")){
+			return videoURL.replace("watch?v=", "v/");
+		}
+		return null;
+	}
+
+	
 }

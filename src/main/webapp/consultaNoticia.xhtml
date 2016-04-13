@@ -33,7 +33,14 @@
 						</ui:repeat>
 					</p:outputPanel>
 
-					<p:outputPanel id="tabelaNoticias">
+					<p:outputPanel rendered="#{listFactory.listaNoticia.size() &lt; 1}">
+						<div class="col-md-12" >
+							<h2>Nenhuma notícia cadastrada.</h2>
+						</div>
+					</p:outputPanel>
+
+					<p:outputPanel id="tabelaNoticias"
+						rendered="#{listFactory.listaNoticia.size() &gt; 0}">
 						<div class="col-md-12">
 							<table class="table table-hover table-striped">
 								<thead>
@@ -50,6 +57,12 @@
 											<td style="width: 55%">#{noticia.subtitulo}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
+													<h:commandLink
+														action="#{consultarNoticia.detalharNoticia(noticia)}">
+														<i class="glyphicon glyphicon-eye-open"
+															style="color: green; margin-top: 8%;"></i>
+													</h:commandLink>
+													<p:spacer width="20%" />
 													<h:commandLink
 														action="#{consultarNoticia.editarNoticia(noticia)}">
 														<i class="glyphicon glyphicon-pencil"
@@ -68,12 +81,25 @@
 								</tbody>
 							</table>
 						</div>
+						<div style="text-align: center;">
+							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagNoticia.pageIndex != 1}"
+								action="#{listFactory.pagNoticia.prev}" update="tableNoticia" />
+							<p:spacer width="3%" />
+							<h:outputText rendered="#{listFactory.pagNoticia.pages &gt; 1}"
+								value="#{listFactory.pagNoticia.pageIndex} / #{listFactory.pagNoticia.pages}" />
+							<p:spacer width="3%" />
+							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
+								rendered="#{listFactory.pagNoticia.pageIndex &lt; listFactory.pagNoticia.pages}"
+								action="#{listFactory.pagNoticia.next}" update="tableNoticia" />
+							<h:inputHidden value="#{listFactory.pagNoticia.pageIndex}" />
+						</div>
 					</p:outputPanel>
 
 				</div>
 				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-					<h:commandLink value="Cadastrar Noticia" class="btn btn-lg btn-success"
-						action="cadastroNoticia.xhtml">
+					<h:commandLink value="Cadastrar Noticia"
+						class="btn btn-lg btn-success" action="cadastroNoticia.xhtml">
 					</h:commandLink>
 					<h:outputText value=" " />
 				</div>

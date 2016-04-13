@@ -18,6 +18,17 @@ public class Util {
 		return rand.nextInt((max - min) + 1) + min;
 	}
 
+	public static String fixExternalURL(String url) {
+		if (url != null && !url.isEmpty()) {
+			if (url.contains("https://")) {
+				return url;
+			} else if (!url.contains("http://")) {
+				url = "http://" + url;
+			}
+		}
+		return url;
+	}
+
 	public static float getFloatAleatorio(int min, int max) {
 		Random rand = new Random();
 		float r = rand.nextFloat();

@@ -29,14 +29,14 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="titulo" value="Título" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Título"
+							a:placeholder="Título"  maxlength="100"
 							requiredMessage="Digite o título da notícia."
 							value="#{cadastrarNoticia.noticia.titulo}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="subtitulo" value="Subtítulo" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Subtítulo"
+							a:placeholder="Subtítulo"  maxlength="300"
 							requiredMessage="Digite o subtítulo da notícia."
 							value="#{cadastrarNoticia.noticia.subtitulo}" />
 					</div>
@@ -44,7 +44,7 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							value="#{cadastrarNoticia.noticia.descricao}"
+							value="#{cadastrarNoticia.noticia.descricao}"  a:maxlength="3000"
 							requiredMessage="Digite a descrição da notícia."
 							a:placeholder="Informe a descrição da notícia" required="true" />
 					</div>
@@ -52,16 +52,18 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
 								fileUploadListener="#{cadastrarNoticia.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{cadastrarNoticia.noticia.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="addnoticia:panelFoto"
+							<ui:repeat var="ima" value="#{cadastrarNoticia.noticia.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addnoticia:panelFoto"
 									action="#{cadastrarNoticia.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
@@ -77,7 +79,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
-							<h:inputText class="form-control" id="videoURL"
+							<h:inputText class="form-control" id="videoURL" maxlength="1000"
 								value="#{cadastrarNoticia.noticia.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
@@ -99,7 +101,8 @@
 								class="fa fa-facebook-square" /></span>
 							<h:inputText class="form-control"
 								value="#{cadastrarNoticia.noticia.URL_facebook}"
-								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
+								maxlength="1000" a:placeholder="Link Facebook"
+								aria-describedby="sizing-addon2" />
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -107,7 +110,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarNoticia.noticia.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
@@ -118,7 +121,7 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
 							<h:inputText class="form-control"
-								value="#{cadastrarNoticia.noticia.URL_site}"
+								value="#{cadastrarNoticia.noticia.URL_site}" maxlength="1000"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>

@@ -29,14 +29,15 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="nome" value="Nome" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Nome do esporte"
+							a:placeholder="Nome do esporte" maxlength="100"
 							requiredMessage="Digite o nome do esporte."
 							value="#{cadastrarEsporte.esporte.nome}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descrição" value="Descrição" />
-						<h:inputText class="form-control" required="true"
-							a:placeholder="Descrição do esporte"
+						<h:inputTextarea cols="50" rows="10" class="form-control"
+							required="true" a:placeholder="Descrição do esporte"
+							a:maxlength="3000"
 							requiredMessage="Digite a descrição do esporte."
 							value="#{cadastrarEsporte.esporte.descricao}" />
 					</div>
@@ -53,22 +54,26 @@
 						<br />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
 							a:placeholder="Informe as recomendações do esporte"
+							a:maxlength="3000"
 							value="#{cadastrarEsporte.esporte.recomendacoes}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
 								fileUploadListener="#{cadastrarEsporte.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
+								invalidSizeMessage="Tamanho do arquivo deve ser menor que 5 Mb."
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{cadastrarEsporte.esporte.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="addesporte:panelFoto"
+							<ui:repeat var="ima" value="#{cadastrarEsporte.esporte.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addesporte:panelFoto"
 									action="#{cadastrarEsporte.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
@@ -84,7 +89,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
-							<h:inputText class="form-control" id="videoURL"
+							<h:inputText class="form-control" id="videoURL" maxlength="1000"
 								value="#{cadastrarEsporte.esporte.videoURL}"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
@@ -104,7 +109,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarEsporte.esporte.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
@@ -114,7 +119,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarEsporte.esporte.URL_twitter}"
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
@@ -124,7 +129,7 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{cadastrarEsporte.esporte.URL_site}"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>

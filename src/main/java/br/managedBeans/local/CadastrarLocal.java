@@ -21,6 +21,7 @@ import br.dao.LocalDAO;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.ListFactory;
+import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarLocal")
@@ -37,6 +38,7 @@ public class CadastrarLocal implements Serializable {
 
 	public String adicionarLocal() {
 		try {
+			fixURL();
 			getLocalDAO().iniciarTransacao();
 			getLocalDAO().inserir(getLocal());
 			getLocalDAO().comitarTransacao();
@@ -52,6 +54,12 @@ public class CadastrarLocal implements Serializable {
 		return "consultaLocal.xhtml";
 	}
 
+	private void fixURL() {
+		getLocal().setURL_facebook(Util.fixExternalURL(getLocal().getURL_facebook()));
+		getLocal().setURL_twitter(Util.fixExternalURL(getLocal().getURL_twitter()));
+		getLocal().setURL_site(Util.fixExternalURL(getLocal().getURL_site()));
+	}
+	
 	public void onPointSelect(PointSelectEvent event) {
 		LatLng latlng = event.getLatLng();
 		getLocal().setLatitude(latlng.getLat());

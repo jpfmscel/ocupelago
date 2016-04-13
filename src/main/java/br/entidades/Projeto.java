@@ -166,5 +166,19 @@ public class Projeto implements Serializable {
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
 	}
-
+	
+	public String getFixedVideoURL(){
+		if(videoURL.contains("watch?v=")){
+			return videoURL.replace("watch?v=", "v/");
+		}
+		return null;
+	}
+	
+	public String getDescricaoTruncated() {
+		if (descricao != null && descricao.length() > 400) {
+			return descricao.substring(0, 400).concat("...");
+		}
+		return descricao;
+	}
+	
 }

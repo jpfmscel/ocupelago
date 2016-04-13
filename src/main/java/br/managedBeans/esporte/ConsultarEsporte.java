@@ -16,6 +16,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
+import br.util.Util;
 
 @SessionScoped
 @ManagedBean(name = "consultarEsporte")
@@ -32,6 +33,12 @@ public class ConsultarEsporte implements Serializable {
 		setEsportes(null);
 		setEsporteSelected(null);
 		getEsportes().addAll(getEsporteDAO().findAll());
+	}
+
+	public String detalharEsporte(Esporte e) {
+		setEsporteSelected(e);
+		atualizaTipoEsporte();
+		return "detalheEsporte.xhtml";
 	}
 
 	public String editarEsporte(Esporte e) {
@@ -57,6 +64,7 @@ public class ConsultarEsporte implements Serializable {
 
 	public String updateEsporte() {
 		try {
+			fixURL();
 			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte atualizado com sucesso!", null));
 		} catch (Exception e) {
@@ -82,6 +90,13 @@ public class ConsultarEsporte implements Serializable {
 		} else if (getEsporteSelected().isTerrestre()) {
 			setTipoEsporte("terrestre");
 		}
+	}
+
+	private void fixURL() {
+		getEsporteSelected().setURL_facebook(Util.fixExternalURL(getEsporteSelected().getURL_facebook()));
+		getEsporteSelected().setURL_twitter(Util.fixExternalURL(getEsporteSelected().getURL_twitter()));
+		getEsporteSelected().setURL_site(Util.fixExternalURL(getEsporteSelected().getURL_site()));
+		getEsporteSelected().setURL_youtube(Util.fixExternalURL(getEsporteSelected().getURL_youtube()));
 	}
 
 	public void filtrarURLYoutube() {

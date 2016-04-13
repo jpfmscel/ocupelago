@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
@@ -19,12 +19,12 @@ import br.entidades.Alerta;
 import br.managedBeans.ListFactory;
 
 @ManagedBean(name = "mapBean")
-@SessionScoped
+@ViewScoped
 public class CadastrarAlerta implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private MapModel emptyModel;
+	private static MapModel emptyModel;
 	private Marker marker;
 
 	private String title;
@@ -76,12 +76,8 @@ public class CadastrarAlerta implements Serializable {
 	}
 
 	public MapModel getEmptyModel() {
-		setEmptyModel(new DefaultMapModel());
-		for (Alerta a : getListFactory().getListaAlerta()) {
-			LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
-			Marker overlay = new Marker(coord, a.getTitulo());
-			emptyModel.addOverlay(overlay);
-			a.setMarker(overlay);
+		if(emptyModel==null){
+			setEmptyModel(new DefaultMapModel());
 		}
 		return emptyModel;
 	}
@@ -137,7 +133,7 @@ public class CadastrarAlerta implements Serializable {
 	}
 
 	public void setEmptyModel(MapModel emptyModel) {
-		this.emptyModel = emptyModel;
+		CadastrarAlerta.emptyModel = emptyModel;
 	}
 
 	public ListFactory getListFactory() {

@@ -28,6 +28,11 @@ public class ConsultarNoticia implements Serializable {
 		setNoticiaSelected(null);
 	}
 
+	public String detalharNoticia(Noticia e) {
+		setNoticiaSelected(e);
+		return "detalheNoticia.xhtml";
+	}
+	
 	public String editarNoticia(Noticia e) {
 		setNoticiaSelected(e);
 		return "editarNoticia.xhtml";
