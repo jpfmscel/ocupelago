@@ -1,8 +1,13 @@
 package br.managedBeans;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.dao.LocalDAO;
 import br.entidades.Esporte;
 import br.entidades.Evento;
 import br.entidades.Local;
@@ -19,6 +24,17 @@ public class IndexBean {
 	private Projeto projetoSel;
 	private Local localSel;
 
+	private List<Local> restaurantes;
+	private List<Local> clubes;
+
+	private LocalDAO localDAO;
+
+	@PostConstruct
+	public void init(){
+		getRestaurantes().addAll(getLocalDAO().buscarPorCategoria("Restaurante"));
+		getClubes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
+	}
+	
 	public String detalhar(Object o) {
 		String redirect = null;
 		if (o instanceof Noticia) {
@@ -38,6 +54,13 @@ public class IndexBean {
 			redirect = "paginaLocal";
 		}
 		return redirect;
+	}
+
+	public void atualizarListaLocais() {
+		setClubes(null);
+		setRestaurantes(null);
+		getClubes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
+		getRestaurantes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
 	}
 
 	public Noticia getNoticiaSel() {
@@ -90,6 +113,40 @@ public class IndexBean {
 
 	public void setLocalSel(Local localSel) {
 		this.localSel = localSel;
+	}
+
+
+	public LocalDAO getLocalDAO() {
+		if (localDAO == null) {
+			localDAO = new LocalDAO();
+		}
+		return localDAO;
+	}
+
+	public void setLocalDAO(LocalDAO localDAO) {
+		this.localDAO = localDAO;
+	}
+
+	public List<Local> getClubes() {
+		if (clubes == null) {
+			clubes = new ArrayList<>();
+		}
+		return clubes;
+	}
+
+	public void setClubes(List<Local> clubes) {
+		this.clubes = clubes;
+	}
+
+	public List<Local> getRestaurantes() {
+		if (restaurantes == null) {
+			restaurantes = new ArrayList<>();
+		}
+		return restaurantes;
+	}
+
+	public void setRestaurantes(List<Local> restaurantes) {
+		this.restaurantes = restaurantes;
 	}
 
 }
