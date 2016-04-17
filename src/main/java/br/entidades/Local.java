@@ -65,7 +65,7 @@ public class Local implements Serializable {
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
-
+	
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Avaliacao> avaliacoes;
 

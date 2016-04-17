@@ -65,6 +65,7 @@ public class ConsultarEsporte implements Serializable {
 	public String updateEsporte() {
 		try {
 			fixURL();
+			atualizaTipoEsporteUpdate();
 			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte atualizado com sucesso!", null));
 		} catch (Exception e) {
@@ -82,13 +83,23 @@ public class ConsultarEsporte implements Serializable {
 		getEsporteDAO().comitarTransacao();
 	}
 
+	private void atualizaTipoEsporteUpdate() {
+		if (tipoEsporte.equalsIgnoreCase("aereo")) {
+			getEsporteSelected().setAereo(true);
+		} else if (tipoEsporte.equalsIgnoreCase("terrestre")) {
+			getEsporteSelected().setTerrestre(true);
+		} else if (tipoEsporte.equalsIgnoreCase("aquatico")) {
+			getEsporteSelected().setAquatico(true);
+		}
+	}
+
 	private void atualizaTipoEsporte() {
 		if (getEsporteSelected().isAereo()) {
 			setTipoEsporte("aereo");
-		} else if (getEsporteSelected().isAquatico()) {
-			setTipoEsporte("aquatico");
 		} else if (getEsporteSelected().isTerrestre()) {
 			setTipoEsporte("terrestre");
+		} else if (getEsporteSelected().isAquatico()) {
+			setTipoEsporte("aquatico");
 		}
 	}
 
