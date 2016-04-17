@@ -56,6 +56,15 @@ a:focus {
   padding: 200px 0;
   color: #fff;
 }
+#main-slider-vcnolago {
+  background-image: url(../images/slider-bg.jpg);
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  padding: 150px 0;
+  color: #fff;
+}
 #main-slider .item {
   -moz-transition: opacity ease-in-out 500ms;
   -o-transition: opacity ease-in-out 500ms;
