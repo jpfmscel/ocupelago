@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.TimeZone;
 
+import javax.xml.bind.DatatypeConverter;
+
 public class Util {
 
 	public static int getIntAleatorio(int min, int max) {
@@ -114,4 +116,11 @@ public class Util {
 		return nomeArquivo2;
 	}
 
+	public static String encodeBase64(byte[] bytes) {
+		return DatatypeConverter.printBase64Binary(bytes);
+	}
+
+	public static Object encodeBase64(String encoded) {
+		return DatatypeConverter.parseBase64Binary(encoded);
+	}
 }

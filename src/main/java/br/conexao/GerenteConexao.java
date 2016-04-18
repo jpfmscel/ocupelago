@@ -27,15 +27,13 @@ public class GerenteConexao {
 
 	public static EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {
-			entityManagerFactory = Persistence
-					.createEntityManagerFactory("ocupelago");
+			entityManagerFactory = Persistence.createEntityManagerFactory("ocupelago");
 		}
 		return entityManagerFactory;
 	}
 
-	public void setEntityManagerFactory(
-			EntityManagerFactory entityManagerFactory) {
-		this.entityManagerFactory = entityManagerFactory;
+	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+		GerenteConexao.entityManagerFactory = entityManagerFactory;
 	}
 
 }

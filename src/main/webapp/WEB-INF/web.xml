@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 	<display-name>OcupeLago</display-name>
 
 	<error-page>
@@ -17,16 +15,13 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/error.xhtml</location>
 	</error-page>
-
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
 		<param-value>Development</param-value>
 	</context-param>
-
-	<web:session-config>
-		<web:session-timeout>10</web:session-timeout>
-	</web:session-config>
-
+	<session-config>
+		<session-timeout>10</session-timeout>
+	</session-config>
 	<welcome-file-list>
 		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
@@ -39,4 +34,12 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
+
+	<web:security-constraint>
+		<web:web-resource-collection>
+			<web:web-resource-name>OcupeLago</web:web-resource-name>
+			<web:url-pattern>/jsonServlet</web:url-pattern>
+		</web:web-resource-collection>
+	</web:security-constraint>
+
 </web-app>

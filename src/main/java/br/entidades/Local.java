@@ -10,8 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+
+import br.entidades.rest.ImagemREST;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class Local implements Serializable {
@@ -21,56 +26,85 @@ public class Local implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
+	@Expose
 	private int id;
 
 	@Column(nullable = false, length = 150)
+	@Expose
 	private String nome;
 
 	@Column(nullable = false, length = 1000)
+	@Expose
 	private String descricao;
 
 	@Column(nullable = false, length = 50)
+	@Expose
 	private String categoria;
 
 	@Column(nullable = false, length = 150)
+	@Expose
 	private String responsavel;
 
 	@Column(nullable = false, length = 100)
+	@Expose
 	private String email;
 
 	@Column(nullable = false, length = 250)
+	@Expose
 	private String endereco;
 
 	@Column(nullable = false, length = 15)
+	@Expose
 	private String telefone;
 
 	@Column(nullable = false)
+	@Expose
 	private double latitude;
 
 	@Column(nullable = false)
+	@Expose
 	private double longitude;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String videoURL;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_facebook;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_twitter;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_site;
 
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
-	
+
 	@OneToMany(cascade = CascadeType.ALL)
+	@Expose
 	private List<Avaliacao> avaliacoes;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
+
+	@Expose
+	@Transient
+	private List<ImagemREST> imagensREST;
+
+	public List<ImagemREST> getImagensREST() {
+		if (imagensREST == null) {
+			imagensREST = new ArrayList<ImagemREST>();
+			for (Imagem imagem : getImagens()) {
+				imagensREST.add(new ImagemREST(imagem));
+			}
+		}
+		return imagensREST;
+	}
 
 	public int getId() {
 		return id;
@@ -202,12 +236,12 @@ public class Local implements Serializable {
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
 	}
-	
-	public String getFixedVideoURL(){
-		if(videoURL.contains("watch?v=")){
+
+	public String getFixedVideoURL() {
+		if (videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
 		}
-		return null;
+		return videoURL;
 	}
 
 }

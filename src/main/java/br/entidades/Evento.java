@@ -14,8 +14,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+
+import br.entidades.rest.ImagemREST;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class Evento implements Serializable {
@@ -25,47 +30,60 @@ public class Evento implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
+	@Expose
 	private int id;
 
 	@Column(nullable = false, length = 100)
+	@Expose
 	private String nome;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date dataInicio;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date dataFim;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Local local;
 
 	@Column(nullable = false, length = 15)
+	@Expose
 	private String telefone;
 
 	@Column(nullable = true, length = 100)
-	private String nomeEmpresaOrganizadora; // (Opcional)
+	@Expose
+	private String nomeEmpresaOrganizadora;
 
 	@Column(nullable = false, length = 1000)
+	@Expose
 	private String informacoes;
 
 	@Column(nullable = true, length = 100)
+	@Expose
 	private String email;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String videoURL;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_facebook;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_youtube;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_twitter;
 
 	@Column(nullable = true, length = 1000)
+	@Expose
 	private String URL_site;
 
 	@Column(nullable = false)
@@ -77,6 +95,20 @@ public class Evento implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
+
+	@Expose
+	@Transient
+	private List<ImagemREST> imagensREST;
+
+	public List<ImagemREST> getImagensREST() {
+		if (imagensREST == null) {
+			imagensREST = new ArrayList<ImagemREST>();
+			for (Imagem imagem : getImagens()) {
+				imagensREST.add(new ImagemREST(imagem));
+			}
+		}
+		return imagensREST;
+	}
 
 	public int getId() {
 		return id;
@@ -266,12 +298,11 @@ public class Evento implements Serializable {
 		return true;
 	}
 
-	public String getFixedVideoURL(){
-		if(videoURL.contains("watch?v=")){
+	public String getFixedVideoURL() {
+		if (videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
 		}
-		return null;
+		return videoURL;
 	}
 
-	
 }

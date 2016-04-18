@@ -8,14 +8,14 @@
 <ui:composition template="template.xhtml">
 	<ui:define name="menu">
 		<li><a href="#vcnolago">Você no Lago</a></li>
-		<li><a href="#noticias">Notícias</a></li>
 		<li><a href="#projetos">Projetos</a></li>
+		<li><a href="#noticias">Notícias</a></li>
 		<li><a href="#sigaolago">#SigaOLago</a></li>
 		<li><a href="sobrenos.xhtml">Sobre nós</a></li>
 	</ui:define>
 
 	<ui:define name="session">
-		<section id="main-slider" class="carousel"> 
+		<section id="main-slider" class="carousel">
 		<div class="carousel-inner">
 			<div class="item active">
 				<div class="container">
@@ -93,9 +93,72 @@
 			</div>
 			<!--/.box-->
 		</div>
-		<!--/.container--> </section>
-		<!--/#services-->
+		</section>
+		<!--/#pricing-->
 
+		<section id="projetos">
+		<div class="container">
+			<div class="box">
+				<div class="center">
+					<h2>Projetos</h2>
+				</div>
+				<div id="myCarousel" class="carousel slide" data-interval="3000"
+					data-ride="carousel">
+					<!-- Carousel indicators -->
+					<ol class="carousel-indicators">
+						<ui:repeat var="" value="#{listFactory.listaProjeto}"
+							varStatus="x">
+							<li data-target="#myCarousel" data-slide-to="#{x.index}"
+								class="#{x.index==0 ? 'active' : ''}"></li>
+						</ui:repeat>
+					</ol>
+					<!-- Carousel items -->
+					<h:form>
+						<div class="carousel-inner">
+							<ui:repeat var="projeto" value="#{listFactory.listaProjeto}"
+								varStatus="x">
+								<div class="item #{x.index==0 ? 'active' : ''}">
+									<div class="container">
+										<div class="carousel-content text-center">
+											<h1>
+												<h:outputText value="#{projeto.titulo}" />
+											</h1>
+											<div class="gap"></div>
+											<div class="col-sm-6">
+												<h:commandLink action="#{indexBean.detalhar(projeto)}">
+													<h:graphicImage styleClass="img-responsive"
+														value="/image/#{projeto.imagens[0].id}" />
+												</h:commandLink>
+											</div>
+											<div class="col-sm-6">
+												<p>
+													<h:outputText value="#{projeto.getDescricaoTruncated()}" />
+												</p>
+												<div class="gap"></div>
+												<h:commandLink value="Saiba Mais..." class="btn btn-primary"
+													action="#{indexBean.detalhar(projeto)}">
+													<span class="glyphicon glyphicon-chevron-right"></span>
+												</h:commandLink>
+											</div>
+										</div>
+									</div>
+								</div>
+							</ui:repeat>
+						</div>
+					</h:form>
+				</div>
+				<!-- Carousel nav -->
+				<a class="carousel-control left" href="#myCarousel"
+					data-slide="prev"> <span
+					class="glyphicon glyphicon-chevron-left"></span>
+				</a> <a class="carousel-control right" href="#myCarousel"
+					data-slide="next"> <span
+					class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</div>
+			<!--/.box-->
+		</div>
+		</section>
 		<section id="noticias"> <h:form>
 			<div class="container">
 				<div class="box">
@@ -107,8 +170,8 @@
 						<ui:repeat var="noticia" value="#{listFactory.listaNoticia}">
 							<div class="row">
 								<div class="col-md-7">
-									<h:graphicImage value="/image/#{noticia.imagens[0].id}"
-										style="width:600px; height:300px;" />
+									<h:graphicImage class="img-responsive"
+										value="/image/#{noticia.imagens[0].id}" />
 								</div>
 								<div class="col-md-5">
 									<h3>#{noticia.titulo}</h3>
@@ -156,93 +219,6 @@
 				<!-- /.row -->
 			</div>
 		</h:form> </section>
-		<!--/#pricing-->
-
-		<section id="projetos">
-		<div class="container">
-			<div class="box">
-				<div class="center">
-					<h2>Projetos</h2>
-				</div>
-				<div id="myCarousel" class="carousel slide" data-interval="3000"
-					data-ride="carousel">
-					<!-- Carousel indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-						<li data-target="#myCarousel" data-slide-to="1"></li>
-						<li data-target="#myCarousel" data-slide-to="2"></li>
-						<li data-target="#myCarousel" data-slide-to="3"></li>
-					</ol>
-					<!-- Carousel items -->
-					<div class="carousel-inner">
-						<div class="item active">
-							<div class="container">
-								<div class="carousel-content text-center">
-									<h1>Projeto X</h1>
-									<div class="gap"></div>
-									<div class="col-sm-6">
-										<a href="#"> <img class="img-responsive"
-											src="images/vocenolago/clube.jpg" alt="" />
-										</a>
-									</div>
-									<div class="col-sm-6">
-										<p>Texto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projeto Texto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projeto Texto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projeto Texto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projetoTexto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projeto Texto do projeto Texto do projeto Texto do projeto
-											Texto do projeto Texto do projeto Texto do projeto Texto do
-											projeto</p>
-										<div class="gap"></div>
-										<a class="btn btn-primary" href="post.xhtml">Saiba Mais...
-											<span class="glyphicon glyphicon-chevron-right"></span>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-						<ui:repeat var="projeto" value="#{listFactory.listaProjeto}">
-							<div class="item">
-								<div class="container">
-									<div class="carousel-content text-center">
-										<h1>#{projeto.titulo}</h1>
-										<div class="gap"></div>
-										<div class="col-sm-6">
-											<a href="#"> <img class="img-responsive"
-												src="images/vocenolago/esportes.jpg" alt="" />
-											</a>
-										</div>
-										<div class="col-sm-6">
-											<p>#{projeto.getDescricaoTruncated()}</p>
-											<div class="gap"></div>
-											<a class="btn btn-primary" href="#">Saiba Mais... <span
-												class="glyphicon glyphicon-chevron-right"></span>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</ui:repeat>
-					</div>
-				</div>
-				<!-- Carousel nav -->
-				<a class="carousel-control left" href="#myCarousel"
-					data-slide="prev"> <span
-					class="glyphicon glyphicon-chevron-left"></span>
-				</a> <a class="carousel-control right" href="#myCarousel"
-					data-slide="next"> <span
-					class="glyphicon glyphicon-chevron-right"></span>
-				</a>
-			</div>
-			<!--/.box-->
-		</div>
-		</section>
 
 		<section id="sigaolago">
 		<div class="container">

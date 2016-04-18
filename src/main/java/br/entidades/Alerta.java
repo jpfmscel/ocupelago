@@ -1,6 +1,7 @@
 package br.entidades;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,10 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
 import org.primefaces.model.map.Marker;
 
+import br.entidades.rest.ImagemREST;
+
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Alerta implements Serializable {
 
@@ -25,22 +30,28 @@ public class Alerta implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
+	@Expose
 	private int id;
 
 	@Column(nullable = false)
+	@Expose
 	private String titulo;
 
 	@Column(nullable = true)
+	@Expose
 	private String descricao;
 
 	@Column(nullable = false)
+	@Expose
 	private double latitude;
 
 	@Column(nullable = false)
+	@Expose
 	private double longitude;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date dataCriado;
 
 	@Column(nullable = false)
@@ -52,6 +63,20 @@ public class Alerta implements Serializable {
 
 	@Transient
 	private Marker marker;
+
+	@Expose
+	@Transient
+	private List<ImagemREST> imagensREST;
+
+	public List<ImagemREST> getImagensREST() {
+		if (imagensREST == null) {
+			imagensREST = new ArrayList<ImagemREST>();
+			for (Imagem imagem : getImagens()) {
+				imagensREST.add(new ImagemREST(imagem));
+			}
+		}
+		return imagensREST;
+	}
 
 	public String getDescricao() {
 		return descricao;
@@ -149,6 +174,17 @@ public class Alerta implements Serializable {
 
 	public void setMarker(Marker marker) {
 		this.marker = marker;
+	}
+
+	public List<Imagem> getImagens() {
+		if (imagens == null) {
+			imagens = new ArrayList<>();
+		}
+		return imagens;
+	}
+
+	public void setImagens(List<Imagem> imagens) {
+		this.imagens = imagens;
 	}
 
 }

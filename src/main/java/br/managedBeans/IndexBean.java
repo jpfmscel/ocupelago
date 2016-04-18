@@ -42,16 +42,16 @@ public class IndexBean {
 			redirect = "post";
 		} else if (o instanceof Evento) {
 			setEventoSel((Evento) o);
-			redirect = "paginaEvento";
+			redirect = "evento";
 		} else if (o instanceof Esporte) {
 			setEsporteSel((Esporte) o);
 			redirect = "paginaEsporte";
 		} else if (o instanceof Projeto) {
 			setProjetoSel((Projeto) o);
-			redirect = "paginaProjeto";
+			redirect = "projeto";
 		} else if (o instanceof Local) {
 			setLocalSel((Local) o);
-			redirect = "paginaLocal";
+			redirect = "local";
 		}
 		return redirect;
 	}

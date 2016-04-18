@@ -14,8 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
+
+import br.entidades.rest.ImagemREST;
+
+import com.google.gson.annotations.Expose;
 
 @Entity
 public class Noticia implements Serializable {
@@ -25,42 +30,67 @@ public class Noticia implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
+	@Expose
 	private int id;
 
+	@Expose
 	@Column(nullable = false, length = 100)
 	private String titulo;
 
+	@Expose
 	@Column(nullable = false, length = 300)
 	private String subtitulo;
 
+	@Expose
 	@Column(nullable = false, length = 3000)
 	private String descricao;
 
+	@Expose
 	@Column(nullable = true, length = 1000)
 	private String videoURL;
 
+	@Expose
 	@Column(nullable = true, length = 1000)
 	private String URL_facebook;
 
+	@Expose
 	@Column(nullable = true, length = 1000)
 	private String URL_youtube;
 
+	@Expose
 	@Column(nullable = true, length = 1000)
 	private String URL_twitter;
 
+	@Expose
 	@Column(nullable = true, length = 1000)
 	private String URL_site;
 
+	@Expose
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date criadoEm;
 
+	@Expose
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
+
+	@Expose
+	@Transient
+	private List<ImagemREST> imagensREST;
+
+	public List<ImagemREST> getImagensREST() {
+		if (imagensREST == null) {
+			imagensREST = new ArrayList<ImagemREST>();
+			for (Imagem imagem : getImagens()) {
+				imagensREST.add(new ImagemREST(imagem));
+			}
+		}
+		return imagensREST;
+	}
 
 	public int getId() {
 		return id;
@@ -204,13 +234,12 @@ public class Noticia implements Serializable {
 		}
 		return descricao;
 	}
-	
-	public String getFixedVideoURL(){
-		if(videoURL.contains("watch?v=")){
+
+	public String getFixedVideoURL() {
+		if (videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
 		}
-		return null;
+		return videoURL;
 	}
-
 
 }

@@ -97,9 +97,12 @@ public class ListFactory {
 	}
 
 	public List<Alerta> getListaAlerta() {
-		// if (!(isSameMinute(dataAlerta) && !listaAlerta.isEmpty())) {
-		atualizarLista(new AlertaDAO(), dataAlerta);
-		// }
+		if (!(isSameMinute(dataAlerta) && !listaAlerta.isEmpty())) {
+			atualizarLista(new AlertaDAO(), dataAlerta);
+			for (Alerta a : listaAlerta) {
+				a.getImagensREST();
+			}
+		}
 		return listaAlerta;
 	}
 
@@ -110,6 +113,9 @@ public class ListFactory {
 	public List<Local> getListaLocal() {
 		if (!(isSamePeriod(dataLocal) && !listaLocal.isEmpty())) {
 			atualizarLista(new LocalDAO(), dataLocal);
+			for (Local l : listaLocal) {
+				l.getImagensREST();
+			}
 		}
 		return listaLocal;
 	}
@@ -121,6 +127,9 @@ public class ListFactory {
 	public List<Projeto> getListaProjeto() {
 		if (!(isSamePeriod(dataProjeto) && !listaProjeto.isEmpty())) {
 			atualizarLista(new ProjetoDAO(), dataProjeto);
+			for (Projeto p : listaProjeto) {
+				p.getImagensREST();
+			}
 		}
 		return listaProjeto;
 	}
@@ -132,6 +141,9 @@ public class ListFactory {
 	public List<Noticia> getListaNoticia() {
 		if (!(isSamePeriod(dataNoticia) && !listaNoticia.isEmpty())) {
 			atualizarLista(new NoticiaDAO(), dataNoticia);
+			for (Noticia noticia : listaNoticia) {
+				noticia.getImagensREST();
+			}
 		}
 		return listaNoticia;
 	}
@@ -143,6 +155,9 @@ public class ListFactory {
 	public List<Esporte> getListaEsporte() {
 		if (!(isSamePeriod(dataEsporte) && !listaEsporte.isEmpty())) {
 			atualizarLista(new EsporteDAO(), dataEsporte);
+			for (Esporte e : listaEsporte) {
+				e.getImagensREST();
+			}
 		}
 		return listaEsporte;
 	}
@@ -154,6 +169,9 @@ public class ListFactory {
 	public List<Evento> getListaEvento() {
 		if (!(isSamePeriod(dataEvento) && !listaEvento.isEmpty())) {
 			atualizarLista(new EventoDAO(), dataEvento);
+			for (Evento e : listaEvento) {
+				e.getImagensREST();
+			}
 		}
 		return listaEvento;
 	}

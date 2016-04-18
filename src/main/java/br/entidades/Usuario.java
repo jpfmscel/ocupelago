@@ -15,6 +15,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
+import com.google.gson.annotations.Expose;
+
 @Entity
 public class Usuario implements Serializable {
 
@@ -23,11 +25,17 @@ public class Usuario implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(nullable = false, insertable = false, updatable = false)
+	@Expose
 	private int id;
+
 	@Column(nullable = false)
+	@Expose
 	private String nome;
+
 	@Column(nullable = false)
+	@Expose
 	private String email;
+
 	@Column(nullable = false)
 	private String senha;
 
@@ -37,6 +45,7 @@ public class Usuario implements Serializable {
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
+	@Expose
 	private Date dataCriado;
 
 	@Transient

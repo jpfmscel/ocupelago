@@ -22,7 +22,7 @@ public class LocalDAO extends BaseDao<Local> {
 
 	@SuppressWarnings("unchecked")
 	public List<Local> buscarPorCategoria(String cat) {
-		Query q = gerarQueryNome(cat);
+		Query q = gerarQueryPorCategoria(cat);
 		return ((List<Local>) q.getResultList());
 	}
 

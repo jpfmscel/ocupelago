@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="template.xhtml">
+	<ui:define name="menu">
+		<li><a href="#projeto"> <h:outputText
+					value="#{indexBean.projetoSel.titulo}" /></a></li>
+		<li><a href="#videos">Vídeos</a></li>
+		<li><a href="#imagens">Imagens</a></li>
+	</ui:define>
+
+	<ui:define name="session">
+		<section id="main-slider-vcnolago" class="carousel"> </section>
+		<!--/#main-slider-->
+
+		<section id="projeto">
+		<div class="container">
+			<div class="box">
+				<div class="center">
+					<h2>
+						<h:outputText value="#{indexBean.projetoSel.titulo}" />
+					</h2>
+				</div>
+				<div class="row">
+					<p>
+						<h:outputText value="#{indexBean.projetoSel.descricao}" />
+					</p>
+				</div>
+			</div>
+			<!--/.box-->
+		</div>
+		</section>
+		<section id="videos">
+		<div class="container">
+			<div class="box">
+				<div class="row">
+					<div class="center">
+						<h2>Vídeo</h2>
+					</div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8">
+						<div class="center responsive-video">
+							<p:media value="#{indexBean.projetoSel.getFixedVideoURL()}"
+								width="700" height="400" player="flash" style="margin-top:2%;" />
+						</div>
+					</div>
+					<div class="col-sm-2"></div>
+				</div>
+			</div>
+			<!--/.box-->
+		</div>
+		</section>
+		<section id="imagens">
+		<div class="container">
+			<div class="box">
+				<div class="row">
+					<div class="center">
+						<h2>Imagens</h2>
+					</div>
+					<div class="col-sm-3"></div>
+					<div class="col-sm-6">
+						<div id="fotos" class="carousel slide" data-interval="3000"
+							data-ride="carousel">
+							<!-- Carousel indicators -->
+							<ol class="carousel-indicators">
+								<ui:repeat var="" value="#{indexBean.projetoSel.imagens}"
+									varStatus="x">
+									<li data-target="#fotos" data-slide-to="#{x.index}"
+										class="#{x.index==0 ? 'active' : ''}"></li>
+								</ui:repeat>
+							</ol>
+							<!-- Carousel items -->
+							<div class="carousel-inner">
+								<ui:repeat var="foto" value="#{indexBean.projetoSel.imagens}"
+									varStatus="x">
+									<div class="item  #{x.index==0 ? 'active' : ''}">
+										<div class="container">
+											<div class="carousel-content text-center">
+												<h:graphicImage styleClass="img-responsive"
+													value="/image/#{foto.id}" />
+											</div>
+										</div>
+									</div>
+								</ui:repeat>
+							</div>
+							<!-- Carousel nav -->
+							<a class="carousel-control left" href="#fotos" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left"></span>
+							</a> <a class="carousel-control right" href="#fotos"
+								data-slide="next"> <span
+								class="glyphicon glyphicon-chevron-right"></span>
+							</a>
+						</div>
+						<div class="col-sm-3"></div>
+					</div>
+				</div>
+				<div class="gap" />
+			</div>
+			<!--/.box-->
+		</div>
+		</section>
+	</ui:define>
+</ui:composition>
+</html>
