@@ -45,7 +45,7 @@ public class IndexBean {
 			redirect = "evento";
 		} else if (o instanceof Esporte) {
 			setEsporteSel((Esporte) o);
-			redirect = "paginaEsporte";
+			redirect = "esporte";
 		} else if (o instanceof Projeto) {
 			setProjetoSel((Projeto) o);
 			redirect = "projeto";

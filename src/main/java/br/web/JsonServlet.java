@@ -56,7 +56,7 @@ public class JsonServlet extends HttpServlet {
 
 		Integer method = Integer.valueOf(request.getParameter("method"));
 		if (method == null) {
-//			response.setCharacterEncoding("ISO-8859-1");
+			response.setCharacterEncoding("ISO-8859-1");
 			response.getWriter().write("Parâmetros insuficientes.");
 			return;
 		}
@@ -91,6 +91,9 @@ public class JsonServlet extends HttpServlet {
 		case ADD_AVALIACAO:
 			jsonG = addAvaliacao(json);
 			break;
+		case ADD_USUARIO:
+			jsonG = addUsuario(json);
+			break;
 		case LOGIN:
 			jsonG = loginUsuario(json);
 			break;
@@ -98,10 +101,9 @@ public class JsonServlet extends HttpServlet {
 			break;
 		}
 
-//		response.setContentType("application/json");
-		response.setContentType("text/html");
-//		response.setCharacterEncoding("UTF-8");
-//		response.setCharacterEncoding("ISO-8859-1");
+		response.setContentType("application/json");
+		// response.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("ISO-8859-1");
 		response.getWriter().write(jsonG);
 	}
 
@@ -119,13 +121,55 @@ public class JsonServlet extends HttpServlet {
 
 	private String addAvaliacao(String json) {
 		Avaliacao a = gson.fromJson(json, Avaliacao.class);
-		a.setCriadoEm(new Date());
-		a.setAtivo(true);
+		String retorno = checkAvaliacao(a);
+		if (retorno == null) {
+			a.setCriadoEm(new Date());
+			a.setAtivo(true);
+			getAvaliacaoDao().iniciarTransacao();
+			getAvaliacaoDao().inserir(a);
+			getAvaliacaoDao().comitarTransacao();
+			return gson.toJson(a);
+		}
+		return retorno;
+	}
 
-		getAvaliacaoDao().iniciarTransacao();
-		getAvaliacaoDao().inserir(a);
-		getAvaliacaoDao().comitarTransacao();
-		return gson.toJson(a);
+	private String addUsuario(String json) {
+		Usuario u = gson.fromJson(json, Usuario.class);
+		String retorno = checkUsuario(u);
+		if (retorno == null) {
+			u.setDataCriado(new Date());
+			u.setAtivo(true);
+			u.setSenha(u.getSenha());
+			getUsuarioDao().iniciarTransacao();
+			getUsuarioDao().inserir(u);
+			getUsuarioDao().comitarTransacao();
+			return gson.toJson(u);
+		}
+		return retorno;
+	}
+
+	private String checkUsuario(Usuario u) {
+		if (u.getNome() == null || u.getNome().isEmpty()) {
+			return "Nome deve ser preenchido!";
+		} else if (u.getEmail() == null || u.getEmail().isEmpty()) {
+			return "E-mail deve ser preenchida!";
+		} else if (u.getSenha() == null || u.getSenha().isEmpty()) {
+			return "Local deve ser informado!";
+		}
+		return null;
+	}
+
+	private String checkAvaliacao(Avaliacao a) {
+		if (a.getTitulo().isEmpty() || a.getTitulo() == null) {
+			return "Título deve ser preenchido!";
+		} else if (a.getComentario().isEmpty() || a.getComentario() == null) {
+			return "Comentário deve ser preenchida!";
+		} else if (a.getLocal() == null || a.getLocal().getId() == 0) {
+			return "Local deve ser informado!";
+		} else if (a.getNota() == null) {
+			return "Nota deve ser informada!";
+		}
+		return null;
 	}
 
 	private String loginUsuario(String json) {
@@ -136,13 +180,32 @@ public class JsonServlet extends HttpServlet {
 
 	private String addAlerta(String json) {
 		Alerta a = gson.fromJson(json, Alerta.class);
-		a.setDataCriado(new Date());
-		a.setAtivo(true);
 
-		getAlertaDao().iniciarTransacao();
-		getAlertaDao().inserir(a);
-		getAlertaDao().comitarTransacao();
-		return gson.toJson(a);
+		String retorno = checkAlerta(a);
+
+		if (retorno == null) {
+			a.setDataCriado(new Date());
+			a.setAtivo(true);
+			getAlertaDao().iniciarTransacao();
+			getAlertaDao().inserir(a);
+			getAlertaDao().comitarTransacao();
+			return gson.toJson(a);
+		}
+
+		return retorno;
+	}
+
+	private String checkAlerta(Alerta a) {
+		if (a.getTitulo().isEmpty() || a.getTitulo() == null) {
+			return "Título deve ser preenchido!";
+		} else if (a.getDescricao().isEmpty() || a.getDescricao() == null) {
+			return "Descrição deve ser preenchida!";
+		} else if (a.getLatitude() == 0) {
+			return "Localização deve ser informada!";
+		} else if (a.getLongitude() == 0) {
+			return "Localização deve ser informada!";
+		}
+		return null;
 	}
 
 	public Gson getGson() {

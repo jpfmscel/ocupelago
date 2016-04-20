@@ -15,6 +15,8 @@ import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 
+import br.util.Util;
+
 import com.google.gson.annotations.Expose;
 
 @Entity
@@ -80,7 +82,12 @@ public class Usuario implements Serializable {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = getHexString(senha);
+		// this.senha = getHexString(senha);
+		this.senha = getEncodedPassword(senha);
+	}
+
+	private String getEncodedPassword(String senha) {
+		return new String(Util.encodeBase64(senha.concat("adjm").getBytes()));
 	}
 
 	private String getHexString(String s) {

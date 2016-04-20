@@ -7,8 +7,8 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="template.xhtml">
 	<ui:define name="menu">
-		<li><a href="#projeto"> <h:outputText
-					value="#{indexBean.projetoSel.titulo}" /></a></li>
+		<li><a href="#local"> <h:outputText
+					value="#{indexBean.localSel.nome}" /></a></li>
 		<li><a href="#videos">Vídeos</a></li>
 		<li><a href="#imagens">Imagens</a></li>
 	</ui:define>
@@ -17,17 +17,17 @@
 		<section id="main-slider-vcnolago" class="carousel"> </section>
 		<!--/#main-slider-->
 
-		<section id="projeto">
+		<section id="local">
 		<div class="container">
 			<div class="box">
 				<div class="center">
 					<h2>
-						<h:outputText value="#{indexBean.projetoSel.titulo}" />
+						<h:outputText value="#{indexBean.localSel.nome}" />
 					</h2>
 				</div>
 				<div class="row">
 					<p>
-						<h:outputText value="#{indexBean.projetoSel.descricao}" />
+						<h:outputText value="#{indexBean.localSel.descricao}" />
 					</p>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
 						<div class="center responsive-video">
-							<p:media value="#{indexBean.projetoSel.getFixedVideoURL()}"
+							<p:media value="#{indexBean.localSel.getFixedVideoURL()}"
 								width="700" height="400" player="flash" style="margin-top:2%;" />
 						</div>
 					</div>
@@ -67,7 +67,7 @@
 							data-ride="carousel">
 							<!-- Carousel indicators -->
 							<ol class="carousel-indicators">
-								<ui:repeat var="" value="#{indexBean.projetoSel.imagens}"
+								<ui:repeat var="" value="#{indexBean.localSel.imagens}"
 									varStatus="x">
 									<li data-target="#fotos" data-slide-to="#{x.index}"
 										class="#{x.index==0 ? 'active' : ''}"></li>
@@ -75,7 +75,7 @@
 							</ol>
 							<!-- Carousel items -->
 							<div class="carousel-inner">
-								<ui:repeat var="foto" value="#{indexBean.projetoSel.imagens}"
+								<ui:repeat var="foto" value="#{indexBean.localSel.imagens}"
 									varStatus="x">
 									<div class="item  #{x.index==0 ? 'active' : ''}">
 										<div class="container">
@@ -101,6 +101,17 @@
 				<div class="gap" />
 			</div>
 			<!--/.box-->
+		</div>
+		<div class="row">
+			<div class="gap" />
+			<div class="center">
+				<h:form>
+					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+						action="index.xhtml" immediate="true">
+					</h:commandLink>
+				</h:form>
+			</div>
+			<div class="gap" />
 		</div>
 		</section>
 	</ui:define>
