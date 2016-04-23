@@ -39,6 +39,7 @@ public class Usuario implements Serializable {
 	private String email;
 
 	@Column(nullable = false)
+	@Expose
 	private String senha;
 
 	@Column(nullable = false)
@@ -113,7 +114,7 @@ public class Usuario implements Serializable {
 	}
 
 	public void setConfirmacaoSenha(String confirmacaoSenha) {
-		this.confirmacaoSenha = getHexString(confirmacaoSenha);
+		this.confirmacaoSenha = getEncodedPassword(confirmacaoSenha);
 	}
 
 	public boolean isAtivo() {

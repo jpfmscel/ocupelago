@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +46,8 @@ public class JsonServlet extends HttpServlet {
 	private AvaliacaoDAO avaliacaoDao;
 	private EventoDAO eventoDao;
 
+	private Logger log = Logger.getGlobal();
+	
 	public JsonServlet() {
 		super();
 	}
@@ -65,7 +69,8 @@ public class JsonServlet extends HttpServlet {
 		EnumWebMethods en = EnumWebMethods.getEnumByCod(method);
 		String jsonG = null;
 		String json = getRequestBody(request);
-
+		log.log(Level.INFO, json);
+		System.out.println("Host :" + request.getRemoteHost() + " - Request :" + json);
 		switch (en) {
 		case GET_ESPORTES:
 			jsonG = gson.toJson(lf.getListaEsporte());

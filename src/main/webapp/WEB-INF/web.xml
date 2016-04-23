@@ -35,11 +35,11 @@
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
 
-	<web:security-constraint>
-		<web:web-resource-collection>
-			<web:web-resource-name>OcupeLago</web:web-resource-name>
-			<web:url-pattern>/jsonServlet</web:url-pattern>
-		</web:web-resource-collection>
-	</web:security-constraint>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>OcupeLago</web-resource-name>
+			<url-pattern>/jsonServlet</url-pattern>
+		</web-resource-collection>
+	</security-constraint>
 
 </web-app>
