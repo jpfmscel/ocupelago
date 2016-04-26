@@ -2,10 +2,13 @@ package br.managedBeans.noticia;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -14,6 +17,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
+import br.managedBeans.LoginBean;
 
 @SessionScoped
 @ManagedBean(name = "consultarNoticia")
@@ -22,6 +26,11 @@ public class ConsultarNoticia implements Serializable {
 	private static final long serialVersionUID = -2333684779244788471L;
 	private Noticia noticiaSelected;
 	private NoticiaDAO noticiaDAO;
+
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	@PostConstruct
 	public void atualizarNoticias() {
@@ -32,7 +41,7 @@ public class ConsultarNoticia implements Serializable {
 		setNoticiaSelected(e);
 		return "detalheNoticia.xhtml";
 	}
-	
+
 	public String editarNoticia(Noticia e) {
 		setNoticiaSelected(e);
 		return "editarNoticia.xhtml";
@@ -43,10 +52,12 @@ public class ConsultarNoticia implements Serializable {
 			setNoticiaSelected(e);
 			getNoticiaSelected().setAtivo(false);
 			update();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia excluída com sucesso!", null));
+			log.log(Level.INFO, "Noticia " + e.toString() + " excluída com sucesso!");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a noticia : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			log.log(Level.INFO, "Noticia " + e.toString() + " com erro!");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + ex.getCause().getMessage(), null));
 			return null;
 		}
 		setNoticiaSelected(null);
@@ -56,10 +67,12 @@ public class ConsultarNoticia implements Serializable {
 	public String updateNoticia() {
 		try {
 			update();
+			log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " excluída com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia atualizada com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a noticia : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " com erro!");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause().getMessage(), null));
 			return null;
 		}
 		setNoticiaSelected(null);
@@ -67,6 +80,7 @@ public class ConsultarNoticia implements Serializable {
 	}
 
 	private void update() {
+		log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 		getNoticiaDAO().iniciarTransacao();
 		getNoticiaDAO().update(getNoticiaSelected());
 		getNoticiaDAO().comitarTransacao();
@@ -76,7 +90,7 @@ public class ConsultarNoticia implements Serializable {
 		String urlFinal = getNoticiaSelected().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getNoticiaSelected().setVideoURL(urlFinal);
 	}
-	
+
 	public void removerImagem(Imagem i) {
 		if (getNoticiaSelected().getImagens().contains(i)) {
 			getNoticiaSelected().getImagens().remove(i);
@@ -111,5 +125,13 @@ public class ConsultarNoticia implements Serializable {
 
 	public void setNoticiaDAO(NoticiaDAO noticiaDAO) {
 		this.noticiaDAO = noticiaDAO;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 }

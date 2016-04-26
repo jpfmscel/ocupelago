@@ -3,10 +3,13 @@ package br.managedBeans.local;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -19,6 +22,7 @@ import org.primefaces.model.map.Marker;
 import br.dao.LocalDAO;
 import br.entidades.Imagem;
 import br.entidades.Local;
+import br.managedBeans.LoginBean;
 
 @SessionScoped
 @ManagedBean(name = "consultarLocal")
@@ -29,6 +33,11 @@ public class ConsultarLocal {
 	private LocalDAO localDAO;
 	private MapModel mapModel;
 
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+	
 	@PostConstruct
 	public void atualizarLocais() {
 		setLocais(null);
@@ -51,8 +60,10 @@ public class ConsultarLocal {
 			setLocalSelected(e);
 			getLocalSelected().setAtivo(false);
 			update();
+			log.log(Level.INFO, "Local " + e.toString() + " excluído com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local excluído com sucesso!", null));
 		} catch (Exception ex) {
+			log.log(Level.INFO, "Local " + e.toString() + " com erro!");
 			ex.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
@@ -65,7 +76,9 @@ public class ConsultarLocal {
 		try {
 			update();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
+			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " atualizado com sucesso!");
 		} catch (Exception e) {
+			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " com erro!");
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
@@ -75,6 +88,7 @@ public class ConsultarLocal {
 	}
 
 	private void update() {
+		log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 		getLocalDAO().iniciarTransacao();
 		getLocalDAO().update(getLocalSelected());
 		getLocalDAO().comitarTransacao();
@@ -142,5 +156,13 @@ public class ConsultarLocal {
 
 	public void setMapModel(MapModel mapModel) {
 		this.mapModel = mapModel;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 }

@@ -2,6 +2,8 @@ package br.managedBeans.noticia;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +18,7 @@ import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
 import br.managedBeans.ListFactory;
+import br.managedBeans.LoginBean;
 import br.util.Util;
 
 @ViewScoped
@@ -26,9 +29,14 @@ public class CadastrarNoticia implements Serializable {
 
 	private Noticia noticia;
 	private NoticiaDAO noticiaDAO;
-	
+
 	@ManagedProperty(value = "#{listFactory}")
 	private ListFactory listFactory;
+
+	private Logger log = Logger.getGlobal();
+	
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	public String adicionarNoticia() {
 		try {
@@ -37,10 +45,13 @@ public class CadastrarNoticia implements Serializable {
 			getNoticiaDAO().iniciarTransacao();
 			getNoticiaDAO().inserir(getNoticia());
 			getNoticiaDAO().comitarTransacao();
+			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+			log.log(Level.INFO, "Notícia " + getNoticia().toString() + " cadastrada com sucesso!");
 			setNoticia(null);
 			getListFactory().atualizarLista(new NoticiaDAO(), new Date());
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause(), null));
+			log.log(Level.SEVERE, "Notícia " + getNoticia().toString() + " com erro!");
 			e.printStackTrace();
 			return null;
 		}
@@ -54,7 +65,7 @@ public class CadastrarNoticia implements Serializable {
 		getNoticia().setURL_site(Util.fixExternalURL(getNoticia().getURL_site()));
 		getNoticia().setURL_youtube(Util.fixExternalURL(getNoticia().getURL_youtube()));
 	}
-	
+
 	public byte[] getBytesFromFile(UploadedFile f) {
 		return f.getContents();
 	}
@@ -106,6 +117,14 @@ public class CadastrarNoticia implements Serializable {
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

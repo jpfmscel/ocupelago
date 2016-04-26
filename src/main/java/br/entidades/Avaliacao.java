@@ -37,10 +37,11 @@ public class Avaliacao implements Serializable {
 	@Column(nullable = false)
 	@Expose
 	private Integer nota;
-	
+
 	@ManyToOne
+	@Expose
 	private Local local;
-	
+
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;

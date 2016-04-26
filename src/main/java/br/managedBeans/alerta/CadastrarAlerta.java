@@ -2,6 +2,8 @@ package br.managedBeans.alerta;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -17,6 +19,7 @@ import org.primefaces.model.map.Marker;
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
 import br.managedBeans.ListFactory;
+import br.managedBeans.LoginBean;
 
 @ManagedBean(name = "mapBean")
 @ViewScoped
@@ -33,6 +36,11 @@ public class CadastrarAlerta implements Serializable {
 
 	private Alerta alerta;
 	private AlertaDAO alertaDAO;
+
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	@ManagedProperty(value = "#{listFactory}")
 	private ListFactory listFactory;
@@ -56,15 +64,21 @@ public class CadastrarAlerta implements Serializable {
 
 		a.setLatitude(lat);
 		a.setLongitude(lng);
-		// a.setDescricao(getDescricao());
 		a.setTitulo(getTitle());
 		a.setDataCriado(new Date());
-
-		aDAO.iniciarTransacao();
-		aDAO.inserir(a);
-		aDAO.comitarTransacao();
-		getListFactory().atualizarLista(new AlertaDAO(), new Date());
-		setTitle("");
+		try {
+			aDAO.iniciarTransacao();
+			aDAO.inserir(a);
+			aDAO.comitarTransacao();
+			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+			log.log(Level.INFO, "Alerta " + a.toString() + " cadastrada com sucesso!");
+			getListFactory().atualizarLista(new AlertaDAO(), new Date());
+			setTitle("");
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Alerta " + a.toString() + " com erro!");
+			e.printStackTrace();
+			return;
+		}
 	}
 
 	public void onMarkerSelect(OverlaySelectEvent event) {
@@ -76,7 +90,7 @@ public class CadastrarAlerta implements Serializable {
 	}
 
 	public MapModel getEmptyModel() {
-		if(emptyModel==null){
+		if (emptyModel == null) {
 			setEmptyModel(new DefaultMapModel());
 		}
 		return emptyModel;
@@ -142,6 +156,14 @@ public class CadastrarAlerta implements Serializable {
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

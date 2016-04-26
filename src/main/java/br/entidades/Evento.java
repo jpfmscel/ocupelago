@@ -48,6 +48,7 @@ public class Evento implements Serializable {
 	private Date dataFim;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@Expose
 	private Local local;
 
 	@Column(nullable = false, length = 15)

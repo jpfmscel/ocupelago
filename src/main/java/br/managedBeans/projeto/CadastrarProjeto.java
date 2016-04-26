@@ -2,6 +2,8 @@ package br.managedBeans.projeto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -16,6 +18,7 @@ import br.dao.ProjetoDAO;
 import br.entidades.Imagem;
 import br.entidades.Projeto;
 import br.managedBeans.ListFactory;
+import br.managedBeans.LoginBean;
 import br.util.Util;
 
 @ViewScoped
@@ -28,6 +31,11 @@ public class CadastrarProjeto implements Serializable {
 	private Projeto projeto;
 	private ProjetoDAO projetoDAO;
 
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+
 	@ManagedProperty(value = "#{listFactory}")
 	private ListFactory listFactory;
 
@@ -37,10 +45,13 @@ public class CadastrarProjeto implements Serializable {
 			getProjetoDAO().iniciarTransacao();
 			getProjetoDAO().inserir(getProjeto());
 			getProjetoDAO().comitarTransacao();
+			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+			log.log(Level.INFO, "Projeto " + getProjeto().toString() + " cadastrado com sucesso!");
 			setProjeto(null);
 			getListFactory().atualizarLista(new ProjetoDAO(), new Date());
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause(), null));
+			log.log(Level.SEVERE, "Projeto " + getProjeto().toString() + " com erro!");
 			e.printStackTrace();
 			return null;
 		}
@@ -55,7 +66,7 @@ public class CadastrarProjeto implements Serializable {
 		getProjeto().setURL_site(Util.fixExternalURL(getProjeto().getURL_site()));
 		getProjeto().setURL_youtube(Util.fixExternalURL(getProjeto().getURL_youtube()));
 	}
-	
+
 	public void filtrarURLYoutube() {
 		String urlFinal = getProjeto().getVideoURL().replace("watch?", "").replace("v=", "v/");
 		getProjeto().setVideoURL(urlFinal);
@@ -115,6 +126,14 @@ public class CadastrarProjeto implements Serializable {
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

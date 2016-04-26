@@ -23,6 +23,7 @@ import br.dao.ProjetoDAO;
 import br.dao.UsuarioDAO;
 import br.entidades.Alerta;
 import br.entidades.Avaliacao;
+import br.entidades.Local;
 import br.entidades.Usuario;
 import br.enumeradores.EnumWebMethods;
 import br.managedBeans.ListFactory;
@@ -47,7 +48,7 @@ public class JsonServlet extends HttpServlet {
 	private EventoDAO eventoDao;
 
 	private Logger log = Logger.getGlobal();
-	
+
 	public JsonServlet() {
 		super();
 	}
@@ -59,8 +60,18 @@ public class JsonServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Integer method = Integer.valueOf(request.getParameter("method"));
+		Integer userid = Integer.valueOf(request.getParameter("userid"));
+		response.setCharacterEncoding("ISO-8859-1");
+		
+		Usuario u;
+		if (userid == null) {
+			response.getWriter().write("Você deve estar logado para acessar essa área.");
+			return;
+		} else {
+			u = getUsuarioDao().buscarPorId(userid);
+		}
+		
 		if (method == null) {
-			response.setCharacterEncoding("ISO-8859-1");
 			response.getWriter().write("Parâmetros insuficientes.");
 			return;
 		}
@@ -69,6 +80,7 @@ public class JsonServlet extends HttpServlet {
 		EnumWebMethods en = EnumWebMethods.getEnumByCod(method);
 		String jsonG = null;
 		String json = getRequestBody(request);
+		log.log(Level.INFO, "Usuário "+u.getNome() + "solicitou "+ en.getNome());
 		log.log(Level.INFO, json);
 		System.out.println("Host :" + request.getRemoteHost() + " - Request :" + json);
 		switch (en) {
@@ -90,6 +102,9 @@ public class JsonServlet extends HttpServlet {
 		case GET_PROJETOS:
 			jsonG = gson.toJson(lf.getListaProjeto());
 			break;
+		case GET_AVAL_LOCAL:
+			jsonG = getAvalLocal(json);
+			break;
 		case ADD_ALERTA:
 			jsonG = addAlerta(json);
 			break;
@@ -107,9 +122,16 @@ public class JsonServlet extends HttpServlet {
 		}
 
 		response.setContentType("application/json");
-		// response.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("ISO-8859-1");
 		response.getWriter().write(jsonG);
+	}
+
+	private String getAvalLocal(String json) {
+		Local l = gson.fromJson(json, Local.class);
+		String retorno = checkLocal(l);
+		if (retorno == null) {
+			return gson.toJson(getAvaliacaoDao().buscarPorLocal(l.getId()));
+		}
+		return retorno;
 	}
 
 	private String getRequestBody(HttpServletRequest request) throws IOException {
@@ -128,11 +150,15 @@ public class JsonServlet extends HttpServlet {
 		Avaliacao a = gson.fromJson(json, Avaliacao.class);
 		String retorno = checkAvaliacao(a);
 		if (retorno == null) {
+			Local l = getLocalDao().buscarPorId(a.getLocal().getId());
 			a.setCriadoEm(new Date());
 			a.setAtivo(true);
-			getAvaliacaoDao().iniciarTransacao();
-			getAvaliacaoDao().inserir(a);
-			getAvaliacaoDao().comitarTransacao();
+
+			l.getAvaliacoes().add(a);
+			getLocalDao().iniciarTransacao();
+			getLocalDao().update(l);
+			getLocalDao().comitarTransacao();
+
 			return gson.toJson(a);
 		}
 		return retorno;
@@ -151,6 +177,13 @@ public class JsonServlet extends HttpServlet {
 			return gson.toJson(u);
 		}
 		return retorno;
+	}
+
+	private String checkLocal(Local l) {
+		if (l == null || l.getId() == 0) {
+			return "Local deve ser informado!";
+		}
+		return null;
 	}
 
 	private String checkUsuario(Usuario u) {

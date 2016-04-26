@@ -85,8 +85,7 @@ public class Local implements Serializable {
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
 
-	@OneToMany(cascade = CascadeType.ALL)
-	@Expose
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "local", orphanRemoval = true)
 	private List<Avaliacao> avaliacoes;
 
 	@OneToMany(cascade = CascadeType.ALL)
@@ -242,6 +241,17 @@ public class Local implements Serializable {
 			return videoURL.replace("watch?v=", "v/");
 		}
 		return videoURL;
+	}
+
+	public List<Avaliacao> getAvaliacoes() {
+		if (avaliacoes == null) {
+			avaliacoes = new ArrayList<>();
+		}
+		return avaliacoes;
+	}
+
+	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+		this.avaliacoes = avaliacoes;
 	}
 
 }

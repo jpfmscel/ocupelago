@@ -2,10 +2,13 @@ package br.managedBeans.projeto;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -14,6 +17,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.dao.ProjetoDAO;
 import br.entidades.Imagem;
 import br.entidades.Projeto;
+import br.managedBeans.LoginBean;
 
 @SessionScoped
 @ManagedBean(name = "consultarProjeto")
@@ -22,6 +26,11 @@ public class ConsultarProjeto implements Serializable {
 	private static final long serialVersionUID = -1803143075277938111L;
 	private Projeto projetoSelected;
 	private ProjetoDAO projetoDAO;
+
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	@PostConstruct
 	public void atualizarProjetos() {
@@ -32,7 +41,7 @@ public class ConsultarProjeto implements Serializable {
 		setProjetoSelected(e);
 		return "detalheProjeto.xhtml";
 	}
-	
+
 	public String editarProjeto(Projeto e) {
 		setProjetoSelected(e);
 		return "editarProjeto.xhtml";
@@ -43,9 +52,11 @@ public class ConsultarProjeto implements Serializable {
 			setProjetoSelected(e);
 			getProjetoSelected().setAtivo(false);
 			update();
+			log.log(Level.INFO, "Projeto " + e.toString() + " excluído com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto excluído com sucesso!", null));
 		} catch (Exception ex) {
 			ex.printStackTrace();
+			log.log(Level.INFO, "Projeto " + e.toString() + " com erro!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
@@ -56,9 +67,11 @@ public class ConsultarProjeto implements Serializable {
 	public String updateProjeto() {
 		try {
 			update();
+			log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " excluído com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto atualizado com sucesso!", null));
 		} catch (Exception e) {
 			e.printStackTrace();
+			log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " com erro!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
@@ -67,6 +80,7 @@ public class ConsultarProjeto implements Serializable {
 	}
 
 	private void update() {
+		log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 		getProjetoDAO().iniciarTransacao();
 		getProjetoDAO().update(getProjetoSelected());
 		getProjetoDAO().comitarTransacao();
@@ -111,5 +125,13 @@ public class ConsultarProjeto implements Serializable {
 
 	public void setProjetoDAO(ProjetoDAO projetoDAO) {
 		this.projetoDAO = projetoDAO;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 }

@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -16,6 +19,7 @@ import org.primefaces.event.FileUploadEvent;
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
+import br.managedBeans.LoginBean;
 import br.util.Util;
 
 @SessionScoped
@@ -27,6 +31,11 @@ public class ConsultarEsporte implements Serializable {
 	private Esporte esporteSelected;
 	private EsporteDAO esporteDAO;
 	private String tipoEsporte;
+
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
 
 	@PostConstruct
 	public void atualizarEsporte() {
@@ -52,8 +61,10 @@ public class ConsultarEsporte implements Serializable {
 			setEsporteSelected(e);
 			getEsporteSelected().setAtivo(false);
 			update();
+			log.log(Level.INFO, "Esporte " + e.toString() + " excluído com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte excluído com sucesso!", null));
 		} catch (Exception ex) {
+			log.log(Level.INFO, "Esporte " + e.toString() + " com erro!");
 			ex.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir o esporte : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
@@ -67,8 +78,10 @@ public class ConsultarEsporte implements Serializable {
 			fixURL();
 			atualizaTipoEsporteUpdate();
 			update();
+			log.log(Level.INFO, "Esporte " + getEsporteSelected().toString() + " atualizado com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte atualizado com sucesso!", null));
 		} catch (Exception e) {
+			log.log(Level.INFO, "Esporte " + e.toString() + " com erro!");
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
@@ -78,6 +91,7 @@ public class ConsultarEsporte implements Serializable {
 	}
 
 	private void update() {
+		log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 		getEsporteDAO().iniciarTransacao();
 		getEsporteDAO().update(getEsporteSelected());
 		getEsporteDAO().comitarTransacao();
@@ -171,6 +185,14 @@ public class ConsultarEsporte implements Serializable {
 
 	public void setTipoEsporte(String tipoEsporte) {
 		this.tipoEsporte = tipoEsporte;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

@@ -2,6 +2,8 @@ package br.managedBeans.local;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,6 +23,7 @@ import br.dao.LocalDAO;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.ListFactory;
+import br.managedBeans.LoginBean;
 import br.util.Util;
 
 @ViewScoped
@@ -32,7 +35,12 @@ public class CadastrarLocal implements Serializable {
 	private Local local;
 	private LocalDAO localDAO;
 	private MapModel mapModel;
-	
+
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+
 	@ManagedProperty(value = "#{listFactory}")
 	private ListFactory listFactory;
 
@@ -42,10 +50,13 @@ public class CadastrarLocal implements Serializable {
 			getLocalDAO().iniciarTransacao();
 			getLocalDAO().inserir(getLocal());
 			getLocalDAO().comitarTransacao();
+			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+			log.log(Level.INFO, "Local " + getLocal().toString() + " cadastrado com sucesso!");
 			setLocal(null);
 			getListFactory().atualizarLista(new LocalDAO(), new Date());
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local!" + e.getCause(), null));
+			log.log(Level.SEVERE, "Local " + getLocal().toString() + " com erro!");
 			e.printStackTrace();
 			return null;
 		}
@@ -59,7 +70,7 @@ public class CadastrarLocal implements Serializable {
 		getLocal().setURL_twitter(Util.fixExternalURL(getLocal().getURL_twitter()));
 		getLocal().setURL_site(Util.fixExternalURL(getLocal().getURL_site()));
 	}
-	
+
 	public void onPointSelect(PointSelectEvent event) {
 		LatLng latlng = event.getLatLng();
 		getLocal().setLatitude(latlng.getLat());
@@ -131,6 +142,14 @@ public class CadastrarLocal implements Serializable {
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 
 }

@@ -1,6 +1,8 @@
 package br.managedBeans.alerta;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -12,21 +14,27 @@ import javax.faces.context.FacesContext;
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
 import br.managedBeans.ListFactory;
+import br.managedBeans.LoginBean;
 
 @ViewScoped
 @ManagedBean(name = "consultarAlerta")
-public class ConsultarAlerta implements Serializable{
+public class ConsultarAlerta implements Serializable {
 
 	private static final long serialVersionUID = -2236749237134308778L;
 	private Alerta alertaSelected;
 	private AlertaDAO alertaDAO;
 
-	@ManagedProperty(value="#{mapBean}")
+	private Logger log = Logger.getGlobal();
+
+	@ManagedProperty(value = "#{loginBean}")
+	private LoginBean loginBean;
+
+	@ManagedProperty(value = "#{mapBean}")
 	private CadastrarAlerta cadastrarAlerta;
-	
+
 	@ManagedProperty(value = "#{listFactory}")
 	private ListFactory listFactory;
-	
+
 	@PostConstruct
 	public void atualizarAlertas() {
 		setAlertaSelected(null);
@@ -37,10 +45,12 @@ public class ConsultarAlerta implements Serializable{
 			setAlertaSelected(e);
 			getAlertaSelected().setAtivo(false);
 			update();
+			log.log(Level.INFO, "Alerta " + e.toString() + " excluída com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta excluída com sucesso!", null));
 			getCadastrarAlerta().setAlerta(null);
 			getCadastrarAlerta().init();
 		} catch (Exception ex) {
+			log.log(Level.INFO, "Alerta " + e.toString() + " com erro!");
 			ex.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir a alerta : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
@@ -49,25 +59,13 @@ public class ConsultarAlerta implements Serializable{
 		return "consultarAlerta.xhtml";
 	}
 
-	public String updateAlerta() {
-		try {
-			update();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta atualizada com sucesso!", null));
-		} catch (Exception e) {
-			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a alerta : " + e.getCause().getMessage(), e.getCause().getMessage()));
-			return null;
-		}
-		setAlertaSelected(null);
-		return "consultaAlerta.xhtml";
-	}
-
 	private void update() {
+		log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 		getAlertaDAO().iniciarTransacao();
 		getAlertaDAO().update(getAlertaSelected());
 		getAlertaDAO().comitarTransacao();
 	}
-	
+
 	public Alerta getAlertaSelected() {
 		if (alertaSelected == null) {
 			alertaSelected = new Alerta();
@@ -104,5 +102,13 @@ public class ConsultarAlerta implements Serializable{
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LoginBean getLoginBean() {
+		return loginBean;
+	}
+
+	public void setLoginBean(LoginBean loginBean) {
+		this.loginBean = loginBean;
 	}
 }
