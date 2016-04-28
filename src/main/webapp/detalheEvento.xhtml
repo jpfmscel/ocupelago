@@ -12,11 +12,20 @@
 	</f:metadata>
 </h:head>
 <ui:composition template="main.xhtml">
-	<ui:define name="title">#{consultarEvento.eventoSelected.nome}</ui:define>
+	<ui:define name="title">Detalhe do Evento</ui:define>
 	<ui:define name="body">
 		<h:form id="addevento">
 			<div class="row">
 				<div class="col-md-12">
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="nome" value="Nome" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarEvento.eventoSelected.nome}" />
+					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="info" value="Informações" />
@@ -51,7 +60,8 @@
 							value="#{consultarEvento.eventoSelected.email}" />
 					</div>
 
-					<p:outputPanel rendered="#{consultarEvento.eventoSelected.listaEsporte.size() > 0}">
+					<p:outputPanel
+						rendered="#{consultarEvento.eventoSelected.listaEsporte.size() > 0}">
 						<div class="col-md-12">
 							<h3>
 								<h:outputLabel id="esportes" value="Esportes" />

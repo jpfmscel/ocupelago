@@ -22,7 +22,9 @@
 			<div class="box">
 				<div class="center">
 					<h2>
-						<h:outputText value="#{indexBean.projetoSel.titulo}" />
+						<h:outputText value="#{indexBean.projetoSel.titulo}">
+							<f:converter converterId="stringConverter100" />
+						</h:outputText>
 					</h2>
 				</div>
 				<div class="row">
@@ -36,70 +38,74 @@
 		</section>
 		<section id="videos">
 		<div class="container">
-			<div class="box">
-				<div class="row">
-					<div class="center">
-						<h2>Vídeo</h2>
-					</div>
-					<div class="col-sm-2"></div>
-					<div class="col-sm-8">
-						<div class="center responsive-video">
-							<p:media value="#{indexBean.projetoSel.getFixedVideoURL()}"
-								width="700" height="400" player="flash" style="margin-top:2%;" />
+			<p:outputPanel rendered="#{indexBean.projetoSel.videoURL != ''}">
+				<div class="box">
+					<div class="row">
+						<div class="center">
+							<h2>Vídeo</h2>
 						</div>
+						<div class="col-sm-2"></div>
+						<div class="col-sm-8">
+							<div class="center responsive-video">
+								<p:media value="#{indexBean.projetoSel.getFixedVideoURL()}"
+									width="700" height="400" player="flash" style="margin-top:2%;" />
+							</div>
+						</div>
+						<div class="col-sm-2"></div>
 					</div>
-					<div class="col-sm-2"></div>
 				</div>
-			</div>
-			<!--/.box-->
+				<!--/.box-->
+			</p:outputPanel>
 		</div>
 		</section>
 		<section id="imagens">
 		<div class="container">
-			<div class="box">
-				<div class="row">
-					<div class="center">
-						<h2>Imagens</h2>
-					</div>
-					<div class="col-sm-3"></div>
-					<div class="col-sm-6">
-						<div id="fotos" class="carousel slide" data-interval="3000"
-							data-ride="carousel">
-							<!-- Carousel indicators -->
-							<ol class="carousel-indicators">
-								<ui:repeat var="" value="#{indexBean.projetoSel.imagens}"
-									varStatus="x">
-									<li data-target="#fotos" data-slide-to="#{x.index}"
-										class="#{x.index==0 ? 'active' : ''}"></li>
-								</ui:repeat>
-							</ol>
-							<!-- Carousel items -->
-							<div class="carousel-inner">
-								<ui:repeat var="foto" value="#{indexBean.projetoSel.imagens}"
-									varStatus="x">
-									<div class="item  #{x.index==0 ? 'active' : ''}">
-										<div class="container">
-											<div class="carousel-content text-center">
-												<h:graphicImage styleClass="img-responsive"
-													value="/image/#{foto.id}" />
-											</div>
-										</div>
-									</div>
-								</ui:repeat>
-							</div>
-							<!-- Carousel nav -->
-							<a class="carousel-control left" href="#fotos" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-							</a> <a class="carousel-control right" href="#fotos"
-								data-slide="next"> <span
-								class="glyphicon glyphicon-chevron-right"></span>
-							</a>
+			<p:outputPanel rendered="#{indexBean.projetoSel.imagens.size() > 0 }">
+				<div class="box">
+					<div class="row">
+						<div class="center">
+							<h2>Imagens</h2>
 						</div>
 						<div class="col-sm-3"></div>
+						<div class="col-sm-6">
+							<div id="fotos" class="carousel slide" data-interval="3000"
+								data-ride="carousel">
+								<!-- Carousel indicators -->
+								<ol class="carousel-indicators">
+									<ui:repeat var="" value="#{indexBean.projetoSel.imagens}"
+										varStatus="x">
+										<li data-target="#fotos" data-slide-to="#{x.index}"
+											class="#{x.index==0 ? 'active' : ''}"></li>
+									</ui:repeat>
+								</ol>
+								<!-- Carousel items -->
+								<div class="carousel-inner">
+									<ui:repeat var="foto" value="#{indexBean.projetoSel.imagens}"
+										varStatus="x">
+										<div class="item  #{x.index==0 ? 'active' : ''}">
+											<div class="container">
+												<div class="carousel-content text-center">
+													<h:graphicImage styleClass="img-responsive"
+														value="/image/#{foto.id}" />
+												</div>
+											</div>
+										</div>
+									</ui:repeat>
+								</div>
+								<!-- Carousel nav -->
+								<a class="carousel-control left" href="#fotos" data-slide="prev">
+									<span class="glyphicon glyphicon-chevron-left"></span>
+								</a> <a class="carousel-control right" href="#fotos"
+									data-slide="next"> <span
+									class="glyphicon glyphicon-chevron-right"></span>
+								</a>
+							</div>
+							<div class="col-sm-3"></div>
+						</div>
 					</div>
+					<div class="gap" />
 				</div>
-				<div class="gap" />
-			</div>
+			</p:outputPanel>
 			<!--/.box-->
 		</div>
 		<div class="row">

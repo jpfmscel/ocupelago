@@ -29,7 +29,11 @@
 										value="/image/#{noticia.imagens[0].id}" class="img-responsive" /></a>
 							</div>
 							<div class="col-md-5">
-								<h3>#{noticia.titulo}</h3>
+								<h3>
+									<h:outputText value="#{noticia.titulo}">
+										<f:converter converterId="stringConverter100" />
+									</h:outputText>
+								</h3>
 								<h4>
 									<span class="glyphicon glyphicon-time"></span>
 									<p:spacer width="2%" />
@@ -39,7 +43,9 @@
 									</h:outputText>
 								</h4>
 								<p>
-									<h:outputText value="#{noticia.getDescricaoTruncated()}" />
+									<h:outputText value="#{noticia.descricao}">
+										<f:converter converterId="stringConverter400" />
+									</h:outputText>
 								</p>
 
 								<h:commandLink value="Continue lendo" class="btn btn-primary"
