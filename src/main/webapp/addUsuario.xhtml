@@ -22,60 +22,61 @@
 </h:head>
 <h:body>
 
-	<div class="row">
+	<div class="row" style="margin-top: 3%">
 		<div
-			class="col-lg-4 col-sm-6 col-xs-8 col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
-			<h:form id="adduser">
-				<h2 class="form-signin-heading text-center"></h2>
-				<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+			class="col-lg-6 col-sm-6 col-xs-8 col-lg-offset-3 col-sm-offset-3 col-xs-offset-2">
+			<div class="jumbotron" style="border-radius: 25px;">
+				<h:form id="adduser">
+					<h2 class="form-signin-heading text-center">Cadastro de Usuário</h2>
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<br></br>
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
 					<br></br>
-					<ui:repeat value="#{facesContext.messageList}" var="message">
-						<div class="row" style="margin-left: 1%">
-							<span class="label label-danger"><h:outputText
-									value="#{message.summary}" escape="false" /></span>
-						</div>
-					</ui:repeat>
-				</p:outputPanel>
-				<br></br>
-				<div class="form-group">
-					<h:outputLabel id="username" value="Nome" />
-					<h:inputText class="form-control" required="true"
-						a:placeholder="Nome completo"
-						requiredMessage="Digite o nome do usuário."
-						value="#{manterUsuario.usuarioAdd.nome}" />
-				</div>
-				<div class="form-group">
-					<h:outputLabel id="email" value="E-mail" />
-					<h:inputText class="form-control" required="true"
-						a:placeholder="exemplo@gmail.com"
-						requiredMessage="Digite o e-mail."
-						value="#{manterUsuario.usuarioAdd.email}" />
-				</div>
-				<div class="form-group">
-					<h:outputLabel id="senha" value="Senha" />
-					<h:inputSecret requiredMessage="Digite a senha"
-						a:placeholder="senha"
-						class="form-control" required="true"
-						value="#{manterUsuario.usuarioAdd.senha}" />
-				</div>
-				<div class="form-group">
-					<h:outputLabel id="confSenha" value="Confirmação Senha" />
-					<h:inputSecret class="form-control" required="true"
-						requiredMessage="Digite a confirmação de senha."
-						value="#{manterUsuario.usuarioAdd.confirmacaoSenha}" />
-				</div>
-				<div class="form-group">
-					<h:commandLink value="Salvar" class="btn btn-lg btn-success"
-						action="#{manterUsuario.adicionarUsuario}">
-						<i class="fa fa-fw fa-save" />
-					</h:commandLink>
-					<h:outputText value=" " />
-					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-						action="login" immediate="true">
-						<i class="fa fa-fw fa-remove" />
-					</h:commandLink>
-				</div>
-			</h:form>
+					<div class="form-group">
+						<h:outputLabel id="username" value="Nome" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Nome completo"
+							requiredMessage="Digite o nome do usuário."
+							value="#{manterUsuario.usuarioAdd.nome}" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel id="email" value="E-mail" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="exemplo@gmail.com"
+							requiredMessage="Digite o e-mail."
+							value="#{manterUsuario.usuarioAdd.email}" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel id="senha" value="Senha" />
+						<h:inputSecret requiredMessage="Digite a senha"
+							a:placeholder="senha" class="form-control" required="true"
+							value="#{manterUsuario.usuarioAdd.senha}" />
+					</div>
+					<div class="form-group">
+						<h:outputLabel id="confSenha" value="Confirmação Senha" />
+						<h:inputSecret class="form-control" required="true"
+							requiredMessage="Digite a confirmação de senha."
+							value="#{manterUsuario.usuarioAdd.confirmacaoSenha}" />
+					</div>
+					<div class="form-group">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{manterUsuario.adicionarUsuario}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="login" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</h:form>
+			</div>
 		</div>
 		<div class="col-lg-4" />
 	</div>

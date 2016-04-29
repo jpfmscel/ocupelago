@@ -3,6 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
@@ -10,8 +11,8 @@
 	<title>Login Ocupe o Lago</title>
 
 	<link href="css/bootstrap.min.css" rel="stylesheet" />
-	<link href="css/login.css" rel="stylesheet" />
-	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="bower_components/font-awesome/css/font-awesome.min.css"
+		rel="stylesheet" />
 	<f:metadata>
 		<f:viewAction action="#{loginBean.isLoggedForwardLogin()}" />
 	</f:metadata>
@@ -20,42 +21,43 @@
 	<div class="row" style="margin-top: 5%">
 		<div
 			class="col-lg-4 col-sm-6 col-xs-8 col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
-			<h:form styleClass="form-signin">
-				<h2 class="form-signin-heading text-center">Ocupe o Lago</h2>
-
-
-				<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+			<div class="jumbotron" style="border-radius: 25px;">
+				<h:form styleClass="form-signin">
+					<h2 class="form-signin-heading text-center">Ocupe o Lago</h2>
+					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
+						<br></br>
+						<ui:repeat value="#{facesContext.messageList}" var="message">
+							<div class="row" style="margin-left: 1%">
+								<span class="label label-danger"><h:outputText
+										value="#{message.summary}" escape="false" /></span>
+							</div>
+						</ui:repeat>
+					</p:outputPanel>
 					<br></br>
-					<ui:repeat value="#{facesContext.messageList}" var="message">
-						<div class="row" style="margin-left: 1%">
-							<span class="label label-danger"><h:outputText
-									value="#{message.summary}" escape="false" /></span>
-						</div>
-					</ui:repeat>
-				</p:outputPanel>
-				<br></br>
-				<label for="inputEmail" class="sr-only">Login</label>
-				<h:inputText id="inputEmail" class="form-control" autofocus="true"
-					value="#{loginBean.usuarioLogado.email}" required="true"
-					requiredMessage="Digite seu login!" />
+					<h:inputText id="inputEmail" class="form-control input-lg"
+						autofocus="true" value="#{loginBean.usuarioLogado.email}"
+						required="true" a:placeholder="E-mail" maxlength="100"
+						requiredMessage="Digite seu login!" />
 
-				<label for="inputPassword" class="sr-only">Password</label>
-				<h:inputSecret id="inputPassword" class="form-control"
-					value="#{loginBean.usuarioLogado.senha}" required="true"
-					requiredMessage="Digite sua senha!" />
-				<br></br>
-
-				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-					<h:commandButton value="Login"
-						styleClass="btn btn-lg btn-primary"
-						action="#{loginBean.login}" />
-						<p:spacer width="10%"/>
-					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-						action="index.xhtml" immediate="true">
-						<i class="fa fa-fw fa-remove" />
-					</h:commandLink>
-				</div>
-			</h:form>
+					<h:inputSecret id="inputPassword" class="form-control input-lg"
+						style="margin-top:5%;" value="#{loginBean.usuarioLogado.senha}"
+						required="true" a:placeholder="Senha" maxlength="50"
+						requiredMessage="Digite sua senha!" />
+					<br></br>
+					<div class="form-group" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandButton value="Login"
+							styleClass="btn btn-lg btn-block btn-success"
+							action="#{loginBean.login}" />
+						<h:commandLink value="Voltar"
+							class="btn btn-lg btn-block btn-primary" style="margin-top:1%;"
+							action="index.xhtml" immediate="true" />
+					</div>
+					<p>
+						Ainda não tem uma conta? <br></br>
+						<h:commandLink action="addUsuario" value="Cadastre-se aqui!" />
+					</p>
+				</h:form>
+			</div>
 		</div>
 		<div class="col-lg-4" />
 	</div>

@@ -29,26 +29,26 @@ import br.util.Paginator;
 @ManagedBean(name = "listFactory")
 public class ListFactory {
 
-	private static List<Alerta> listaAlerta = new ArrayList<>();
-	private static List<Local> listaLocal = new ArrayList<>();
-	private static List<Projeto> listaProjeto = new ArrayList<>();
-	private static List<Noticia> listaNoticia = new ArrayList<>();
-	private static List<Esporte> listaEsporte = new ArrayList<>();
-	private static List<Evento> listaEvento = new ArrayList<>();
+	private List<Alerta> listaAlerta = new ArrayList<>();
+	private List<Local> listaLocal = new ArrayList<>();
+	private List<Projeto> listaProjeto = new ArrayList<>();
+	private List<Noticia> listaNoticia = new ArrayList<>();
+	private List<Esporte> listaEsporte = new ArrayList<>();
+	private List<Evento> listaEvento = new ArrayList<>();
 
-	private static Date dataAlerta = new Date();
-	private static Date dataLocal = new Date();
-	private static Date dataProjeto = new Date();
-	private static Date dataNoticia = new Date();
-	private static Date dataEsporte = new Date();
-	private static Date dataEvento = new Date();
+	private Date dataAlerta = new Date();
+	private Date dataLocal = new Date();
+	private Date dataProjeto = new Date();
+	private Date dataNoticia = new Date();
+	private Date dataEsporte = new Date();
+	private Date dataEvento = new Date();
 
-	private static Paginator pagLocal;
-	private static Paginator pagProjeto;
-	private static Paginator pagNoticia;
-	private static Paginator pagEsporte;
-	private static Paginator pagEvento;
-	private static Paginator pagAlerta;
+	private Paginator pagLocal;
+	private Paginator pagProjeto;
+	private Paginator pagNoticia;
+	private Paginator pagEsporte;
+	private Paginator pagEvento;
+	private Paginator pagAlerta;
 
 	public boolean isSamePeriod(Date d1) {
 		boolean retorno = false;
@@ -107,7 +107,7 @@ public class ListFactory {
 	}
 
 	public void setListaAlerta(List<Alerta> listaAlerta) {
-		ListFactory.listaAlerta = listaAlerta;
+		this.listaAlerta = listaAlerta;
 	}
 
 	public List<Local> getListaLocal() {
@@ -121,7 +121,7 @@ public class ListFactory {
 	}
 
 	public void setListaLocal(List<Local> listaLocal) {
-		ListFactory.listaLocal = listaLocal;
+		this.listaLocal = listaLocal;
 	}
 
 	public List<Projeto> getListaProjeto() {
@@ -135,7 +135,7 @@ public class ListFactory {
 	}
 
 	public void setListaProjeto(List<Projeto> listaProjeto) {
-		ListFactory.listaProjeto = listaProjeto;
+		this.listaProjeto = listaProjeto;
 	}
 
 	public List<Noticia> getListaNoticia() {
@@ -149,7 +149,7 @@ public class ListFactory {
 	}
 
 	public void setListaNoticia(List<Noticia> listaNoticia) {
-		ListFactory.listaNoticia = listaNoticia;
+		this.listaNoticia = listaNoticia;
 	}
 
 	public List<Esporte> getListaEsporte() {
@@ -163,7 +163,7 @@ public class ListFactory {
 	}
 
 	public void setListaEsporte(List<Esporte> listaEsporte) {
-		ListFactory.listaEsporte = listaEsporte;
+		this.listaEsporte = listaEsporte;
 	}
 
 	public List<Evento> getListaEvento() {
@@ -177,7 +177,7 @@ public class ListFactory {
 	}
 
 	public void setListaEvento(List<Evento> listaEvento) {
-		ListFactory.listaEvento = listaEvento;
+		this.listaEvento = listaEvento;
 	}
 
 	public Paginator getPagLocal() {
@@ -187,8 +187,8 @@ public class ListFactory {
 		return pagLocal;
 	}
 
-	public static void setPagLocal(Paginator pagLocal) {
-		ListFactory.pagLocal = pagLocal;
+	public void setPagLocal(Paginator pagLocal) {
+		this.pagLocal = pagLocal;
 	}
 
 	public Paginator getPagProjeto() {
@@ -198,8 +198,8 @@ public class ListFactory {
 		return pagProjeto;
 	}
 
-	public static void setPagProjeto(Paginator pagProjeto) {
-		ListFactory.pagProjeto = pagProjeto;
+	public void setPagProjeto(Paginator pagProjeto) {
+		this.pagProjeto = pagProjeto;
 	}
 
 	public Paginator getPagNoticia() {
@@ -210,7 +210,7 @@ public class ListFactory {
 	}
 
 	public void setPagNoticia(Paginator pagNoticia) {
-		ListFactory.pagNoticia = pagNoticia;
+		this.pagNoticia = pagNoticia;
 	}
 
 	public Paginator getPagEsporte() {
@@ -220,8 +220,8 @@ public class ListFactory {
 		return pagEsporte;
 	}
 
-	public static void setPagEsporte(Paginator pagEsporte) {
-		ListFactory.pagEsporte = pagEsporte;
+	public void setPagEsporte(Paginator pagEsporte) {
+		this.pagEsporte = pagEsporte;
 	}
 
 	public Paginator getPagEvento() {
@@ -231,8 +231,8 @@ public class ListFactory {
 		return pagEvento;
 	}
 
-	public static void setPagEvento(Paginator pagEvento) {
-		ListFactory.pagEvento = pagEvento;
+	public void setPagEvento(Paginator pagEvento) {
+		this.pagEvento = pagEvento;
 	}
 
 	public Paginator getPagAlerta() {
@@ -242,8 +242,8 @@ public class ListFactory {
 		return pagAlerta;
 	}
 
-	public static void setPagAlerta(Paginator pagAlerta) {
-		ListFactory.pagAlerta = pagAlerta;
+	public void setPagAlerta(Paginator pagAlerta) {
+		this.pagAlerta = pagAlerta;
 	}
 
 }

@@ -7,25 +7,25 @@ import javax.persistence.PersistenceContext;
 
 public class GerenteConexao {
 
-	private static EntityManagerFactory entityManagerFactory;
+	private EntityManagerFactory entityManagerFactory;
 
 	@PersistenceContext
-	private static EntityManager entityManager;
+	private EntityManager entityManager;
 
-	public static EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		if (entityManager == null) {
 			entityManager = getEntityManagerFactory().createEntityManager();
 		}
 		return entityManager;
 	}
 
-	public static void inserir(Object o) {
+	public void inserir(Object o) {
 		getEntityManager().getTransaction().begin();
 		getEntityManager().persist(o);
 		getEntityManager().getTransaction().commit();
 	}
 
-	public static EntityManagerFactory getEntityManagerFactory() {
+	public EntityManagerFactory getEntityManagerFactory() {
 		if (entityManagerFactory == null) {
 			entityManagerFactory = Persistence.createEntityManagerFactory("ocupelago");
 		}
@@ -33,7 +33,7 @@ public class GerenteConexao {
 	}
 
 	public void setEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-		GerenteConexao.entityManagerFactory = entityManagerFactory;
+		this.entityManagerFactory = entityManagerFactory;
 	}
 
 }
