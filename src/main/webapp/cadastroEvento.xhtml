@@ -85,6 +85,7 @@
 						<h:outputLabel id="localLab" value="Local" />
 						<br></br>
 						<p:autoComplete id="local" value="#{cadastrarEvento.evento.local}"
+							dropdown="true"
 							itemLabel="#{loc.nome}" itemValue="#{loc}" var="loc"
 							maxlength="150" completeMethod="#{cadastrarEvento.completeText}"
 							converter="localConverter" forceSelection="true"
@@ -93,6 +94,8 @@
 							<p:ajax event="itemSelect"
 								listener="#{cadastrarEvento.onItemSelect}" />
 						</p:autoComplete>
+						<p:tooltip id="toolTipFade" for="local" value="Digite partes do nome do local" />
+ 
 					</div>
 
 					<div class="col-md-12" style="margin-top: 2%;">

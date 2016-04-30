@@ -2,16 +2,54 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-<h1>Oooops! Alguma coisa deu errado...</h1>
-<h2>Descrição</h2>
-<br />
-<h:outputText value="Error Code: #{errorHandler.statusCode}"></h:outputText>
-<br />
-<h:outputText value="Error Desscription: #{errorHandler.message}"></h:outputText>
-<br />
-<h:outputText value="Exception Type: #{errorHandler.exceptionType}"></h:outputText>
-<br />
-<h:outputText value="Exception Calss: #{errorHandler.exception}"></h:outputText>
-<br />
-<h:outputText value="Request URI : #{errorHandler.requestURI}"></h:outputText>
+
+<h:head>
+
+	<link href="bower_components/bootstrap/dist/css/bootstrap.min.css"
+		rel="stylesheet" />
+	<!-- MetisMenu CSS -->
+	<link href="bower_components/metisMenu/dist/metisMenu.min.css"
+		rel="stylesheet" />
+	<!-- Custom CSS -->
+	<link href="dist/css/sb-admin-2.css" rel="stylesheet" />
+	<!-- Custom Fonts -->
+	<link href="bower_components/font-awesome/css/font-awesome.min.css"
+		rel="stylesheet" />
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
+
+</h:head>
+<h:body>
+	<div class="jumbotron"
+		style="background-color: firebrick; -webkit-filter: opacity(80%);">
+		<div class="container">
+			<div class="col-md-1">
+				<h1 style="color: white; font-size: 130px;">
+					<span class="glyphicon glyphicon-remove-sign" />
+				</h1>
+			</div>
+			<div class="col-md-10 col-md-offset-1">
+				<h1 style="color: white;">Oooops! Alguma coisa deu errado...</h1>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<h2>Descrição</h2>
+		<br />
+		<h:outputText value="Error Code: #{errorHandler.statusCode}"></h:outputText>
+		<br />
+		<h:outputText value="Error Desscription: #{errorHandler.message}"></h:outputText>
+		<br />
+		<h:outputText value="Exception Type: #{errorHandler.exceptionType}"></h:outputText>
+		<br />
+		<h:outputText value="Exception Calss: #{errorHandler.exception}"></h:outputText>
+		<br />
+		<h:outputText value="Request URI : #{errorHandler.requestURI}"></h:outputText>
+		<h:form>
+			<h:commandButton value="Voltar para o site" style="margin-top:10%;"
+				styleClass="btn btn-lg btn-block btn-primary" action="index.xhtml"
+				immediate="true" />
+		</h:form>
+	</div>
+</h:body>
 </html>

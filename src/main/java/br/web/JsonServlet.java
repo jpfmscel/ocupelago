@@ -60,17 +60,9 @@ public class JsonServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		Integer method = Integer.valueOf(request.getParameter("method"));
-		Integer userid = Integer.valueOf(request.getParameter("userid"));
+		String userid = request.getParameter("userid");
 		response.setCharacterEncoding("ISO-8859-1");
-		
-		Usuario u;
-		if (userid == null) {
-			response.getWriter().write("Você deve estar logado para acessar essa área.");
-			return;
-		} else {
-			u = getUsuarioDao().buscarPorId(userid);
-		}
-		
+
 		if (method == null) {
 			response.getWriter().write("Parâmetros insuficientes.");
 			return;
@@ -80,9 +72,6 @@ public class JsonServlet extends HttpServlet {
 		EnumWebMethods en = EnumWebMethods.getEnumByCod(method);
 		String jsonG = null;
 		String json = getRequestBody(request);
-		log.log(Level.INFO, "Usuário "+u.getNome() + "solicitou "+ en.getNome());
-		log.log(Level.INFO, json);
-		System.out.println("Host :" + request.getRemoteHost() + " - Request :" + json);
 		switch (en) {
 		case GET_ESPORTES:
 			jsonG = gson.toJson(lf.getListaEsporte());
@@ -103,13 +92,13 @@ public class JsonServlet extends HttpServlet {
 			jsonG = gson.toJson(lf.getListaProjeto());
 			break;
 		case GET_AVAL_LOCAL:
-			jsonG = getAvalLocal(json);
+			jsonG = getAvalLocal(json, userid);
 			break;
 		case ADD_ALERTA:
-			jsonG = addAlerta(json);
+			jsonG = addAlerta(json, userid);
 			break;
 		case ADD_AVALIACAO:
-			jsonG = addAvaliacao(json);
+			jsonG = addAvaliacao(json, userid);
 			break;
 		case ADD_USUARIO:
 			jsonG = addUsuario(json);
@@ -121,11 +110,25 @@ public class JsonServlet extends HttpServlet {
 			break;
 		}
 
+		log.log(Level.INFO, json);
 		response.setContentType("application/json");
 		response.getWriter().write(jsonG);
 	}
 
-	private String getAvalLocal(String json) {
+	private Usuario getUsuarioLogado(String userid) {
+		if (userid == null) {
+			return null;
+		}
+		return getUsuarioDao().buscarPorId(Integer.valueOf(userid));
+	}
+
+	private String getAvalLocal(String json, String userid) {
+		Usuario usuarioLogado = getUsuarioLogado(userid);
+		if (usuarioLogado == null) {
+			return "Você deve estar logado para acessar essa área.";
+		}
+		log.log(Level.INFO, "Usuário " + usuarioLogado.getNome() + "solicitou " + json);
+
 		Local l = gson.fromJson(json, Local.class);
 		String retorno = checkLocal(l);
 		if (retorno == null) {
@@ -146,7 +149,13 @@ public class JsonServlet extends HttpServlet {
 		return json;
 	}
 
-	private String addAvaliacao(String json) {
+	private String addAvaliacao(String json, String userid) {
+		Usuario usuarioLogado = getUsuarioLogado(userid);
+		if (usuarioLogado == null) {
+			return "Você deve estar logado para acessar essa área.";
+		}
+		log.log(Level.INFO, "Usuário " + usuarioLogado.getNome() + "solicitou " + json);
+
 		Avaliacao a = gson.fromJson(json, Avaliacao.class);
 		String retorno = checkAvaliacao(a);
 		if (retorno == null) {
@@ -216,7 +225,13 @@ public class JsonServlet extends HttpServlet {
 		return gson.toJson(us);
 	}
 
-	private String addAlerta(String json) {
+	private String addAlerta(String json, String userid) {
+		Usuario usuarioLogado = getUsuarioLogado(userid);
+		if (usuarioLogado == null) {
+			return "Você deve estar logado para acessar essa área.";
+		}
+		log.log(Level.INFO, "Usuário " + usuarioLogado.getNome() + "solicitou " + json);
+
 		Alerta a = gson.fromJson(json, Alerta.class);
 
 		String retorno = checkAlerta(a);

@@ -44,6 +44,10 @@ public class CadastrarEvento implements Serializable {
 
 	public String adicionarEvento() {
 		try {
+			if (isDataOk()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial : ", null));
+				return null;
+			}
 			fixURL();
 			getEventoDAO().iniciarTransacao();
 			getEventoDAO().update(getEvento());
@@ -60,6 +64,10 @@ public class CadastrarEvento implements Serializable {
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento cadastrado com sucesso!", null));
 		return "consultaEvento.xhtml";
+	}
+
+	private boolean isDataOk() {
+		return getEvento().getDataInicio().before(getEvento().getDataFim());
 	}
 
 	private void fixURL() {

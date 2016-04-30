@@ -1,6 +1,7 @@
 package br.managedBeans.alerta;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,6 +50,7 @@ public class ConsultarAlerta implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Alerta excluída com sucesso!", null));
 			getCadastrarAlerta().setAlerta(null);
 			getCadastrarAlerta().init();
+			getListFactory().atualizarLista(getAlertaDAO(), new Date());
 		} catch (Exception ex) {
 			log.log(Level.INFO, "Alerta " + e.toString() + " com erro!");
 			ex.printStackTrace();
@@ -56,7 +58,7 @@ public class ConsultarAlerta implements Serializable {
 			return null;
 		}
 		setAlertaSelected(null);
-		return "consultarAlerta.xhtml";
+		return "consultaAlerta.xhtml";
 	}
 
 	private void update() {
