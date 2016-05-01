@@ -13,6 +13,31 @@
 </h:head>
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Mapa de Alertas</ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#tabelaAlerta')
+										.DataTable(
+												{
+													pageLength : 5,
+													pagingType : 'full',
+													language : {
+														search : "Pesquisar:",
+														lengthMenu : "Mostrar _MENU_ linhas",
+														info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+														paginate : {
+															first : 'Primeira',
+															previous : 'Anterior',
+															next : 'Próxima',
+															last : 'Última'
+														}
+													}
+												});
+							});
+		</script>
+	</ui:define>
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
 		<h:form>
@@ -39,8 +64,8 @@
 
 			<p:outputPanel id="tabelaAlertas"
 				rendered="#{listFactory.listaAlerta.size() &gt; 0}">
-				<div class="col-md-12">
-					<table class="table table-hover table-striped">
+				<div class="col-md-12" style="padding-bottom: 10%;">
+					<table id="tabelaAlerta" class="table table-hover table-striped">
 						<thead>
 							<tr>
 								<th style="width: 25%">Título</th>
@@ -51,7 +76,10 @@
 						<tbody>
 							<ui:repeat var="alerta" value="#{listFactory.listaAlerta}">
 								<tr>
-									<td style="width: 25%">#{alerta.titulo}</td>
+									<td style="width: 25%"><h:outputText
+											value="#{alerta.titulo}">
+											<f:converter converterId="stringConverter100" />
+										</h:outputText></td>
 									<td style="width: 55%">#{alerta.latitude} ,
 										#{alerta.longitude}</td>
 									<td style="width: 15%;">
@@ -68,19 +96,6 @@
 							</ui:repeat>
 						</tbody>
 					</table>
-				</div>
-				<div style="text-align: center;">
-					<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
-						rendered="#{listFactory.pagAlerta.pageIndex != 1}"
-						action="#{listFactory.pagAlerta.prev}" update="tableAlerta" />
-					<p:spacer width="3%" />
-					<h:outputText rendered="#{listFactory.pagAlerta.pages &gt; 1}"
-						value="#{listFactory.pagAlerta.pageIndex} / #{listFactory.pagAlerta.pages}" />
-					<p:spacer width="3%" />
-					<p:commandLink value="next &gt;" styleClass="btn btn-primary"
-						rendered="#{listFactory.pagAlerta.pageIndex &lt; listFactory.pagAlerta.pages}"
-						action="#{listFactory.pagAlerta.next}" update="tableAlerta" />
-					<h:inputHidden value="#{listFactory.pagAlerta.pageIndex}" />
 				</div>
 			</p:outputPanel>
 

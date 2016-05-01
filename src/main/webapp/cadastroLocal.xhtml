@@ -18,16 +18,7 @@
 		<h:form id="addlocal">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<br></br>
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-					<br></br>
+					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Nome" />
 						<h:inputText class="form-control" required="true"
@@ -37,8 +28,9 @@
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Descrição" />
-						<h:inputTextarea styleClass="form-control"  required="true" a:maxlength="1000" cols="50"
-							rows="10" a:placeholder="Descrição do local" id="descricao"
+						<h:inputTextarea styleClass="form-control" required="true"
+							a:maxlength="1000" cols="50" rows="10"
+							a:placeholder="Descrição do local" id="descricao"
 							requiredMessage="Digite a descrição do local."
 							value="#{cadastrarLocal.local.descricao}" />
 					</div>

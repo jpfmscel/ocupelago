@@ -18,16 +18,7 @@
 		<h:form id="adduser">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<br></br>
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-					<br></br>
+					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Nome" />
 						<h:inputText class="form-control" required="true"

@@ -12,34 +12,45 @@
 </h:head>
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Consultar Eventos</ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#tabelaEvento')
+										.DataTable(
+												{
+													pageLength : 5,
+													pagingType : 'full',
+													language : {
+														search : "Pesquisar:",
+														lengthMenu : "Mostrar _MENU_ linhas",
+														info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+														paginate : {
+															first : 'Primeira',
+															previous : 'Anterior',
+															next : 'Próxima',
+															last : 'Última'
+														}
+													}
+												});
+							});
+		</script>
+	</ui:define>
 	<ui:define name="body">
 		<h:form id="consultaevento">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasInfoMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-success"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="col-md-4">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
+					<ui:include src="messages.xhtml" />
 					<p:outputPanel rendered="#{listFactory.listaEvento.size() &lt; 1}">
-						<div class="col-md-12" >
+						<div class="col-md-12">
 							<h2>Nenhum evento cadastrado.</h2>
 						</div>
 					</p:outputPanel>
-					<p:outputPanel id="tabelaEventos" rendered="#{listFactory.listaEvento.size() &gt; 0}">
+					<p:outputPanel id="tabelaEventos"
+						rendered="#{listFactory.listaEvento.size() &gt; 0}">
 						<div class="col-md-12">
-							<table class="table table-hover table-striped">
+							<table class="table table-hover table-striped" id="tabelaEvento">
 								<thead>
 									<tr>
 										<th style="width: 25%">Nome</th>
@@ -50,7 +61,10 @@
 								<tbody>
 									<ui:repeat var="evento" value="#{listFactory.listaEvento}">
 										<tr>
-											<td style="width: 25%">#{evento.nome}</td>
+											<td style="width: 25%"><h:outputText
+													value="#{evento.nome}">
+													<f:converter converterId="stringConverter100" />
+												</h:outputText></td>
 											<td style="width: 55%">#{evento.local.nome}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
@@ -77,19 +91,6 @@
 									</ui:repeat>
 								</tbody>
 							</table>
-						</div>
-						<div style="text-align: center;">
-							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagEvento.pageIndex != 1}"
-								action="#{listFactory.pagEvento.prev}" update="tableEvento" />
-							<p:spacer width="3%" />
-							<h:outputText rendered="#{listFactory.pagEvento.pages &gt; 1}"
-								value="#{listFactory.pagEvento.pageIndex} / #{listFactory.pagEvento.pages}" />
-							<p:spacer width="3%" />
-							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagEvento.pageIndex &lt; listFactory.pagEvento.pages}"
-								action="#{listFactory.pagEvento.next}" update="tableEvento" />
-							<h:inputHidden value="#{listFactory.pagEvento.pageIndex}" />
 						</div>
 					</p:outputPanel>
 

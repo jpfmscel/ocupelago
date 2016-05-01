@@ -58,19 +58,6 @@
 						<hr />
 					</ui:repeat>
 
-					<div style="text-align: center;">
-						<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
-							rendered="#{listFactory.pagNoticia.pageIndex != 1}"
-							action="#{listFactory.pagNoticia.prev}" update="tableNoticia" />
-						<p:spacer width="3%" />
-						<h:outputText rendered="#{listFactory.pagNoticia.pages &gt; 1}"
-							value="#{listFactory.pagNoticia.pageIndex} / #{listFactory.pagNoticia.pages}" />
-						<p:spacer width="3%" />
-						<p:commandLink value="next &gt;" styleClass="btn btn-primary"
-							rendered="#{listFactory.pagNoticia.pageIndex &lt; listFactory.pagNoticia.pages}"
-							action="#{listFactory.pagNoticia.next}" update="tableNoticia" />
-						<h:inputHidden value="#{listFactory.pagNoticia.pageIndex}" />
-					</div>
 					<div class="row">
 						<div class="gap" />
 						<div class="center">

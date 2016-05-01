@@ -14,18 +14,10 @@
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Editar Esporte</ui:define>
 	<ui:define name="body">
-		<h:form id="adduser">
-<!-- 			<p:growl id="messages" showDetail="true" /> -->
+		<h:form id="editaEsporte">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
+					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="nome" value="Nome" />
 						<h:inputText class="form-control" required="true"
@@ -59,16 +51,19 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
 								fileUploadListener="#{consultarEsporte.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{consultarEsporte.esporteSelected.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="adduser:panelFoto"
+							<ui:repeat var="ima"
+								value="#{consultarEsporte.esporteSelected.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="editaEsporte:panelFoto"
 									action="#{consultarEsporte.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
@@ -94,8 +89,8 @@
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
-							<p:media value="#{consultarEsporte.esporteSelected.videoURL}" width="700"
-								height="400" player="flash"
+							<p:media value="#{consultarEsporte.esporteSelected.videoURL}"
+								width="700" height="400" player="flash"
 								style="margin-top:2%; margin-left: 10%;"
 								rendered="#{consultarEsporte.esporteSelected.videoURL != null and consultarEsporte.esporteSelected.videoURL != ''}" />
 						</p:outputPanel>
@@ -139,7 +134,7 @@
 						</h:commandLink>
 						<h:outputText value=" " />
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="consultaEsporte.xhtml" immediate="true"/>
+							action="consultaEsporte.xhtml" immediate="true" />
 					</div>
 				</div>
 				<div class="col-lg-4" />

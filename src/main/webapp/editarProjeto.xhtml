@@ -19,14 +19,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2 class="form-signin-heading text-center"></h2>
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
+					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="titulo" value="Título" />
 						<h:inputText class="form-control" required="true"
@@ -45,16 +38,19 @@
 						<p:outputPanel id="panelFoto">
 							<h:outputLabel id="foto" value="Foto" />
 							<br></br>
-							<p:fileUpload
-								label="Selecionar" cancelLabel="Cancelar" auto="true"
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
 								fileUploadListener="#{consultarProjeto.handleFileUpload}"
 								mode="advanced" update="panelFoto" sizeLimit="5000000"
 								fileLimit="5"
 								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;"/>
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
 
-							<ui:repeat var="ima" value="#{consultarProjeto.projetoSelected.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link" update="addprojeto:panelFoto"
+							<ui:repeat var="ima"
+								value="#{consultarProjeto.projetoSelected.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addprojeto:panelFoto"
 									action="#{consultarProjeto.removerImagem(ima)}">
 									<i class="glyphicon glyphicon-remove" style="color: red;" />
 								</p:commandLink>
@@ -80,8 +76,9 @@
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
-							<p:media value="#{consultarProjeto.projetoSelected.videoURL}" width="700"
-								height="400" player="flash" style="margin-top:2%; margin-left: 10%;"
+							<p:media value="#{consultarProjeto.projetoSelected.videoURL}"
+								width="700" height="400" player="flash"
+								style="margin-top:2%; margin-left: 10%;"
 								rendered="#{consultarProjeto.projetoSelected.videoURL != null and consultarProjeto.projetoSelected.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
@@ -96,7 +93,7 @@
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-<!-- 						<h:outputLabel value="Link Twitter" /> -->
+						<!-- 						<h:outputLabel value="Link Twitter" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
@@ -106,7 +103,7 @@
 						</div>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
-<!-- 						<h:outputLabel value="Link Site" /> -->
+						<!-- 						<h:outputLabel value="Link Site" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>

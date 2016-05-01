@@ -5,7 +5,6 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:head>
-	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta name="description" content="Projeto Ocupe o Lago" />
@@ -23,6 +22,11 @@
 		rel="stylesheet" />
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript library="primefaces" name="primefaces.js" />
+
+	<link rel="stylesheet" type="text/css"
+		href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css" />
+	<script type="text/javascript" charset="utf8"
+		src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js" />
 	<!-- DataTables CSS -->
 	<!-- 	<link -->
 	<!-- 		href="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" -->
@@ -31,6 +35,8 @@
 	<!-- 	<link -->
 	<!-- 		href="../bower_components/datatables-responsive/css/dataTables.responsive.css" -->
 	<!-- 		rel="stylesheet" /> -->
+
+	<ui:insert name="head" />
 
 	<f:metadata>
 		<f:viewAction action="#{loginBean.isLoggedForward()}" />
@@ -54,12 +60,12 @@
 		<ul class="nav navbar-top-links navbar-right">
 			<li class="dropdown">
 				<li class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw" /> #{loginBean.usuarioLogado.nome} 
-						<i class="fa fa-caret-down" /></a>
+					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw" />
+						#{loginBean.usuarioLogado.nome} <i class="fa fa-caret-down" /></a>
 					<ul class="dropdown-menu dropdown-user">
 						<h:form>
-							<li><h:commandLink
-									action="#{loginBean.logout}" value="Logout">
+							<li><h:commandLink action="#{loginBean.logout}"
+									value="Logout">
 									<i class="fa fa-sign-out fa-fw" />
 								</h:commandLink></li>
 						</h:form>

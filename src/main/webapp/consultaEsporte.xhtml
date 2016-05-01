@@ -12,27 +12,36 @@
 </h:head>
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Consultar Esportes</ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#tabelaEsporte')
+										.DataTable(
+												{
+													pageLength : 5,
+													pagingType : 'full',
+													language : {
+														search : "Pesquisar:",
+														lengthMenu : "Mostrar _MENU_ linhas",
+														info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+														paginate : {
+															first : 'Primeira',
+															previous : 'Anterior',
+															next : 'Próxima',
+															last : 'Última'
+														}
+													}
+												});
+							});
+		</script>
+	</ui:define>
 	<ui:define name="body">
 		<h:form id="consultaesporte">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasInfoMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-success"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="col-md-4">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-
+					<ui:include src="messages.xhtml" />
 					<p:outputPanel rendered="#{listFactory.listaEsporte.size() &lt; 1}">
 						<div class="col-md-12">
 							<h2>Nenhum esporte cadastrado.</h2>
@@ -41,27 +50,30 @@
 					<p:outputPanel id="tabelaEsportes"
 						rendered="#{listFactory.listaEsporte.size() &gt; 0}">
 						<div class="col-md-12">
-							<table class="table table-hover table-striped">
+							<table class="table table-hover table-striped" id="tabelaEsporte">
 								<thead>
 									<tr>
 										<th style="width: 25%">Nome</th>
-										<th style="width: 5%">Tipo</th>
-										<th style="width: 55%">Descrição</th>
+										<th style="width: 10%">Tipo</th>
+										<th style="width: 50%">Descrição</th>
 										<th style="width: 15%;">Operações</th>
 									</tr>
 								</thead>
 								<tbody>
 									<ui:repeat var="esporte" value="#{listFactory.listaEsporte}">
 										<tr>
-											<td style="width: 25%; padding-top: 1.5%;">#{esporte.nome}</td>
-											<td style="width: 5%"><h:graphicImage
+											<td style="width: 25%; padding-top: 1.5%;"><h:outputText
+													value="#{esporte.nome}">
+													<f:converter converterId="stringConverter100" />
+												</h:outputText></td>
+											<td style="width: 10%"><h:graphicImage
 													rendered="#{esporte.aquatico}" value="images/agua.png"
 													style="height: 34px;width: 34px;" /> <h:graphicImage
 													rendered="#{esporte.aereo}" value="images/ar.png"
 													style="height: 34px;width: 34px;" /> <h:graphicImage
 													rendered="#{esporte.terrestre}" value="images/terra.png"
 													style="height: 34px;width: 34px;" /></td>
-											<td style="width: 55%; padding-top: 1.5%;">#{esporte.descricao}</td>
+											<td style="width: 50%; padding-top: 1.5%;">#{esporte.descricao}</td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
 													<h:commandLink
@@ -87,19 +99,6 @@
 									</ui:repeat>
 								</tbody>
 							</table>
-						</div>
-						<div style="text-align: center;">
-							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagEsporte.pageIndex != 1}"
-								action="#{listFactory.pagEsporte.prev}" update="tableEsporte" />
-							<p:spacer width="3%" />
-							<h:outputText rendered="#{listFactory.pagEsporte.pages &gt; 1}"
-								value="#{listFactory.pagEsporte.pageIndex} / #{listFactory.pagEsporte.pages}" />
-							<p:spacer width="3%" />
-							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagEsporte.pageIndex &lt; listFactory.pagEsporte.pages}"
-								action="#{listFactory.pagEsporte.next}" update="tableEsporte" />
-							<h:inputHidden value="#{listFactory.pagEsporte.pageIndex}" />
 						</div>
 					</p:outputPanel>
 

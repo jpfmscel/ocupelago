@@ -30,11 +30,11 @@ public class IndexBean {
 	private LocalDAO localDAO;
 
 	@PostConstruct
-	public void init(){
+	public void init() {
 		getRestaurantes().addAll(getLocalDAO().buscarPorCategoria("Restaurante"));
 		getClubes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
 	}
-	
+
 	public String detalhar(Object o) {
 		String redirect = null;
 		if (o instanceof Noticia) {
@@ -54,6 +54,11 @@ public class IndexBean {
 			redirect = "local";
 		}
 		return redirect;
+	}
+
+	public String navegarVcNoLago() {
+		atualizarListaLocais();
+		return "vcnolago";
 	}
 
 	public void atualizarListaLocais() {
@@ -114,7 +119,6 @@ public class IndexBean {
 	public void setLocalSel(Local localSel) {
 		this.localSel = localSel;
 	}
-
 
 	public LocalDAO getLocalDAO() {
 		if (localDAO == null) {

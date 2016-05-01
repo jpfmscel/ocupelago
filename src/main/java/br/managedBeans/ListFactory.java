@@ -23,7 +23,6 @@ import br.entidades.Evento;
 import br.entidades.Local;
 import br.entidades.Noticia;
 import br.entidades.Projeto;
-import br.util.Paginator;
 
 @ApplicationScoped
 @ManagedBean(name = "listFactory")
@@ -42,13 +41,6 @@ public class ListFactory {
 	private Date dataNoticia = new Date();
 	private Date dataEsporte = new Date();
 	private Date dataEvento = new Date();
-
-	private Paginator pagLocal;
-	private Paginator pagProjeto;
-	private Paginator pagNoticia;
-	private Paginator pagEsporte;
-	private Paginator pagEvento;
-	private Paginator pagAlerta;
 
 	public boolean isSamePeriod(Date d1) {
 		boolean retorno = false;
@@ -178,72 +170,6 @@ public class ListFactory {
 
 	public void setListaEvento(List<Evento> listaEvento) {
 		this.listaEvento = listaEvento;
-	}
-
-	public Paginator getPagLocal() {
-		if (pagLocal == null) {
-			pagLocal = new Paginator(listaLocal);
-		}
-		return pagLocal;
-	}
-
-	public void setPagLocal(Paginator pagLocal) {
-		this.pagLocal = pagLocal;
-	}
-
-	public Paginator getPagProjeto() {
-		if (pagProjeto == null) {
-			pagProjeto = new Paginator(listaProjeto);
-		}
-		return pagProjeto;
-	}
-
-	public void setPagProjeto(Paginator pagProjeto) {
-		this.pagProjeto = pagProjeto;
-	}
-
-	public Paginator getPagNoticia() {
-		if (pagNoticia == null) {
-			pagNoticia = new Paginator(listaNoticia);
-		}
-		return pagNoticia;
-	}
-
-	public void setPagNoticia(Paginator pagNoticia) {
-		this.pagNoticia = pagNoticia;
-	}
-
-	public Paginator getPagEsporte() {
-		if (pagEsporte == null) {
-			pagEsporte = new Paginator(listaEsporte);
-		}
-		return pagEsporte;
-	}
-
-	public void setPagEsporte(Paginator pagEsporte) {
-		this.pagEsporte = pagEsporte;
-	}
-
-	public Paginator getPagEvento() {
-		if (pagEvento == null) {
-			pagEvento = new Paginator(listaEvento);
-		}
-		return pagEvento;
-	}
-
-	public void setPagEvento(Paginator pagEvento) {
-		this.pagEvento = pagEvento;
-	}
-
-	public Paginator getPagAlerta() {
-		if (pagAlerta == null) {
-			pagAlerta = new Paginator(listaAlerta);
-		}
-		return pagAlerta;
-	}
-
-	public void setPagAlerta(Paginator pagAlerta) {
-		this.pagAlerta = pagAlerta;
 	}
 
 }

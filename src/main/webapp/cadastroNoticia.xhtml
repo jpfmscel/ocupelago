@@ -18,25 +18,18 @@
 			<div class="row">
 				<div class="col-md-12">
 					<h2 class="text-center"></h2>
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="col-md-4">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
+					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="titulo" value="Título" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Título"  maxlength="100"
+							a:placeholder="Título" maxlength="100"
 							requiredMessage="Digite o título da notícia."
 							value="#{cadastrarNoticia.noticia.titulo}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="subtitulo" value="Subtítulo" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Subtítulo"  maxlength="300"
+							a:placeholder="Subtítulo" maxlength="300"
 							requiredMessage="Digite o subtítulo da notícia."
 							value="#{cadastrarNoticia.noticia.subtitulo}" />
 					</div>
@@ -44,7 +37,7 @@
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
 						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							value="#{cadastrarNoticia.noticia.descricao}"  a:maxlength="3000"
+							value="#{cadastrarNoticia.noticia.descricao}" a:maxlength="3000"
 							requiredMessage="Digite a descrição da notícia."
 							a:placeholder="Informe a descrição da notícia" required="true" />
 					</div>

@@ -14,35 +14,46 @@
 
 <ui:composition template="main.xhtml">
 	<ui:define name="title">Consultar Projetos</ui:define>
+	<ui:define name="head">
+		<script type="text/javascript">
+			$(document)
+					.ready(
+							function() {
+								$('#tabelaProjeto')
+										.DataTable(
+												{
+													pageLength : 5,
+													pagingType : 'full',
+													language : {
+														search : "Pesquisar:",
+														lengthMenu : "Mostrar _MENU_ linhas",
+														info : "Mostrando _START_ a _END_ de _TOTAL_ registros",
+														paginate : {
+															first : 'Primeira',
+															previous : 'Anterior',
+															next : 'Próxima',
+															last : 'Última'
+														}
+													}
+												});
+							});
+		</script>
+	</ui:define>
 	<ui:define name="body">
 		<h:form id="consultaprojeto">
 			<div class="row">
 				<div class="col-md-12">
-					<p:outputPanel rendered="#{dashboardView.hasInfoMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="row" style="margin-left: 1%">
-								<span class="label label-success"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
-					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
-						<ui:repeat value="#{facesContext.messageList}" var="message">
-							<div class="col-md-4">
-								<span class="label label-danger"><h:outputText
-										value="#{message.summary}" escape="false" /></span>
-							</div>
-						</ui:repeat>
-					</p:outputPanel>
+					<ui:include src="messages.xhtml" />
 					<p:outputPanel rendered="#{listFactory.listaProjeto.size() &lt; 1}">
 						<div class="col-md-12">
 							<h2>Nenhum projeto cadastrado.</h2>
 						</div>
 					</p:outputPanel>
 
-					<p:outputPanel id="tabelaProjetos" rendered="#{listFactory.listaProjeto.size() &gt; 0}">
+					<p:outputPanel id="tabelaProjetos"
+						rendered="#{listFactory.listaProjeto.size() &gt; 0}">
 						<div class="col-md-12">
-							<table class="table table-hover table-striped">
+							<table class="table table-hover table-striped" id="tabelaProjeto">
 								<thead>
 									<tr>
 										<th style="width: 25%">Nome</th>
@@ -53,8 +64,14 @@
 								<tbody>
 									<ui:repeat var="projeto" value="#{listFactory.listaProjeto}">
 										<tr>
-											<td style="width: 25%">#{projeto.titulo}</td>
-											<td style="width: 55%">#{projeto.descricao}</td>
+											<td style="width: 25%"><h:outputText
+													value="#{projeto.titulo}">
+													<f:converter converterId="stringConverter100" />
+												</h:outputText></td>
+											<td style="width: 55%"><h:outputText
+													value="#{projeto.descricao}">
+													<f:converter converterId="stringConverter100" />
+												</h:outputText></td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
 													<h:commandLink
@@ -80,19 +97,6 @@
 									</ui:repeat>
 								</tbody>
 							</table>
-						</div>
-						<div style="text-align: center;">
-							<p:commandLink value="&lt; anterior" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagProjeto.pageIndex != 1}"
-								action="#{listFactory.pagProjeto.prev}" update="tabelaProjetos" />
-							<p:spacer width="3%" />
-							<h:outputText rendered="#{listFactory.pagProjeto.pages &gt; 1}"
-								value="#{listFactory.pagProjeto.pageIndex} / #{listFactory.pagProjeto.pages}" />
-							<p:spacer width="3%" />
-							<p:commandLink value="next &gt;" styleClass="btn btn-primary"
-								rendered="#{listFactory.pagProjeto.pageIndex &lt; listFactory.pagProjeto.pages}"
-								action="#{listFactory.pagProjeto.next}" update="tabelaProjetos" />
-							<h:inputHidden value="#{listFactory.pagProjeto.pageIndex}" />
 						</div>
 					</p:outputPanel>
 
