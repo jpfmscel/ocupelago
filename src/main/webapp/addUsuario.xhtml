@@ -20,14 +20,15 @@
 	<link href="css/login.css" rel="stylesheet" />
 	<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 </h:head>
-<h:body>
-
+<h:body style="background: #4e8ce5;">
 	<div class="row" style="margin-top: 3%">
 		<div
 			class="col-lg-6 col-sm-6 col-xs-8 col-lg-offset-3 col-sm-offset-3 col-xs-offset-2">
-			<div class="jumbotron" style="border-radius: 25px;">
+			<div class="jumbotron"
+				style="border-radius: 25px; box-shadow: 5px 5px 80px #000000;">
 				<h:form id="adduser">
-					<h2 class="form-signin-heading text-center">Cadastro de Usuário</h2>
+					<h2 class="form-signin-heading text-center">Cadastro de
+						Usuário</h2>
 					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
 						<br></br>
 						<ui:repeat value="#{facesContext.messageList}" var="message">
@@ -78,7 +79,6 @@
 				</h:form>
 			</div>
 		</div>
-		<div class="col-lg-4" />
 	</div>
 </h:body>
 </html>

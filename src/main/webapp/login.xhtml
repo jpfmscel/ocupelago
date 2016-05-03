@@ -17,11 +17,12 @@
 		<f:viewAction action="#{loginBean.isLoggedForwardLogin()}" />
 	</f:metadata>
 </h:head>
-<h:body>
-	<div class="row" style="margin-top: 5%">
+<h:body style="background: #4e8ce5;">
+	<div class="row" style="margin-top: 3%">
 		<div
 			class="col-lg-4 col-sm-6 col-xs-8 col-lg-offset-4 col-sm-offset-3 col-xs-offset-2">
-			<div class="jumbotron" style="border-radius: 25px;">
+			<div class="jumbotron"
+				style="border-radius: 25px; box-shadow: 5px 5px 80px #000000;">
 				<h:form styleClass="form-signin">
 					<h2 class="form-signin-heading text-center">Ocupe o Lago</h2>
 					<p:outputPanel rendered="#{dashboardView.hasErrorMessage()}">
@@ -54,7 +55,8 @@
 					</div>
 					<p>
 						Ainda não tem uma conta? <br></br>
-						<h:commandLink action="addUsuario" value="Cadastre-se aqui!" />
+						<h:commandLink action="addUsuario" value="Cadastre-se aqui!"
+							immediate="true" />
 					</p>
 				</h:form>
 			</div>

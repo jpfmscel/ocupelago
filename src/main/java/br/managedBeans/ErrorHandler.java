@@ -32,9 +32,16 @@ public class ErrorHandler {
 	}
 
 	public String getException() {
-		Exception e = ((Exception) FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("javax.servlet.error.exception"));
+		Object e = FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get("javax.servlet.error.exception");
 		String val = "";
-		if(e!=null){
+		if(e == null){
+			return val;
+		}
+		if(e instanceof Exception){
+			if(e!=null){
+				val = e.toString();
+			}
+		}else{
 			val = e.toString();
 		}
 		return val;
