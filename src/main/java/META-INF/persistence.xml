@@ -30,13 +30,14 @@
 
 			<property name="hibernate.c3p0.idleConnectionTestPeriod" value="600" />
 			<property name="hibernate.c3p0.maxIdleTimeExcessConnections" value="600" />
-			<!-- <property name="hibernate.c3p0.maxConnectionAge" value="60" /> -->
+			<property name="hibernate.c3p0.maxConnectionAge" value="3600" />
 
-
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ocupelago" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://aai4arvolaix86.caubzvqegnle.us-west-2.rds.amazonaws.com:3306/ocupelago" />
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://ocupelago.caubzvqegnle.us-west-2.rds.amazonaws.com:3306/ocupelago" /> -->
+			<!-- <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ocupelago" /> -->
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="root" />
+			<property name="javax.persistence.jdbc.password" value="rootroot" />
 
 		</properties>
 

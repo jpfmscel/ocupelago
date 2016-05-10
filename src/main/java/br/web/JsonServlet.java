@@ -126,11 +126,12 @@ public class JsonServlet extends HttpServlet {
 	}
 
 	private String getAvalLocal(String json, String userid) {
-		Usuario usuarioLogado = getUsuarioLogado(userid);
+		/*Usuario usuarioLogado = getUsuarioLogado(userid);
 		if (usuarioLogado == null) {
 			return "Você deve estar logado para acessar essa área.";
 		}
-		log.log(Level.INFO, "Usuário " + usuarioLogado.getNome() + "solicitou " + json);
+		*/
+		log.log(Level.INFO, "Usuário solicitou avaliacoes local" + json);
 
 		Local l = gson.fromJson(json, Local.class);
 		String retorno = checkLocal(l);

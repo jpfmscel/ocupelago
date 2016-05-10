@@ -21,11 +21,11 @@ public class ImagemREST implements Serializable {
 
 	@Expose
 	private int id;
-	@Expose
+//	@Expose
 	private String nomeArquivo;
-	@Expose
+//	@Expose
 	private String conteudo;
-	@Expose
+//	@Expose
 	private Date dataCriado;
 
 	private String getBase64EncodedBytes(Imagem i) {
