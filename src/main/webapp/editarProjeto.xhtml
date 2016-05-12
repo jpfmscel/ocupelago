@@ -29,10 +29,13 @@
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel id="descricao" value="Descrição" />
-						<h:inputText class="form-control"
+
+						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
 							requiredMessage="Digite a descrição do projeto."
 							a:placeholder="Informe a descrição do projeto" required="true"
 							value="#{consultarProjeto.projetoSelected.descricao}" />
+
+
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:outputPanel id="panelFoto">
