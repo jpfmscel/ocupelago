@@ -22,13 +22,13 @@ import org.primefaces.model.map.Marker;
 import br.dao.LocalDAO;
 import br.entidades.Imagem;
 import br.entidades.Local;
-import br.managedBeans.ListFactory;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarLocal")
-public class CadastrarLocal implements Serializable {
+public class CadastrarLocal extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = 734069129117081739L;
 
@@ -41,19 +41,21 @@ public class CadastrarLocal implements Serializable {
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
-
 	public String adicionarLocal() {
 		try {
-			fixURL();
-			getLocalDAO().iniciarTransacao();
-			getLocalDAO().inserir(getLocal());
-			getLocalDAO().comitarTransacao();
-			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Local " + getLocal().toString() + " cadastrado com sucesso!");
-			setLocal(null);
-			getListFactory().atualizarLista(new LocalDAO(), new Date());
+			if (!getLocalDAO().buscarPorNome(getLocal().getNome()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Local já existe!", null));
+				return null;
+			} else {
+				fixURL();
+				getLocalDAO().iniciarTransacao();
+				getLocalDAO().inserir(getLocal());
+				getLocalDAO().comitarTransacao();
+				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+				log.log(Level.INFO, "Local " + getLocal().toString() + " cadastrado com sucesso!");
+				setLocal(null);
+				getListFactory().atualizarLista(new LocalDAO(), new Date());
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local!" + e.getCause(), null));
 			log.log(Level.SEVERE, "Local " + getLocal().toString() + " com erro!");
@@ -134,14 +136,6 @@ public class CadastrarLocal implements Serializable {
 
 	public void setMapModel(MapModel mapModel) {
 		this.mapModel = mapModel;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
 	}
 
 	public LoginBean getLoginBean() {

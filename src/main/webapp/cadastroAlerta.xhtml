@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{loginBean.isLoggedForward()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Local</ui:define>
+	<ui:define name="body">
+		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
+		<h:form id="addalerta">
+			<div class="row">
+				<div class="col-md-12">
+					<ui:include src="messages.xhtml" />
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel value="Nome" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Título da alerta" id="nome" maxlength="150"
+							requiredMessage="Digite o título da alerta."
+							value="#{cadastrarAlerta.alerta.titulo}" />
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel value="Descrição" />
+						<h:inputTextarea styleClass="form-control" required="true"
+							a:maxlength="1000" cols="50" rows="10"
+							a:placeholder="Descrição da alerta" id="descricao"
+							requiredMessage="Digite a descrição da alerta."
+							value="#{cadastrarAlerta.alerta.descricao}" />
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
+							streetView="true" id="mapa" style="width:98%;height:450px"
+							model="#{cadastrarAlerta.emptyModel}">
+							<p:ajax event="pointSelect"
+								listener="#{cadastrarAlerta.onPointSelect}" update="mapa" />
+						</p:gmap>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel value="Categoria" />
+						<br />
+						<h:selectOneMenu value="#{cadastrarAlerta.alerta.categoria}"
+							id="categoria">
+							<f:selectItem itemLabel="Animal" itemValue="Animal" />
+							<f:selectItem itemLabel="Criminal" itemValue="Criminal" />
+							<f:selectItem itemLabel="Ambiental" itemValue="Ambiental" />
+							<f:selectItem itemLabel="Segurança" itemValue="Seguranca" />
+							<f:selectItem itemLabel="Incêndio" itemValue="Incendio" />
+							<f:selectItem itemLabel="Outros" itemValue="Outros" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel id="panelFoto">
+							<h:outputLabel id="foto" value="Foto" />
+							<br></br>
+							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
+								auto="true"
+								fileUploadListener="#{cadastrarAlerta.handleFileUpload}"
+								mode="advanced" update="panelFoto" sizeLimit="5000000"
+								fileLimit="5"
+								fileLimitMessage="O número máximo de arquivos é 5!"
+								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
+
+							<ui:repeat var="ima" value="#{cadastrarAlerta.alerta.imagens}"
+								varStatus="stat">
+								<p:commandLink immediate="true" id="link"
+									update="addalerta:panelFoto"
+									action="#{cadastrarAlerta.removerImagem(ima)}">
+									<i class="glyphicon glyphicon-remove" style="color: red;" />
+								</p:commandLink>
+								<p:spacer width="2%" />
+								<h:outputLabel value="#{ima.nomeArquivo}" />
+								<br></br>
+							</ui:repeat>
+
+						</p:outputPanel>
+					</div>
+
+					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+							action="#{cadastrarAlerta.adicionarAlerta}">
+							<i class="fa fa-fw fa-save" />
+						</h:commandLink>
+						<h:outputText value=" " />
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="consultaAlerta.xhtml" immediate="true">
+							<i class="fa fa-fw fa-remove" />
+						</h:commandLink>
+					</div>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

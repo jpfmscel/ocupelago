@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<ui:composition template="template.xhtml">
+	<ui:define name="menu">
+		<li><a href="#projeto">Projetos</a></li>
+	</ui:define>
+
+	<ui:define name="session">
+		<!-- Page Content -->
+
+		<!-- Page Content -->
+		<div class="container" style="margin-top: 7%; background: white;">
+
+			<!-- Page Header -->
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" style="color: black; font-weight: 500;">Projetos</h1>
+				</div>
+			</div>
+			<!-- /.row -->
+
+			<!-- Projects Row -->
+			<h:form>
+				<div class="row" style="margin-top: 5%;">
+					<ui:repeat var="projeto" value="#{listFactory.listaProjeto}"
+						varStatus="i">
+						<div class="col-md-4 portfolio-item" style="padding-bottom: 25px;">
+							<h:commandLink action="#{indexBean.detalhar(projeto)}">
+								<h:graphicImage class="img-responsive portfolio-item"
+									value="/image/#{projeto.imagens[0].id}" />
+							</h:commandLink>
+							<h3>
+								<h:commandLink value="#{projeto.titulo}"
+									action="#{indexBean.detalhar(projeto)}" />
+							</h3>
+							<p>
+								<h:commandLink action="#{indexBean.detalhar(projeto)}">
+									<h:outputText value="#{projeto.descricao}">
+										<f:converter converterId="stringConverter100" />
+									</h:outputText>
+								</h:commandLink>
+							</p>
+							<div class="line"></div>
+							<div class="share">
+								<div class="post-bottom text-right">
+									<h:commandLink value="Continue lendo"
+										action="#{indexBean.detalhar(projeto)}" />
+								</div>
+								<!-- End .post-bottom -->
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+			</h:form>
+
+		</div>
+		<div class="row">
+			<div class="gap" />
+			<div class="center">
+				<h:form>
+					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+						action="index.xhtml" immediate="true">
+					</h:commandLink>
+				</h:form>
+			</div>
+			<div class="gap" />
+		</div>
+		<!-- /.container -->
+	</ui:define>
+</ui:composition>
+</html>
+

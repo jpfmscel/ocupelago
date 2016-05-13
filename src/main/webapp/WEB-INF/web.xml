@@ -8,12 +8,12 @@
 		<location>/error.xhtml</location>
 	</error-page>
 	<error-page>
-		<error-code>500</error-code>
+		<exception-type>java.lang.Exception</exception-type>
 		<location>/error.xhtml</location>
 	</error-page>
 	<error-page>
-		<exception-type>java.lang.Exception</exception-type>
-		<location>/error.xhtml</location>
+		<error-code>500</error-code>
+		<location>/index.xhtml</location>
 	</error-page>
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>

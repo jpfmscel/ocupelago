@@ -45,6 +45,10 @@ public class Usuario implements Serializable {
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	private boolean ativo = true;
+	
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	private boolean administrador = false;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -80,6 +84,13 @@ public class Usuario implements Serializable {
 
 	public String getSenha() {
 		return senha;
+	}
+	
+	public String getPrimeiroNome(){
+		if (this.nome.contains(" ")) {
+			return this.nome.substring(0, this.nome.indexOf(" "));
+		}
+		return this.nome;
 	}
 
 	public void setSenha(String senha) {
@@ -123,6 +134,14 @@ public class Usuario implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
+	}
+
+	public boolean isAdministrador() {
+		return administrador;
+	}
+
+	public void setAdministrador(boolean administrador) {
+		this.administrador = administrador;
 	}
 
 	public Date getDataCriado() {

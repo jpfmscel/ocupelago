@@ -98,21 +98,28 @@
 									<ul class="plan">
 										<li>
 											<div class="thumbmail">
-												<div class="thum-item">
-													<h:graphicImage class="img-responsive"
-														value="/image/#{projeto.imagens[0].id}" />
+												<div class="thum-item" style="height: 180px">
+													<h:commandLink action="#{indexBean.detalhar(projeto)}">
+														<h:graphicImage class="img-responsive"
+															value="/image/#{projeto.imagens[0].id}" />
+													</h:commandLink>
 												</div>
-												<div class="caption">
+												<div class="caption" style="text-align: left;">
 													<h3 style="color: black">
-														<h:outputText value="#{projeto.titulo}">
-															<f:converter converterId="stringConverter100" />
-														</h:outputText>
+														<h:commandLink action="#{indexBean.detalhar(projeto)}">
+															<h:outputText value="#{projeto.titulo}"
+																style="color:black;">
+																<f:converter converterId="stringConverter100" />
+															</h:outputText>
+														</h:commandLink>
 													</h3>
 													<div class="text-left">
 														<p>
-															<h:outputText value="#{projeto.descricao}">
-																<f:converter converterId="stringConverter100" />
-															</h:outputText>
+															<h:commandLink action="#{indexBean.detalhar(projeto)}">
+																<h:outputText value="#{projeto.descricao}">
+																	<f:converter converterId="stringConverter100" />
+																</h:outputText>
+															</h:commandLink>
 														</p>
 													</div>
 													<!-- End .content -->
@@ -133,6 +140,12 @@
 							</p:outputPanel>
 						</ui:repeat>
 					</h:form>
+				</div>
+				<div class="row text-center gap">
+					<div class="col-lg-12">
+						<a class="btn btn-lg btn-primary" href="projetos.xhtml">Todos
+							os projetos </a>
+					</div>
 				</div>
 			</div>
 			<!--/.box-->
@@ -155,20 +168,28 @@
 										<li>
 											<div class="thumbmail">
 												<div class="thum-item">
-													<h:graphicImage class="img-responsive"
-														value="/image/#{noticia.imagens[0].id}" />
+													<h:commandLink action="#{indexBean.detalhar(noticia)}">
+														<h:graphicImage class="img-responsive"
+															style="height: 180px"
+															value="/image/#{noticia.imagens[0].id}" />
+													</h:commandLink>
 												</div>
-												<div class="caption">
+												<div class="caption" style="text-align: left;">
 													<h3 style="color: black">
-														<h:outputText value="#{noticia.titulo}">
-															<f:converter converterId="stringConverter100" />
-														</h:outputText>
+														<h:commandLink action="#{indexBean.detalhar(noticia)}">
+															<h:outputText value="#{noticia.titulo}"
+																style="color:black;">
+																<f:converter converterId="stringConverter100" />
+															</h:outputText>
+														</h:commandLink>
 													</h3>
 													<div class="text-left">
 														<p>
-															<h:outputText value="#{noticia.descricao}">
-																<f:converter converterId="stringConverter100" />
-															</h:outputText>
+															<h:commandLink action="#{indexBean.detalhar(noticia)}">
+																<h:outputText value="#{noticia.descricao}">
+																	<f:converter converterId="stringConverter100" />
+																</h:outputText>
+															 </h:commandLink>
 														</p>
 													</div>
 													<!-- End .content -->
@@ -260,8 +281,8 @@
 						<div class="row">
 							<div class="col-md-6">
 								<ul class="social">
-									<li><a href="#"><i class="icon-facebook icon-social"></i>
-											Facebook</a></li>
+									<li><a href="https://facebook.com/ocupeolago"><i
+											class="icon-facebook icon-social"></i> Facebook</a></li>
 									<li><a href="#"><i
 											class="icon-google-plus icon-social"></i> Google Plus</a></li>
 									<li><a href="#"><i class="icon-instagram icon-social"></i>

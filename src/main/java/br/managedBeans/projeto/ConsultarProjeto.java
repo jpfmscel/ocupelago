@@ -18,10 +18,11 @@ import br.dao.ProjetoDAO;
 import br.entidades.Imagem;
 import br.entidades.Projeto;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 
 @SessionScoped
 @ManagedBean(name = "consultarProjeto")
-public class ConsultarProjeto implements Serializable {
+public class ConsultarProjeto extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -1803143075277938111L;
 	private Projeto projetoSelected;
@@ -33,8 +34,9 @@ public class ConsultarProjeto implements Serializable {
 	private LoginBean loginBean;
 
 	@PostConstruct
-	public void atualizarProjetos() {
+	public void iniciarProjetos() {
 		setProjetoSelected(null);
+		atualizarProjetos();
 	}
 
 	public String detalharProjeto(Projeto e) {
@@ -61,14 +63,20 @@ public class ConsultarProjeto implements Serializable {
 			return null;
 		}
 		setProjetoSelected(null);
+		atualizarProjetos();
 		return "consultaProjeto.xhtml";
 	}
 
 	public String updateProjeto() {
 		try {
-			update();
-			log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " excluído com sucesso!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto atualizado com sucesso!", null));
+			if (!getProjetoDAO().buscarPorNome(getProjetoSelected().getTitulo()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Projeto já existe!", null));
+				return null;
+			} else {
+				update();
+				log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " excluído com sucesso!");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto atualizado com sucesso!", null));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " com erro!");
@@ -76,6 +84,7 @@ public class ConsultarProjeto implements Serializable {
 			return null;
 		}
 		setProjetoSelected(null);
+		atualizarProjetos();
 		return "consultaProjeto.xhtml";
 	}
 

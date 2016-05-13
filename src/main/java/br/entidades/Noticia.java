@@ -236,7 +236,7 @@ public class Noticia implements Serializable {
 	}
 
 	public String getFixedVideoURL() {
-		if (videoURL.contains("watch?v=")) {
+		if (videoURL !=null && videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
 		}
 		return videoURL;

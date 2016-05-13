@@ -13,80 +13,96 @@
 	</ui:define>
 
 	<ui:define name="session">
-		<section id="todas"> <h:form>
-			<div class="container">
-				<div class="box">
-					<div class="row">
-						<br />
-						<h1 class="page-header">#{indexBean.noticiaSel.titulo}</h1>
-						<p class="lead">
-							<span class="glyphicon glyphicon-time"></span> <small>
-								Postado em <h:outputText
-									value="#{indexBean.noticiaSel.criadoEm}">
-									<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
-								</h:outputText>
-							</small>
-						</p>
-						<hr />
 
-						<p class="lead">#{indexBean.noticiaSel.subtitulo}</p>
-						<p>#{indexBean.noticiaSel.descricao}</p>
-						<hr />
-						<p:outputPanel
-							rendered="#{indexBean.noticiaSel.imagens.size() > 0}">
-							<h3>
-								<h:outputLabel id="fotos" value="Fotos" />
-							</h3>
 
-							<div class="col-sm-7">
-								<div id="fotos" class="carousel slide" data-interval="3000"
-									data-ride="carousel">
-									<!-- Carousel indicators -->
-									<ol class="carousel-indicators">
-										<ui:repeat var="" value="#{indexBean.noticiaSel.imagens}"
-											varStatus="x">
-											<li data-target="#fotos" data-slide-to="#{x.index}"
-												class="#{x.index==0 ? 'active' : ''}"></li>
-										</ui:repeat>
-									</ol>
-									<!-- Carousel items -->
-									<div class="carousel-inner">
-										<ui:repeat var="foto" value="#{indexBean.noticiaSel.imagens}"
-											varStatus="x">
-											<div class="item  #{x.index==0 ? 'active' : ''}">
-												<div class="container">
-													<div class="carousel-content text-center">
-														<h:graphicImage styleClass="img-responsive"
-															style="max-height: 300px;" value="/image/#{foto.id}" />
-													</div>
-												</div>
-											</div>
-										</ui:repeat>
-									</div>
-								</div>
-								<!-- Carousel nav -->
-								<a class="carousel-control left" href="#fotos" data-slide="prev">
-									<span class="glyphicon glyphicon-chevron-left"></span>
-								</a> <a class="carousel-control right" href="#fotos"
-									data-slide="next"> <span
-									class="glyphicon glyphicon-chevron-right"></span>
-								</a>
-							</div>
-						</p:outputPanel>
-					</div>
-					<div class="row">
-						<div class="gap" />
-						<div class="center">
-							<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-								action="noticias.xhtml" immediate="true">
-							</h:commandLink>
-						</div>
-						<div class="gap" />
-					</div>
+		<!-- Page Content -->
+		<div class="container" style="background: white;">
+			<!-- Portfolio Item Heading -->
+			<div class="row">
+				<div class="col-lg-12" style="padding-top: 7%">
+					<h1 class="page-header" style="color: black; font-weight: 500;">
+						<h:outputText value="#{indexBean.noticiaSel.titulo}">
+							<f:converter converterId="stringConverter100" />
+						</h:outputText>
+						<p:spacer width="20px;" />
+						<small style="font-size: 14px"> Postado em <h:outputText
+								value="#{indexBean.noticiaSel.criadoEm}">
+								<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
+							</h:outputText>
+						</small>
+					</h1>
 				</div>
-				<!-- /.row -->
 			</div>
-		</h:form> </section>
+			<!-- /.row -->
+
+			<!-- Portfolio Item Row -->
+			<div class="row">
+				<div class="col-md-6">
+					<h:graphicImage class="img-responsive portfolio-item"
+						value="/image/#{indexBean.noticiaSel.imagens[0].id}" />
+				</div>
+
+				<div class="col-md-6">
+					<h3 style="color: black; font-weight: 500;">Descrição</h3>
+					<p>
+						<h:outputText value="#{indexBean.noticiaSel.descricao}" />
+					</p>
+				</div>
+
+			</div>
+			<!-- /.row -->
+
+			<!-- Related Projects Row -->
+			<div class="row">
+
+				<div class="col-lg-12">
+					<h3 class="page-header" style="color: black; font-weight: 500;">Imagens</h3>
+				</div>
+
+				<ui:repeat var="img" value="#{indexBean.noticiaSel.imagens}"
+					varStatus="i">
+					<div class="col-sm-3 col-xs-6">
+						<a href="#"> <h:graphicImage
+								class="img-responsive portfolio-item" value="/image/#{img.id}" />
+						</a>
+					</div>
+				</ui:repeat>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+
+				<p:outputPanel
+					rendered="#{indexBean.noticiaSel.videoURL != null and indexBean.noticiaSel.videoURL != ''}">
+					<div class="col-lg-12">
+						<h3 class="page-header" style="color: black; font-weight: 500;">Vídeo</h3>
+					</div>
+
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8" style="padding-bottom: 8%;">
+						<div class="center">
+							<p:media value="#{indexBean.noticiaSel.getFixedVideoURL()}"
+								width="700" height="400" player="flash" style="margin-top:2%;" />
+						</div>
+					</div>
+					<div class="col-sm-2"></div>
+				</p:outputPanel>
+			</div>
+		</div>
+		<!-- /.container -->
+
+
+		<div class="row">
+			<div class="gap" />
+			<div class="center">
+				<h:form>
+					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+						action="index.xhtml" immediate="true">
+					</h:commandLink>
+				</h:form>
+			</div>
+			<div class="gap" />
+		</div>
 	</ui:define>
 </ui:composition>
 </html>

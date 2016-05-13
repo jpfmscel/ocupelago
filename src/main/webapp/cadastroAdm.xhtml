@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{loginBean.isLoggedForward()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Eventos</ui:define>
+	<ui:define name="body">
+
+		<h:form id="addAdmin">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="form-signin-heading text-center"></h2>
+					<ui:include src="messages.xhtml" />
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel value="Pesquisa: " for="search" />
+						<div class="input-group custom-search-form">
+							<h:inputText id="search" value="#{manterUsuario.search}"
+								class="form-control" a:placeholder="Nome do usuário"
+								required="true"
+								requiredMessage="Informe o NOME para que o sistema verifique se há cadastro" />
+							<span class="input-group-btn"> <p:commandLink
+									class="btn btn-info" update="tabelaAdm" process="search">
+									<f:ajax event="click" />
+									<i class="fa fa-search" />
+								</p:commandLink>
+							</span>
+						</div>
+						<br />
+					</div>
+					<p:outputPanel id="tabelaAdm">
+						<div class="col-md-12" style="padding-bottom: 10%;">
+							<table id="tabelaAlerta" class="table table-hover table-striped">
+								<thead>
+									<tr>
+										<th style="width: 25%">Nome</th>
+										<th style="width: 40%">Email</th>
+										<th style="width: 15%">Adm</th>
+										<th style="width: 15%;">Opções</th>
+									</tr>
+								</thead>
+								<tbody>
+									<ui:repeat var="usuario" value="#{manterUsuario.buscaParteNome()}">
+										<tr>
+											<td style="width: 25%"><h:outputText
+													value="#{usuario.nome}">
+												</h:outputText></td>
+											<td style="width: 40%"><h:outputText
+													value="#{usuario.email}" /></td>
+											<td style="width: %">#{alerta.latitude} ,
+												#{alerta.longitude}</td>
+											<td style="width: 15%;">
+												<div style="margin-left: 10%;">
+													<h:commandLink
+														action="#">
+														<i class="glyphicon glyphicon glyphicon-remove"
+															style="color: red;"></i>
+													</h:commandLink>
+												</div>
+											</td>
+										</tr>
+									</ui:repeat>
+								</tbody>
+							</table>
+						</div>
+					</p:outputPanel>
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

@@ -41,17 +41,18 @@
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
 		<h:form>
-			<div class="col-md-12" style="margin-top: 5%; padding-bottom: 10%;">
+			<div class="col-md-12" style="margin-top: 5%; padding-bottom: 5%;">
 				<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
 					id="mapaAlerta" style="width:98%;height:450px"
-					model="#{mapBean.emptyModel}"
+					model="#{consultarAlerta.mapModel}"
 					onPointClick="handlePointClick(event);">
-					<p:ajax event="overlaySelect" listener="#{mapBean.onMarkerSelect}" />
+					<p:ajax event="overlaySelect"
+						listener="#{consultarAlerta.onMarkerSelect}" />
 
 					<p:gmapInfoWindow id="infoWindow">
 						<p:outputPanel
 							style="text-align: center; display: block; margin: auto">
-							<h:outputText value="#{mapBean.marker.title}" />
+							<h:outputText value="#{consultarAlerta.marker.title}" />
 						</p:outputPanel>
 					</p:gmapInfoWindow>
 				</p:gmap>
@@ -62,6 +63,13 @@
 				</div>
 			</p:outputPanel>
 
+			<div class="col-md-12" style="padding-bottom: 5%;">
+				<h:commandLink value="Cadastrar Alerta"
+					class="btn btn-lg btn-success" action="cadastroAlerta.xhtml">
+				</h:commandLink>
+				<h:outputText value=" " />
+			</div>
+
 			<p:outputPanel id="tabelaAlertas"
 				rendered="#{listFactory.listaAlerta.size() &gt; 0}">
 				<div class="col-md-12" style="padding-bottom: 10%;">
@@ -69,7 +77,8 @@
 						<thead>
 							<tr>
 								<th style="width: 25%">Título</th>
-								<th style="width: 55%">Latitude , Longitude</th>
+								<th style="width: 15%">Categoria</th>
+								<th style="width: 40%">Latitude , Longitude</th>
 								<th style="width: 15%;">Excluir</th>
 							</tr>
 						</thead>
@@ -80,6 +89,8 @@
 											value="#{alerta.titulo}">
 											<f:converter converterId="stringConverter100" />
 										</h:outputText></td>
+									<td style="width: 15%"><h:outputText
+											value="#{alerta.categoria}" /></td>
 									<td style="width: 55%">#{alerta.latitude} ,
 										#{alerta.longitude}</td>
 									<td style="width: 15%;">

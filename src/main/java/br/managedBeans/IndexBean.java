@@ -65,7 +65,7 @@ public class IndexBean {
 		setClubes(null);
 		setRestaurantes(null);
 		getClubes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
-		getRestaurantes().addAll(getLocalDAO().buscarPorCategoria("Clube"));
+		getRestaurantes().addAll(getLocalDAO().buscarPorCategoria("Restaurante"));
 	}
 
 	public Noticia getNoticiaSel() {

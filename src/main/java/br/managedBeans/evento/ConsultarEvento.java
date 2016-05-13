@@ -18,11 +18,12 @@ import br.dao.EventoDAO;
 import br.entidades.Evento;
 import br.entidades.Imagem;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @SessionScoped
 @ManagedBean(name = "consultarEvento")
-public class ConsultarEvento implements Serializable {
+public class ConsultarEvento extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -2333684779244788471L;
 	private Evento eventoSelected;
@@ -34,7 +35,8 @@ public class ConsultarEvento implements Serializable {
 	private LoginBean loginBean;
 
 	@PostConstruct
-	public void atualizarEventos() {
+	public void iniciarEventos() {
+		atualizarEventos();
 		setEventoSelected(null);
 	}
 
@@ -62,18 +64,24 @@ public class ConsultarEvento implements Serializable {
 			return null;
 		}
 		setEventoSelected(null);
+		atualizarEventos();
 		return "consultaEvento.xhtml";
 	}
 
 	public String updateEvento() {
 		try {
-			if (!Util.isDataOk(getEventoSelected().getDataInicio(), getEventoSelected().getDataFim())) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
+			if (!getEventoDAO().buscarPorNome(getEventoSelected().getNome()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento já existe!", null));
 				return null;
+			} else {
+				if (!Util.isDataOk(getEventoSelected().getDataInicio(), getEventoSelected().getDataFim())) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
+					return null;
+				}
+				update();
+				log.log(Level.INFO, "Evento " + getEventoSelected().toString() + " atualizado com sucesso!");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento atualizado com sucesso!", null));
 			}
-			update();
-			log.log(Level.INFO, "Evento " + getEventoSelected().toString() + " atualizado com sucesso!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento atualizado com sucesso!", null));
 		} catch (Exception e) {
 			log.log(Level.INFO, "Evento " + e.toString() + " com erro!");
 			e.printStackTrace();
@@ -81,6 +89,7 @@ public class ConsultarEvento implements Serializable {
 			return null;
 		}
 		setEventoSelected(null);
+		atualizarEventos();
 		return "consultaEvento.xhtml";
 	}
 

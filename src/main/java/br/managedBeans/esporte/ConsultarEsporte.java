@@ -20,11 +20,12 @@ import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @SessionScoped
 @ManagedBean(name = "consultarEsporte")
-public class ConsultarEsporte implements Serializable {
+public class ConsultarEsporte extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = 5362883764686822609L;
 	private List<Esporte> esportes;
@@ -38,7 +39,7 @@ public class ConsultarEsporte implements Serializable {
 	private LoginBean loginBean;
 
 	@PostConstruct
-	public void atualizarEsporte() {
+	public void inciarEsporte() {
 		setEsportes(null);
 		setEsporteSelected(null);
 		getEsportes().addAll(getEsporteDAO().findAll());
@@ -70,6 +71,7 @@ public class ConsultarEsporte implements Serializable {
 			return null;
 		}
 		setEsporteSelected(null);
+		atualizarEsportes();
 		return "consultaEsporte.xhtml";
 	}
 
@@ -87,6 +89,7 @@ public class ConsultarEsporte implements Serializable {
 			return null;
 		}
 		setEsporteSelected(null);
+		atualizarEsportes();
 		return "consultaEsporte.xhtml";
 	}
 

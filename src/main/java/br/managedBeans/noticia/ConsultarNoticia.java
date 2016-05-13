@@ -18,10 +18,11 @@ import br.dao.NoticiaDAO;
 import br.entidades.Imagem;
 import br.entidades.Noticia;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 
 @SessionScoped
 @ManagedBean(name = "consultarNoticia")
-public class ConsultarNoticia implements Serializable {
+public class ConsultarNoticia extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -2333684779244788471L;
 	private Noticia noticiaSelected;
@@ -33,8 +34,9 @@ public class ConsultarNoticia implements Serializable {
 	private LoginBean loginBean;
 
 	@PostConstruct
-	public void atualizarNoticias() {
+	public void iniciarNoticias() {
 		setNoticiaSelected(null);
+		atualizarNoticias();
 	}
 
 	public String detalharNoticia(Noticia e) {
@@ -61,14 +63,20 @@ public class ConsultarNoticia implements Serializable {
 			return null;
 		}
 		setNoticiaSelected(null);
+		atualizarNoticias();
 		return "consultaNoticia.xhtml";
 	}
 
 	public String updateNoticia() {
 		try {
-			update();
-			log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " excluída com sucesso!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia atualizada com sucesso!", null));
+			if (!getNoticiaDAO().buscarPorNome(getNoticiaSelected().getTitulo()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Noticia já existe!", null));
+				return null;
+			} else {
+				update();
+				log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " excluída com sucesso!");
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Noticia atualizada com sucesso!", null));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " com erro!");
@@ -76,6 +84,7 @@ public class ConsultarNoticia implements Serializable {
 			return null;
 		}
 		setNoticiaSelected(null);
+		atualizarNoticias();
 		return "consultaNoticia.xhtml";
 	}
 

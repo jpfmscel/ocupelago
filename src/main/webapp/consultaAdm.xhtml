@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<f:metadata>
+		<f:viewAction action="#{loginBean.isLoggedForward()}" />
+	</f:metadata>
+</h:head>
+<ui:composition template="main.xhtml">
+	<ui:define name="title">Cadastro de Eventos</ui:define>
+	<ui:define name="body">
+
+		<h:form id="addevento">
+			<div class="row">
+				<div class="col-md-12">
+					<h2 class="form-signin-heading text-center"></h2>
+					<ui:include src="messages.xhtml" />
+					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputLabel id="nome" value="Pesquisa de Usuários" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="nome do evento" maxlength="100"
+							requiredMessage="Digite o nome do evento."
+							value="#{cadastrarEvento.evento.nome}" />
+					</div>					
+				</div>
+				<div class="col-lg-4" />
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

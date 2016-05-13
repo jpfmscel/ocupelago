@@ -41,14 +41,19 @@ public class CadastrarProjeto implements Serializable {
 
 	public String adicionarProjeto() {
 		try {
-			fixURL();
-			getProjetoDAO().iniciarTransacao();
-			getProjetoDAO().inserir(getProjeto());
-			getProjetoDAO().comitarTransacao();
-			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Projeto " + getProjeto().toString() + " cadastrado com sucesso!");
-			setProjeto(null);
-			getListFactory().atualizarLista(new ProjetoDAO(), new Date());
+			if (!getProjetoDAO().buscarPorNome(getProjeto().getTitulo()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Projeto já existe!", null));
+				return null;
+			} else {
+				fixURL();
+				getProjetoDAO().iniciarTransacao();
+				getProjetoDAO().inserir(getProjeto());
+				getProjetoDAO().comitarTransacao();
+				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+				log.log(Level.INFO, "Projeto " + getProjeto().toString() + " cadastrado com sucesso!");
+				setProjeto(null);
+				getListFactory().atualizarLista(new ProjetoDAO(), new Date());
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause(), null));
 			log.log(Level.SEVERE, "Projeto " + getProjeto().toString() + " com erro!");

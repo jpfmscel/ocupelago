@@ -1,5 +1,6 @@
 package br.managedBeans.local;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,11 +24,13 @@ import br.dao.LocalDAO;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 
 @SessionScoped
 @ManagedBean(name = "consultarLocal")
-public class ConsultarLocal {
+public class ConsultarLocal extends ManagedBeanGenerico implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private List<Local> locais;
 	private Local localSelected;
 	private LocalDAO localDAO;
@@ -37,9 +40,9 @@ public class ConsultarLocal {
 
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
-	
+
 	@PostConstruct
-	public void atualizarLocais() {
+	public void iniciarLocais() {
 		setLocais(null);
 		setLocalSelected(null);
 		getLocais().addAll(getLocalDAO().findAll());
@@ -49,7 +52,7 @@ public class ConsultarLocal {
 		setLocalSelected(e);
 		return "detalheLocal.xhtml";
 	}
-	
+
 	public String editarLocal(Local e) {
 		setLocalSelected(e);
 		return "editarLocal.xhtml";
@@ -69,14 +72,20 @@ public class ConsultarLocal {
 			return null;
 		}
 		setLocalSelected(null);
+		atualizarLocais();
 		return "consultaLocal.xhtml";
 	}
 
 	public String updateLocal() {
 		try {
-			update();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
-			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " atualizado com sucesso!");
+			if (!getLocalDAO().buscarPorNome(getLocalSelected().getNome()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Local já existe!", null));
+				return null;
+			} else {
+				update();
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
+				log.log(Level.INFO, "Local " + getLocalSelected().toString() + " atualizado com sucesso!");
+			}
 		} catch (Exception e) {
 			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " com erro!");
 			e.printStackTrace();
@@ -84,6 +93,7 @@ public class ConsultarLocal {
 			return null;
 		}
 		setLocalSelected(null);
+		atualizarLocais();
 		return "consultaLocal.xhtml";
 	}
 

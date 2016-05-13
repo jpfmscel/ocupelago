@@ -5,12 +5,12 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.event.map.PointSelectEvent;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -18,71 +18,61 @@ import org.primefaces.model.map.Marker;
 
 import br.dao.AlertaDAO;
 import br.entidades.Alerta;
-import br.managedBeans.ListFactory;
+import br.entidades.Imagem;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 
-@ManagedBean(name = "mapBean")
+@ManagedBean(name = "cadastrarAlerta")
 @ViewScoped
-public class CadastrarAlerta implements Serializable {
+public class CadastrarAlerta extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private static MapModel emptyModel;
-	private Marker marker;
-
-	private String title;
-	private double lat;
-	private double lng;
+	// static
+	private MapModel emptyModel;
 
 	private Alerta alerta;
 	private AlertaDAO alertaDAO;
+	private Marker marker;
 
 	private Logger log = Logger.getGlobal();
 
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
-
-	@PostConstruct
-	public void init() {
-		setEmptyModel(new DefaultMapModel());
-		for (Alerta a : getAlertaDAO().getListaInicial()) {
-			LatLng coord = new LatLng(a.getLatitude(), a.getLongitude());
-			Marker overlay = new Marker(coord, a.getTitulo());
-			emptyModel.addOverlay(overlay);
-			a.setMarker(overlay);
-		}
-	}
-
-	public void addMarker() {
-		Marker marker = new Marker(new LatLng(lat, lng), title);
-		getEmptyModel().addOverlay(marker);
-		AlertaDAO aDAO = new AlertaDAO();
-		Alerta a = new Alerta();
-
-		a.setLatitude(lat);
-		a.setLongitude(lng);
-		a.setTitulo(getTitle());
-		a.setDataCriado(new Date());
+	public String adicionarAlerta() {
 		try {
-			aDAO.iniciarTransacao();
-			aDAO.inserir(a);
-			aDAO.comitarTransacao();
+			getAlerta().setDataCriado(new Date());
+			getAlertaDAO().iniciarTransacao();
+			getAlertaDAO().inserir(getAlerta());
+			getAlertaDAO().comitarTransacao();
 			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Alerta " + a.toString() + " cadastrada com sucesso!");
-			getListFactory().atualizarLista(new AlertaDAO(), new Date());
-			setTitle("");
+			log.log(Level.INFO, "Alerta " + getAlerta().toString() + " cadastrada com sucesso!");
+			atualizarAlertas();
+			setAlerta(null);
 		} catch (Exception e) {
-			log.log(Level.SEVERE, "Alerta " + a.toString() + " com erro!");
+			log.log(Level.SEVERE, "Alerta " + getAlerta().toString() + " com erro!");
 			e.printStackTrace();
-			return;
+			return null;
 		}
+		return "consultaAlerta.xhtml";
 	}
 
-	public void onMarkerSelect(OverlaySelectEvent event) {
-		setMarker((Marker) event.getOverlay());
+	public void handleFileUpload(FileUploadEvent event) {
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setDataCriado(new Date());
+		getAlerta().getImagens().add(i);
+	}
+
+	public void onPointSelect(PointSelectEvent event) {
+		LatLng latlng = event.getLatLng();
+		getAlerta().setLatitude(latlng.getLat());
+		getAlerta().setLongitude(latlng.getLng());
+		Marker marker = new Marker(latlng);
+		setEmptyModel(null);
+		getEmptyModel().addOverlay(marker);
 	}
 
 	public Marker getMarker() {
@@ -94,30 +84,6 @@ public class CadastrarAlerta implements Serializable {
 			setEmptyModel(new DefaultMapModel());
 		}
 		return emptyModel;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public double getLat() {
-		return lat;
-	}
-
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public void setLng(double lng) {
-		this.lng = lng;
 	}
 
 	public void setMarker(Marker marker) {
@@ -147,15 +113,7 @@ public class CadastrarAlerta implements Serializable {
 	}
 
 	public void setEmptyModel(MapModel emptyModel) {
-		CadastrarAlerta.emptyModel = emptyModel;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
+		this.emptyModel = emptyModel;
 	}
 
 	public LoginBean getLoginBean() {

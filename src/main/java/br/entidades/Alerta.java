@@ -33,11 +33,11 @@ public class Alerta implements Serializable {
 	@Expose
 	private int id;
 
-	@Column(nullable = false)
+	@Column(nullable = false, length = 100)
 	@Expose
 	private String titulo;
 
-	@Column(nullable = true)
+	@Column(nullable = true, length = 1000)
 	@Expose
 	private String descricao;
 
@@ -48,6 +48,10 @@ public class Alerta implements Serializable {
 	@Column(nullable = false)
 	@Expose
 	private double longitude;
+
+	@Column(nullable = false, length = 100)
+	@Expose
+	private String categoria;
 
 	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -185,6 +189,14 @@ public class Alerta implements Serializable {
 
 	public void setImagens(List<Imagem> imagens) {
 		this.imagens = imagens;
+	}
+
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 
 }

@@ -9,107 +9,87 @@
 	<ui:define name="menu">
 		<li><a href="#esporte"> <h:outputText
 					value="#{indexBean.esporteSel.nome}" /></a></li>
-		<li><a href="#videos">Vídeos</a></li>
-		<li><a href="#imagens">Imagens</a></li>
 	</ui:define>
 
 	<ui:define name="session">
-		<section id="main-slider-vcnolago" class="carousel"> </section>
-		<!--/#main-slider-->
 
-		<section id="esporte">
-		<div class="container">
-			<div class="box">
-				<div class="center">
-					<h2>
-						<h:outputText value="#{indexBean.esporteSel.nome}" />
-					</h2>
+
+		<!-- Page Content -->
+		<div class="container" style="background: white;">
+			<!-- Portfolio Item Heading -->
+			<div class="row">
+				<div class="col-lg-12" style="padding-top: 7%">
+					<h1 class="page-header" style="color: black; font-weight: 500;">
+						<h:outputText value="#{indexBean.esporteSel.nome}">
+							<f:converter converterId="stringConverter100" />
+						</h:outputText>
+					</h1>
 				</div>
-				<div class="row">
+			</div>
+			<!-- /.row -->
+
+			<!-- Portfolio Item Row -->
+			<div class="row">
+				<div class="col-md-6">
+					<h:graphicImage class="img-responsive portfolio-item"
+						value="/image/#{indexBean.esporteSel.imagens[0].id}" />
+				</div>
+
+				<div class="col-md-6">
+					<h3 style="color: black; font-weight: 500;">Descrição</h3>
 					<p>
 						<h:outputText value="#{indexBean.esporteSel.descricao}" />
 					</p>
-					<h3>Recomendações</h3>
+
+					<br></br>
+					<h3 style="color: black; font-weight: 500;">Recomendações</h3>
 					<p>
 						<h:outputText value="#{indexBean.esporteSel.recomendacoes}" />
 					</p>
 				</div>
+
 			</div>
-			<!--/.box-->
-		</div>
-		</section>
-		<section id="videos">
-		<div class="container">
-			<p:outputPanel rendered="#{indexBean.esporteSel.videoURL !=''}">
-				<div class="box">
-					<div class="row">
-						<div class="center">
-							<h2>Vídeo</h2>
-						</div>
-						<div class="col-sm-2"></div>
-						<div class="col-sm-8">
-							<div class="center responsive-video">
-								<p:media value="#{indexBean.esporteSel.getFixedVideoURL()}"
-									width="700" height="400" player="flash" style="margin-top:2%;" />
-							</div>
-						</div>
-						<div class="col-sm-2"></div>
-					</div>
+			<!-- /.row -->
+
+			<!-- Related Projects Row -->
+			<div class="row">
+
+				<div class="col-lg-12">
+					<h3 class="page-header" style="color: black; font-weight: 500;">Imagens</h3>
 				</div>
-			</p:outputPanel>
-			<!--/.box-->
-		</div>
-		</section>
-		<section id="imagens">
-		<div class="container">
-			<p:outputPanel rendered="#{indexBean.esporteSel.imagens.size() > 0 }">
-				<div class="box">
-					<div class="row">
+
+				<ui:repeat var="img" value="#{indexBean.esporteSel.imagens}"
+					varStatus="i">
+					<div class="col-sm-3 col-xs-6">
+						<a href="#"> <h:graphicImage
+								class="img-responsive portfolio-item" value="/image/#{img.id}" />
+						</a>
+					</div>
+				</ui:repeat>
+			</div>
+			<!-- /.row -->
+
+			<div class="row">
+
+				<p:outputPanel
+					rendered="#{indexBean.esporteSel.videoURL !=null and indexBean.esporteSel.videoURL != ''}">
+					<div class="col-lg-12">
+						<h3 class="page-header" style="color: black; font-weight: 500;">Vídeo</h3>
+					</div>
+
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8" style="padding-bottom: 8%;">
 						<div class="center">
-							<h2>Imagens</h2>
-						</div>
-						<div class="col-sm-3"></div>
-						<div class="col-sm-6">
-							<div id="fotos" class="carousel slide" data-interval="3000"
-								data-ride="carousel">
-								<!-- Carousel indicators -->
-								<ol class="carousel-indicators">
-									<ui:repeat var="" value="#{indexBean.esporteSel.imagens}"
-										varStatus="x">
-										<li data-target="#fotos" data-slide-to="#{x.index}"
-											class="#{x.index==0 ? 'active' : ''}"></li>
-									</ui:repeat>
-								</ol>
-								<!-- Carousel items -->
-								<div class="carousel-inner">
-									<ui:repeat var="foto" value="#{indexBean.esporteSel.imagens}"
-										varStatus="x">
-										<div class="item  #{x.index==0 ? 'active' : ''}">
-											<div class="container">
-												<div class="carousel-content text-center">
-													<h:graphicImage styleClass="img-responsive"
-														value="/image/#{foto.id}" />
-												</div>
-											</div>
-										</div>
-									</ui:repeat>
-								</div>
-								<!-- Carousel nav -->
-								<a class="carousel-control left" href="#fotos" data-slide="prev">
-									<span class="glyphicon glyphicon-chevron-left"></span>
-								</a> <a class="carousel-control right" href="#fotos"
-									data-slide="next"> <span
-									class="glyphicon glyphicon-chevron-right"></span>
-								</a>
-							</div>
-							<div class="col-sm-3"></div>
+							<p:media value="#{indexBean.esporteSel.getFixedVideoURL()}"
+								width="700" height="400" player="flash" style="margin-top:2%;" />
 						</div>
 					</div>
-					<div class="gap" />
-				</div>
-			</p:outputPanel>
-			<!--/.box-->
+					<div class="col-sm-2"></div>
+				</p:outputPanel>
+			</div>
 		</div>
+		<!-- /.container -->
+
 		<div class="row">
 			<div class="gap" />
 			<div class="center">
@@ -121,7 +101,6 @@
 			</div>
 			<div class="gap" />
 		</div>
-		</section>
 	</ui:define>
 </ui:composition>
 </html>

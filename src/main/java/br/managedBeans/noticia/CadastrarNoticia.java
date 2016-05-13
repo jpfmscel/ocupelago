@@ -34,21 +34,26 @@ public class CadastrarNoticia implements Serializable {
 	private ListFactory listFactory;
 
 	private Logger log = Logger.getGlobal();
-	
+
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 
 	public String adicionarNoticia() {
 		try {
-			getNoticia().setCriadoEm(new Date());
-			fixURL();
-			getNoticiaDAO().iniciarTransacao();
-			getNoticiaDAO().inserir(getNoticia());
-			getNoticiaDAO().comitarTransacao();
-			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Notícia " + getNoticia().toString() + " cadastrada com sucesso!");
-			setNoticia(null);
-			getListFactory().atualizarLista(new NoticiaDAO(), new Date());
+			if (!getNoticiaDAO().buscarPorNome(getNoticia().getTitulo()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Noticia já existe!", null));
+				return null;
+			} else {
+				getNoticia().setCriadoEm(new Date());
+				fixURL();
+				getNoticiaDAO().iniciarTransacao();
+				getNoticiaDAO().inserir(getNoticia());
+				getNoticiaDAO().comitarTransacao();
+				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+				log.log(Level.INFO, "Notícia " + getNoticia().toString() + " cadastrada com sucesso!");
+				setNoticia(null);
+				getListFactory().atualizarLista(new NoticiaDAO(), new Date());
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause(), null));
 			log.log(Level.SEVERE, "Notícia " + getNoticia().toString() + " com erro!");

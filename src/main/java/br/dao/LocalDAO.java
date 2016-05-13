@@ -15,11 +15,6 @@ public class LocalDAO extends BaseDao<Local> {
 		return Local.class;
 	}
 
-	public Local buscarPorNome(String nome) {
-		Query q = gerarQueryNome(nome);
-		return (Local) q.getSingleResult();
-	}
-
 	@SuppressWarnings("unchecked")
 	public List<Local> buscarPorCategoria(String cat) {
 		Query q = gerarQueryPorCategoria(cat);
@@ -33,10 +28,4 @@ public class LocalDAO extends BaseDao<Local> {
 		return getEntityManager().createQuery(sb.toString());
 	}
 
-	private Query gerarQueryNome(String nome) {
-		String nomeClasse = getClasse().getSimpleName();
-		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + nomeClasse + " x where ativo <> 0 and nome ='" + nome + "'");
-		return getEntityManager().createQuery(sb.toString());
-	}
 }

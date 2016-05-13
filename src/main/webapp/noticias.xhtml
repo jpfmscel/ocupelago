@@ -22,54 +22,54 @@
 						<h1 class="page-header">Notícias</h1>
 					</div>
 					<!--/.center-->
-					<ui:repeat var="noticia" value="#{listFactory.listaNoticia}">
-						<div class="row">
-							<div class="col-md-7">
-								<a href="#"> <h:graphicImage
-										value="/image/#{noticia.imagens[0].id}" class="img-responsive" /></a>
-							</div>
-							<div class="col-md-5">
+					<div class="row" style="margin-top: 5%;">
+						<ui:repeat var="noticia" value="#{listFactory.listaNoticia}">
+
+							<div class="col-md-4 portfolio-item"
+								style="padding-bottom: 25px;">
+								<h:graphicImage class="img-responsive portfolio-item"
+									value="/image/#{noticia.imagens[0].id}" />
 								<h3>
-									<h:outputText value="#{noticia.titulo}">
-										<f:converter converterId="stringConverter100" />
-									</h:outputText>
+									<h:commandLink value="#{noticia.titulo}"
+										action="#{indexBean.detalhar(noticia)}" />
 								</h3>
 								<h4>
-									<span class="glyphicon glyphicon-time"></span>
-									<p:spacer width="2%" />
-									Postado em
+									<span class="glyphicon glyphicon-time"></span> Postado em
 									<h:outputText value="#{noticia.criadoEm}">
 										<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
 									</h:outputText>
 								</h4>
 								<p>
 									<h:outputText value="#{noticia.descricao}">
-										<f:converter converterId="stringConverter400" />
+										<f:converter converterId="stringConverter100" />
 									</h:outputText>
 								</p>
-
-								<h:commandLink value="Continue lendo" class="btn btn-primary"
-									action="#{indexBean.detalhar(noticia)}">
-									<span class="glyphicon glyphicon-chevron-right"></span>
-								</h:commandLink>
+								<div class="line"></div>
+								<div class="share">
+									<div class="post-bottom text-right">
+										<h:commandLink value="Continue lendo"
+											action="#{indexBean.detalhar(noticia)}" />
+									</div>
+									<!-- End .post-bottom -->
+								</div>
 							</div>
-						</div>
-						<!-- /.row -->
-						<hr />
-					</ui:repeat>
-
-					<div class="row">
-						<div class="gap" />
-						<div class="center">
-							<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-								action="index" immediate="true">
-							</h:commandLink>
-						</div>
-						<div class="gap" />
+						</ui:repeat>
 					</div>
 				</div>
 				<!-- /.row -->
+				<hr />
+
+				<div class="row">
+					<div class="gap" />
+					<div class="center">
+						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+							action="index" immediate="true">
+						</h:commandLink>
+					</div>
+					<div class="gap" />
+				</div>
 			</div>
+			<!-- /.row -->
 		</h:form> </section>
 	</ui:define>
 </ui:composition>

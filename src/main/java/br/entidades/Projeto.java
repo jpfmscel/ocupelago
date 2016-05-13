@@ -69,6 +69,24 @@ public class Projeto implements Serializable {
 	@Transient
 	private List<ImagemREST> imagensREST;
 
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Instituicao> patrocinadores;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Instituicao> apoio;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Instituicao> parceiros;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Associado> patrocinadoresAssociado;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Associado> apoioAssociado;
+
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Associado> parceirosAssociado;
+
 	public List<ImagemREST> getImagensREST() {
 		if (imagensREST == null) {
 			imagensREST = new ArrayList<ImagemREST>();
@@ -143,6 +161,72 @@ public class Projeto implements Serializable {
 		URL_site = uRL_site;
 	}
 
+	public List<Instituicao> getPatrocinadores() {
+		if (patrocinadores == null) {
+			patrocinadores = new ArrayList<>();
+		}
+		return patrocinadores;
+	}
+
+	public void setPatrocinadores(List<Instituicao> patrocinadores) {
+		this.patrocinadores = patrocinadores;
+	}
+
+	public List<Instituicao> getApoio() {
+		if (apoio == null) {
+			apoio = new ArrayList<>();
+		}
+		return apoio;
+	}
+
+	public void setApoio(List<Instituicao> apoio) {
+		this.apoio = apoio;
+	}
+
+	public List<Instituicao> getParceiros() {
+		if (parceiros == null) {
+			parceiros = new ArrayList<>();
+		}
+		return parceiros;
+	}
+
+	public void setParceiros(List<Instituicao> parceiros) {
+		this.parceiros = parceiros;
+	}
+
+	public List<Associado> getPatrocinadoresAssociado() {
+		if (patrocinadoresAssociado == null) {
+			patrocinadoresAssociado = new ArrayList<>();
+		}
+		return patrocinadoresAssociado;
+	}
+
+	public void setPatrocinadoresAssociado(List<Associado> patrocinadoresAssociado) {
+		this.patrocinadoresAssociado = patrocinadoresAssociado;
+	}
+
+	public List<Associado> getApoioAssociado() {
+		if (apoioAssociado == null) {
+			apoioAssociado = new ArrayList<>();
+		}
+		return apoioAssociado;
+	}
+
+	public void setApoioAssociado(List<Associado> apoioAssociado) {
+		this.apoioAssociado = apoioAssociado;
+	}
+
+	public List<Associado> getParceirosAssociado() {
+		if (parceirosAssociado == null) {
+			parceirosAssociado = new ArrayList<>();
+		}
+		return parceirosAssociado;
+	}
+
+	public void setParceirosAssociado(List<Associado> parceirosAssociado) {
+		this.parceirosAssociado = parceirosAssociado;
+	}
+
 	@Override
 	public String toString() {
 		return "Projeto [id=" + id + ", titulo=" + titulo + "]";
@@ -196,7 +280,7 @@ public class Projeto implements Serializable {
 	}
 
 	public String getFixedVideoURL() {
-		if (videoURL.contains("watch?v=")) {
+		if (videoURL != null && videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
 		}
 		return videoURL;

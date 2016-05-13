@@ -14,129 +14,200 @@
 	</ui:define>
 
 	<ui:define name="session">
-		<section id="main-slider-vcnolago" class="carousel"> </section>
-		<!--/#main-slider-->
-
 		<h:form>
-			<section id="agenda">
-			<div class="container">
-				<div class="box">
-					<div class="center">
-						<h2>Agenda</h2>
-					</div>
-					<div class="row">
-						<ui:repeat var="evento" value="#{listFactory.listaEvento}">
-							<div class="col-sm-4">
-								<div class="center">
-									<h:commandLink action="#{indexBean.detalhar(evento)}">
-										<h:graphicImage styleClass="img-responsive"
-											value="/image/#{evento.imagens[0].id}" />
-										<div class="carousel-caption">
-											<h2>
-												<h:outputText value="#{evento.nome}" />
-											</h2>
-										</div>
-									</h:commandLink>
-									<h3>
-										<span class="glyphicon glyphicon-time"></span>
-										<h:outputText value="#{evento.dataInicio}">
-											<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
-										</h:outputText>
-									</h3>
-								</div>
-							</div>
-						</ui:repeat>
+			<section id="agenda"> <!-- Page Content -->
+			<div class="container" style="margin-top: 7%; background: white;">
+
+				<!-- Page Header -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header" style="color: black; font-weight: 500;">Eventos</h1>
 					</div>
 				</div>
-				<!--/.box-->
+				<!-- /.row -->
+
+				<!-- Projects Row -->
+
+				<div class="row" style="margin-top: 5%;">
+					<ui:repeat var="evento" value="#{listFactory.listaEvento}"
+						varStatus="i">
+						<div class="col-md-3 portfolio-item" style="padding-bottom: 25px;">
+							<h:commandLink action="#{indexBean.detalhar(evento)}">
+								<h:graphicImage class="img-responsive portfolio-item"
+									style="max-width: 350px; max-height: 300px;"
+									value="/image/#{evento.imagens[0].id}" />
+							</h:commandLink>
+							<h3>
+								<h:commandLink value="#{evento.nome}"
+									action="#{indexBean.detalhar(evento)}" />
+							</h3>
+							<p>
+								<h:outputText value="#{evento.informacoes}">
+									<f:converter converterId="stringConverter100" />
+								</h:outputText>
+							</p>
+							<div class="line"></div>
+							<div class="share">
+								<div class="post-bottom text-right">
+									<h:commandLink value="Continue lendo"
+										action="#{indexBean.detalhar(evento)}" />
+								</div>
+								<!-- End .post-bottom -->
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
 			</div>
+
 			</section>
 			<section id="restaurantes">
-			<div class="container">
-				<div class="box">
-					<div class="center">
-						<h2>Restaurantes</h2>
-					</div>
-					<div class="row">
-						<ui:repeat var="local" value="#{indexBean.restaurantes}">
-							<div class="col-sm-4">
-								<div class="center">
-									<h:commandLink action="#{indexBean.detalhar(local)}">
-										<h:graphicImage styleClass="img-responsive"
-											value="/image/#{local.imagens[0].id}" />
-										<div class="carousel-caption">
-											<h2>
-												<h:outputText value="#{local.nome}" />
-											</h2>
-										</div>
-									</h:commandLink>
-								</div>
-							</div>
-						</ui:repeat>
+
+			<div class="container" style="margin-top: 7%; background: white;">
+
+				<!-- Page Header -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header" style="color: black; font-weight: 500;">Restaurantes</h1>
 					</div>
 				</div>
-				<!--/.box-->
+				<!-- /.row -->
+
+				<!-- Projects Row -->
+
+				<div class="row" style="margin-top: 5%;">
+					<ui:repeat var="local" value="#{indexBean.restaurantes}"
+						varStatus="i">
+						<div class="col-md-3 portfolio-item" style="padding-bottom: 25px;">
+							<h:commandLink action="#{indexBean.detalhar(local)}">
+								<h:graphicImage class="img-responsive portfolio-item"
+									value="/image/#{local.imagens[0].id}" />
+							</h:commandLink>
+							<h3>
+								<h:commandLink value="#{local.nome}"
+									action="#{indexBean.detalhar(local)}" />
+							</h3>
+							<p>
+								<h:outputText value="#{local.descricao}">
+									<f:converter converterId="stringConverter100" />
+								</h:outputText>
+							</p>
+							<div class="line"></div>
+							<div class="share">
+								<div class="post-bottom text-right">
+									<h:commandLink value="Continue lendo"
+										action="#{indexBean.detalhar(local)}" />
+								</div>
+								<!-- End .post-bottom -->
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+
+
 			</div>
+
 			</section>
+
 			<section id="clubes">
-			<div class="container">
-				<div class="box">
-					<div class="center">
-						<h2>Clubes</h2>
-					</div>
-					<div class="row">
-						<ui:repeat var="clube" value="#{indexBean.clubes}">
-							<div class="col-sm-4">
-								<div class="center">
-									<h:commandLink action="#{indexBean.detalhar(clube)}">
-										<h:graphicImage styleClass="img-responsive"
-											value="/image/#{clube.imagens[0].id}" />
-										<div class="carousel-caption">
-											<h2>#{clube.nome}</h2>
-										</div>
-									</h:commandLink>
-								</div>
-							</div>
-						</ui:repeat>
+
+			<div class="container" style="margin-top: 7%; background: white;">
+
+				<!-- Page Header -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header" style="color: black; font-weight: 500;">Clubes</h1>
 					</div>
 				</div>
-				<!--/.box-->
+				<!-- /.row -->
+
+				<!-- Projects Row -->
+
+				<div class="row" style="margin-top: 5%;">
+					<ui:repeat var="local" value="#{indexBean.clubes}" varStatus="i">
+						<div class="col-md-3 portfolio-item" style="padding-bottom: 25px;">
+							<h:commandLink action="#{indexBean.detalhar(local)}">
+								<h:graphicImage class="img-responsive portfolio-item"
+									value="/image/#{local.imagens[0].id}" />
+							</h:commandLink>
+							<h3>
+								<h:commandLink value="#{local.nome}"
+									action="#{indexBean.detalhar(local)}" />
+							</h3>
+							<p>
+								<h:outputText value="#{local.descricao}">
+									<f:converter converterId="stringConverter100" />
+								</h:outputText>
+							</p>
+							<div class="line"></div>
+							<div class="share">
+								<div class="post-bottom text-right">
+									<h:commandLink value="Continue lendo"
+										action="#{indexBean.detalhar(local)}" />
+								</div>
+								<!-- End .post-bottom -->
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+
+
 			</div>
+
 			</section>
+
+
 			<section id="esportes">
-			<div class="container">
-				<div class="box">
-					<div class="center">
-						<h2>Esportes</h2>
-					</div>
-					<div class="row">
-						<ui:repeat var="esporte" value="#{listFactory.listaEsporte}">
-							<div class="col-sm-4">
-								<div class="center">
-									<h:commandLink action="#{indexBean.detalhar(esporte)}">
-										<h:graphicImage styleClass="img-responsive"
-											value="/image/#{esporte.imagens[0].id}" />
-										<div class="carousel-caption">
-											<h2>
-												<h:outputText value="#{esporte.nome}" />
-											</h2>
-										</div>
-									</h:commandLink>
-								</div>
-							</div>
-						</ui:repeat>
+			<div class="container" style="margin-top: 7%; background: white;">
+
+				<!-- Page Header -->
+				<div class="row">
+					<div class="col-lg-12">
+						<h1 class="page-header" style="color: black; font-weight: 500;">Esportes</h1>
 					</div>
 				</div>
-				<!--/.box-->
+				<!-- /.row -->
+
+				<!-- Projects Row -->
+
+				<div class="row" style="margin-top: 5%;">
+					<ui:repeat var="esporte" value="#{listFactory.listaEsporte}"
+						varStatus="i">
+						<div class="col-md-3 portfolio-item" style="padding-bottom: 25px;">
+							<h:commandLink action="#{indexBean.detalhar(esporte)}">
+								<h:graphicImage class="img-responsive portfolio-item"
+									value="/image/#{esporte.imagens[0].id}" />
+							</h:commandLink>
+							<h3>
+								<h:commandLink value="#{esporte.nome}"
+									action="#{indexBean.detalhar(esporte)}" />
+							</h3>
+							<p>
+								<h:outputText value="#{esporte.descricao}">
+									<f:converter converterId="stringConverter100" />
+								</h:outputText>
+							</p>
+							<div class="line"></div>
+							<div class="share">
+								<div class="post-bottom text-right">
+									<h:commandLink value="Saiba mais"
+										action="#{indexBean.detalhar(esporte)}" />
+								</div>
+								<!-- End .post-bottom -->
+							</div>
+						</div>
+					</ui:repeat>
+				</div>
+
+
 			</div>
+
+
 			<div class="row">
 				<div class="gap" />
 				<div class="center">
-					<h:form>
-						<h:commandLink value="Voltar" class="btn btn-lg btn-primary" 
-							immediate="true" >
-						</h:commandLink>
-					</h:form>
+					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+						immediate="true">
+					</h:commandLink>
 				</div>
 				<div class="gap" />
 			</div>

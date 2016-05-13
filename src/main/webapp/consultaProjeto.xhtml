@@ -42,6 +42,12 @@
 	<ui:define name="body">
 		<h:form id="consultaprojeto">
 			<div class="row">
+				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+					<h:commandLink value="Cadastrar Projeto"
+						class="btn btn-lg btn-success" action="cadastroProjeto.xhtml">
+					</h:commandLink>
+					<h:outputText value=" " />
+				</div>
 				<div class="col-md-12">
 					<ui:include src="messages.xhtml" />
 					<p:outputPanel rendered="#{listFactory.listaProjeto.size() &lt; 1}">
@@ -101,12 +107,7 @@
 					</p:outputPanel>
 
 				</div>
-				<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-					<h:commandLink value="Cadastrar Projeto"
-						class="btn btn-lg btn-success" action="cadastroProjeto.xhtml">
-					</h:commandLink>
-					<h:outputText value=" " />
-				</div>
+
 
 				<div class="col-lg-4" />
 			</div>

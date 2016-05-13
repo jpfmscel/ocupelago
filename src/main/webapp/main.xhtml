@@ -61,7 +61,8 @@
 			<li class="dropdown">
 				<li class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#"> <i class="fa fa-user fa-fw" />
-						#{loginBean.usuarioLogado.nome} <i class="fa fa-caret-down" /></a>
+						#{loginBean.usuarioLogado.primeiroNome} <i
+						class="fa fa-caret-down" /></a>
 					<ul class="dropdown-menu dropdown-user">
 						<h:form>
 							<li><h:commandLink action="#{loginBean.logout}"
@@ -89,8 +90,10 @@
 									<i class="fa fa-fw fa-location-arrow" style="margin-right: 5%;" /> Local </h:link></li>
 							<li><h:link outcome="cadastroEvento.xhtml">
 									<i class="fa fa-fw fa-calendar" style="margin-right: 5%;" /> Evento </h:link></li>
-							<li><h:link outcome="mapa.xhtml">
-									<i class="fa fa-fw fa-warning" /> Alertas</h:link></li>
+							<li><h:link outcome="cadastroAlerta.xhtml">
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;" /> Alertas</h:link></li>
+							<li><h:link outcome="cadastroAdm.xhtml">
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;" /> Administrador</h:link></li>
 						</ul></li>
 					<li><a href="#"><i class="fa fa-institution fa-fw" />
 							Consultar<span class="fa arrow" /></a>
@@ -106,10 +109,10 @@
 							<li><h:link outcome="consultaEvento.xhtml">
 									<i class="fa fa-fw fa-calendar" style="margin-right: 5%;" /> Evento </h:link></li>
 							<li><h:link outcome="consultaAlerta.xhtml">
-									<i class="fa fa-fw fa-warning" /> Alertas
-						</h:link></li>
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;" /> Alertas	</h:link></li>
+							<li><h:link outcome="consultaAdm.xhtml">
+									<i class="fa fa-fw fa-warning" style="margin-right: 5%;" /> Administrador</h:link></li>
 						</ul></li>
-
 				</ul>
 			</div>
 			<!-- /.sidebar-collapse -->

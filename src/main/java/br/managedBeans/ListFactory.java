@@ -1,12 +1,10 @@
 package br.managedBeans;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
@@ -42,50 +40,65 @@ public class ListFactory {
 	private Date dataEsporte = new Date();
 	private Date dataEvento = new Date();
 
+	@PostConstruct
+	public void init() {
+		setListaEsporte((List<Esporte>) new EsporteDAO().findAll());
+		setListaLocal((List<Local>) new LocalDAO().findAll());
+		setListaNoticia((List<Noticia>) new NoticiaDAO().findAll());
+		setListaProjeto((List<Projeto>) new ProjetoDAO().findAll());
+		setListaAlerta((List<Alerta>) new AlertaDAO().getListaInicial());
+		setListaEvento((List<Evento>) new EventoDAO().findAll());
+
+	}
+
 	public boolean isSamePeriod(Date d1) {
-		boolean retorno = false;
+		Date d2 = new Date();
+		long seconds = (d2.getTime() - d1.getTime()) / 1000;
 
-		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT -03:00"), new Locale("pt-BR"));
-		c1.setTime(d1);
-
-		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT -03:00"), new Locale("pt-BR"));
-		// c2.add(Calendar.MINUTE, -5);
-
-		retorno = c2.before(c1);
-
-		return retorno;
+		return seconds <= 300;
 	}
 
 	public boolean isSameMinute(Date d1) {
-		boolean retorno = false;
+		Date d2 = new Date();
+		long seconds = (d2.getTime() - d1.getTime()) / 1000;
 
-		Calendar c1 = Calendar.getInstance(TimeZone.getTimeZone("GMT -03:00"), new Locale("pt-BR"));
-		c1.setTime(d1);
-
-		Calendar c2 = Calendar.getInstance(TimeZone.getTimeZone("GMT -03:00"), new Locale("pt-BR"));
-		c2.add(Calendar.MINUTE, -1);
-
-		retorno = c2.before(c1);
-
-		return retorno;
+		return seconds <= 60;
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T> void atualizarLista(BaseDao<T> b, Date d) {
 		if (b instanceof EsporteDAO) {
-			setListaEsporte((List<Esporte>) b.findAll());
+			if (!isSamePeriod(dataEsporte)) {
+				setListaEsporte((List<Esporte>) b.findAll());
+				dataEsporte = new Date();
+			}
 		} else if (b instanceof LocalDAO) {
-			setListaLocal((List<Local>) b.findAll());
+			if (!isSamePeriod(dataLocal)) {
+				setListaLocal((List<Local>) b.findAll());
+				dataLocal = new Date();
+			}
 		} else if (b instanceof NoticiaDAO) {
-			setListaNoticia((List<Noticia>) b.findAll());
+			if (!isSamePeriod(dataNoticia)) {
+				setListaNoticia((List<Noticia>) b.findAll());
+				dataNoticia = new Date();
+			}
 		} else if (b instanceof ProjetoDAO) {
-			setListaProjeto((List<Projeto>) b.findAll());
+			if (!isSamePeriod(dataProjeto)) {
+				setListaProjeto((List<Projeto>) b.findAll());
+				dataProjeto = new Date();
+			}
 		} else if (b instanceof AlertaDAO) {
-			setListaAlerta((List<Alerta>) ((AlertaDAO) b).getListaInicial());
+			if (!isSameMinute(dataAlerta)) {
+				setListaAlerta((List<Alerta>) ((AlertaDAO) b).getListaInicial());
+				dataAlerta = new Date();
+			}
 		} else if (b instanceof EventoDAO) {
-			setListaEvento((List<Evento>) b.findAll());
+			if (!isSamePeriod(dataEvento)) {
+				setListaEvento((List<Evento>) b.findAll());
+				dataEvento = new Date();
+			}
 		}
-		d = new Date();
+
 	}
 
 	public List<Alerta> getListaAlerta() {

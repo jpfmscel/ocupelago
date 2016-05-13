@@ -44,18 +44,23 @@ public class CadastrarEvento implements Serializable {
 
 	public String adicionarEvento() {
 		try {
-			if (!Util.isDataOk(getEvento().getDataInicio(), getEvento().getDataFim())) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
+			if (!getEventoDAO().buscarPorNome(getEvento().getNome()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento já existe!", null));
 				return null;
+			} else {
+				if (!Util.isDataOk(getEvento().getDataInicio(), getEvento().getDataFim())) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
+					return null;
+				}
+				fixURL();
+				getEventoDAO().iniciarTransacao();
+				getEventoDAO().update(getEvento());
+				getEventoDAO().comitarTransacao();
+				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+				log.log(Level.INFO, "Evento " + getEvento().toString() + " cadastrado com sucesso!");
+				setEvento(null);
+				getListFactory().atualizarLista(new EventoDAO(), new Date());
 			}
-			fixURL();
-			getEventoDAO().iniciarTransacao();
-			getEventoDAO().update(getEvento());
-			getEventoDAO().comitarTransacao();
-			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Evento " + getEvento().toString() + " cadastrado com sucesso!");
-			setEvento(null);
-			getListFactory().atualizarLista(new EventoDAO(), new Date());
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o evento : " + e.getCause(), null));
 			log.log(Level.SEVERE, "Evento " + getEvento().toString() + " com erro!");
@@ -65,8 +70,6 @@ public class CadastrarEvento implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento cadastrado com sucesso!", null));
 		return "consultaEvento.xhtml";
 	}
-
-	
 
 	private void fixURL() {
 		getEvento().setURL_facebook(Util.fixExternalURL(getEvento().getURL_facebook()));

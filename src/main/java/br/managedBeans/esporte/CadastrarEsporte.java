@@ -41,6 +41,10 @@ public class CadastrarEsporte implements Serializable {
 
 	public String adicionarEsporte() {
 		try {
+			if (!getEsporteDAO().buscarPorNome(getEsporte().getNome()).isEmpty()) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Esporte já existe!", null));
+				return null;
+			} else {
 			atualizaTipoEsporte();
 			fixURL();
 			getEsporteDAO().iniciarTransacao();
@@ -50,6 +54,7 @@ public class CadastrarEsporte implements Serializable {
 			log.log(Level.INFO, "Esporte " + getEsporte().toString() + " cadastrado com sucesso!");
 			setEsporte(null);
 			getListFactory().atualizarLista(new EsporteDAO(), new Date());
+			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause(), null));
 			log.log(Level.SEVERE, "Esporte " + getEsporte().toString() + " com erro!");
