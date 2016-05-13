@@ -20,6 +20,10 @@ public class Util {
 		return rand.nextInt((max - min) + 1) + min;
 	}
 
+	public static boolean isDataOk(Date dataInicio, Date dataFim) {
+		return dataInicio.before(dataFim);
+	}
+	
 	public static String fixExternalURL(String url) {
 		if (url != null && !url.isEmpty()) {
 			if (url.contains("https://")) {

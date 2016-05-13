@@ -18,6 +18,7 @@ import br.dao.EventoDAO;
 import br.entidades.Evento;
 import br.entidades.Imagem;
 import br.managedBeans.LoginBean;
+import br.util.Util;
 
 @SessionScoped
 @ManagedBean(name = "consultarEvento")
@@ -66,6 +67,10 @@ public class ConsultarEvento implements Serializable {
 
 	public String updateEvento() {
 		try {
+			if (!Util.isDataOk(getEventoSelected().getDataInicio(), getEventoSelected().getDataFim())) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
+				return null;
+			}
 			update();
 			log.log(Level.INFO, "Evento " + getEventoSelected().toString() + " atualizado com sucesso!");
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento atualizado com sucesso!", null));

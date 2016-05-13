@@ -44,8 +44,8 @@ public class CadastrarEvento implements Serializable {
 
 	public String adicionarEvento() {
 		try {
-			if (isDataOk()) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial : ", null));
+			if (!Util.isDataOk(getEvento().getDataInicio(), getEvento().getDataFim())) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Data fim não pode ser anterior à data inicial! ", null));
 				return null;
 			}
 			fixURL();
@@ -66,9 +66,7 @@ public class CadastrarEvento implements Serializable {
 		return "consultaEvento.xhtml";
 	}
 
-	private boolean isDataOk() {
-		return getEvento().getDataInicio().before(getEvento().getDataFim());
-	}
+	
 
 	private void fixURL() {
 		getEvento().setURL_facebook(Util.fixExternalURL(getEvento().getURL_facebook()));

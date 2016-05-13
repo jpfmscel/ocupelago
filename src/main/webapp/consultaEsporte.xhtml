@@ -73,7 +73,10 @@
 													style="height: 34px;width: 34px;" /> <h:graphicImage
 													rendered="#{esporte.terrestre}" value="images/terra.png"
 													style="height: 34px;width: 34px;" /></td>
-											<td style="width: 50%; padding-top: 1.5%;">#{esporte.descricao}</td>
+											<td style="width: 50%; padding-top: 1.5%;"><h:outputText
+													value="#{esporte.descricao}">
+													<f:converter converterId="stringConverter100" />
+												</h:outputText></td>
 											<td style="width: 15%;">
 												<div style="margin-left: 10%;">
 													<h:commandLink
