@@ -15,164 +15,239 @@
 	<ui:define name="title">Editar Local</ui:define>
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
-		<h:form id="adduser">
+		<h:form id="editlocal">
 			<div class="row">
 				<div class="col-md-12">
 					<ui:include src="messages.xhtml" />
 					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel value="Nome" />
+						<h:outputLabel value="Nome"
+							rendered="#{empty consultarLocal.localSelected.cnpj}" />
 						<h:inputText class="form-control" required="true"
-							a:placeholder="Nome do local" id="nome"
+							a:placeholder="Nome do local" id="nome" maxlength="150"
 							requiredMessage="Digite o nome do local."
-							value="#{consultarLocal.localSelected.nome}" />
+							value="#{consultarLocal.localSelected.nome}"
+							rendered="#{empty consultarLocal.localSelected.cnpj}" />
 					</div>
+					<div class="col-md-6">
+						<h:outputLabel value="Nome Fantasia"
+							rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Nome Fantasia" id="nomefantasia" maxlength="100"
+							requiredMessage="Digite o nome fantasia."
+							value="#{consultarLocal.localSelected.nomeFantasia}"
+							rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+					</div>
+					<div class="col-md-6">
+						<h:outputLabel value="Razão Social"
+							rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+						<h:inputText class="form-control" required="true"
+							a:placeholder="Razão Social" id="razaosocial" maxlength="100"
+							requiredMessage="Digite a Razão Social."
+							value="#{consultarLocal.localSelected.razaoSocial}"
+							rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+					</div>
+
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Descrição" />
-						<h:inputTextarea cols="50" rows="10" styleClass="form-control"
-							required="true" a:placeholder="Descrição do local" id="descricao"
+						<h:inputTextarea styleClass="form-control" required="true"
+							a:maxlength="1000" cols="50" rows="10"
+							a:placeholder="Descrição do local" id="descricao"
 							requiredMessage="Digite a descrição do local."
 							value="#{consultarLocal.localSelected.descricao}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
+						<h:outputLabel value="Órgão Responsável" />
+						<h:inputText class="form-control" required="true" maxlength="100"
+							a:placeholder="Nome do órgão se houver" id="orgresponsavel"
+							requiredMessage="Digite o nome do órgão responsável."
+							value="#{consultarLocal.localSelected.orgaoResp}" />
+					</div>
+					<div class="col-md-6" style="margin-top: 2%;">
 						<h:outputLabel value="Responsável" />
-						<h:inputText class="form-control" required="true"
+						<h:inputText class="form-control" required="true" maxlength="150"
 							a:placeholder="Nome do responsável" id="responsavel"
 							requiredMessage="Digite o nome do responsável."
 							value="#{consultarLocal.localSelected.responsavel}" />
 					</div>
-
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
+						<h:outputLabel value="Contato" />
+						<h:inputText class="form-control" required="true" maxlength="50"
+							a:placeholder="Nome do contato" id="contato"
+							requiredMessage="Digite o nome do contato."
+							value="#{consultarLocal.localSelected.contato}" />
+					</div>
+					<div class="col-md-6" style="margin-top: 2%;">
 						<h:outputLabel value="E-mail" />
 						<h:inputText class="form-control" required="true"
 							a:placeholder="exemple@gmail.com" id="email"
-							requiredMessage="Digite o e-mail."
-							value="#{consultarLocal.localSelected.email}" />
+							requiredMessage="Digite o e-mail." maxlength="100"
+							value="#{consultarLocal.localSelected.email}"
+							validatorMessage="E-mail não válido!">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</h:inputText>
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Estado" />
+						<h:selectOneMenu class="form-control" required="true"
+							requiredMessage="Selecione o estado" id="estado"
+							value="#{consultarLocal.localSelected.endereco.estado}">
+							<f:selectItem itemLabel="Acre" itemValue="AC" />
+							<f:selectItem itemLabel="Alagoas" itemValue="AL" />
+							<f:selectItem itemLabel="Amapá" itemValue="AP" />
+							<f:selectItem itemLabel="Amazonas" itemValue="AM" />
+							<f:selectItem itemLabel="Bahia" itemValue="BA" />
+							<f:selectItem itemLabel="Ceará" itemValue="CE" />
+							<f:selectItem itemLabel="Distrito Federal" itemValue="DF" />
+							<f:selectItem itemLabel="Espírito Santo" itemValue="ES" />
+							<f:selectItem itemLabel="Goiás" itemValue="GO" />
+							<f:selectItem itemLabel="Maranhão" itemValue="MA" />
+							<f:selectItem itemLabel="Mato Grosso" itemValue="MT" />
+							<f:selectItem itemLabel="Mato Grosso do Sul" itemValue="MS" />
+							<f:selectItem itemLabel="Minas Gerais" itemValue="MG" />
+							<f:selectItem itemLabel="Pará" itemValue="PA" />
+							<f:selectItem itemLabel="Paraíba" itemValue="PB" />
+							<f:selectItem itemLabel="Parana" itemValue="PR" />
+							<f:selectItem itemLabel="Pernambuco" itemValue="PE" />
+							<f:selectItem itemLabel="Piauí" itemValue="PI" />
+							<f:selectItem itemLabel="Rio de Janeiro" itemValue="RJ" />
+							<f:selectItem itemLabel="Rio Grande do Norte" itemValue="RN" />
+							<f:selectItem itemLabel="Rio Grande do Sul" itemValue="RS" />
+							<f:selectItem itemLabel="Rondônia" itemValue="RO" />
+							<f:selectItem itemLabel="Roraima" itemValue="RR" />
+							<f:selectItem itemLabel="Santa Catarina" itemValue="SC" />
+							<f:selectItem itemLabel="São Paulo" itemValue="SP" />
+							<f:selectItem itemLabel="Sergipe" itemValue="SE" />
+							<f:selectItem itemLabel="Tocantins" itemValue="TO" />
+						</h:selectOneMenu>
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Cidade" />
+						<h:inputText class="form-control" required="true" maxlength="50"
+							requiredMessage="Digite a Cidade." id="cidade"
+							value="#{consultarLocal.localSelected.endereco.cidade}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Bairro" />
+						<h:inputText class="form-control" required="true" maxlength="50"
+							requiredMessage="Digite a Bairro." id="bairro"
+							value="#{consultarLocal.localSelected.endereco.bairro}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="CEP" />
+						<p:inputMask class="form-control" mask="99999-999" required="true"
+							requiredMessage="Digite o CEP." id="cep"
+							value="#{consultarLocal.localSelected.endereco.cep}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Endereço" />
-						<h:inputText class="form-control" required="true"
-							requiredMessage="Digite o endereço." id="endereco"
-							value="#{consultarLocal.localSelected.endereco}" />
+						<h:inputText class="form-control" required="true" maxlength="200"
+							requiredMessage="Digite o Endereço." id="endereço"
+							a:placeholder="Av, Rua, Quadra..."
+							value="#{consultarLocal.localSelected.endereco.logradouro}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel value="Telefone" />
-						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
-							required="true" requiredMessage="Digite o telefone."
-							id="telefone" value="#{consultarLocal.localSelected.telefone}" />
-					</div>
-
-					<div class="col-md-12" style="margin-top: 2%;">
-						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
-							streetView="true" id="mapa" style="width:98%;height:450px"
-							model="#{consultarLocal.mapModel}">
-						</p:gmap>
-					</div>
-
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h:outputLabel value="Categoria" />
 						<br />
 						<h:selectOneMenu value="#{consultarLocal.localSelected.categoria}"
-							id="categoria">
+							id="categoria" class="form-control">
 							<f:selectItem itemLabel="Restaurante" itemValue="Restaurante" />
 							<f:selectItem itemLabel="Clube" itemValue="Clube" />
-							<f:selectItem itemLabel="Parque" itemValue="Restaurante" />
+							<f:selectItem itemLabel="Parque" itemValue="Parque" />
 							<f:selectItem itemLabel="Área Privativa"
 								itemValue="Area Privativa" />
 							<f:selectItem itemLabel="Centro Esportivo"
 								itemValue="Centro Esportivo" />
 						</h:selectOneMenu>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
-						<p:outputPanel id="panelFoto">
-							<h:outputLabel id="foto" value="Foto" />
-							<br></br>
-							<p:fileUpload label="Selecionar" cancelLabel="Cancelar"
-								auto="true"
-								fileUploadListener="#{consultarLocal.handleFileUpload}"
-								mode="advanced" update="panelFoto" sizeLimit="5000000"
-								fileLimit="5"
-								fileLimitMessage="O número máximo de arquivos é 5!"
-								allowTypes="/(\.|\/)(gif|jpe?g|png)$/" style="margin-bottom:3%;" />
-
-							<ui:repeat var="ima"
-								value="#{consultarLocal.localSelected.imagens}" varStatus="stat">
-								<p:commandLink immediate="true" id="link"
-									update="adduser:panelFoto"
-									action="#{consultarLocal.removerImagem(ima)}">
-									<i class="glyphicon glyphicon-remove" style="color: red;" />
-								</p:commandLink>
-								<p:spacer width="2%" />
-								<h:outputLabel value="#{ima.nomeArquivo}" />
-								<br></br>
-							</ui:repeat>
-
-						</p:outputPanel>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Telefone 1" />
+						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
+							required="true" requiredMessage="Digite o telefone."
+							id="telefone" value="#{consultarLocal.localSelected.telefone1}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Telefone 2 " />
+						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
+							required="false" id="telefone2"
+							value="#{consultarLocal.localSelected.telefone1}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Telefone 3" />
+						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
+							required="false" id="telefone3"
+							value="#{consultarLocal.localSelected.telefone1}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
+						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
+							streetView="true" id="mapa" style="width:98%;height:450px"
+							model="#{cadastrarLocal.mapModel}">
+							<p:ajax event="pointSelect"
+								listener="#{cadastrarLocal.onPointSelect}" update="mapa" />
+						</p:gmap>
+					</div>
+					<div class="col-md-6" style="margin-top: 2%;">
 
-						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{consultarLocal.localSelected.videoURL}"
+								value="#{consultarLocal.localSelected.videoURL}" maxlength="1000"
 								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
-									listener="#{consultarLocal.filtrarURLYoutube}" />
+									listener="#{cadastrarLocal.filtrarURLYoutube}" />
 							</h:inputText>
 						</div>
 						<p:outputPanel id="videoYou">
 							<p:media value="#{consultarLocal.localSelected.videoURL}"
-								width="700" height="400" player="flash"
-								style="margin-top:2%; margin-left: 10%;"
+								player="flash" style="margin-top:2%; margin-left: 2%;"
 								rendered="#{consultarLocal.localSelected.videoURL != null and consultarLocal.localSelected.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Facebook" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
-							<h:inputText class="form-control" id="linkFacebook"
+							<h:inputText class="form-control" id="linkFacebook" maxlength="1000"
 								value="#{consultarLocal.localSelected.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Twitter" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-twitter" /></span>
 							<h:inputText class="form-control" id="linkTwitter"
 								value="#{consultarLocal.localSelected.URL_twitter}"
-								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
+								maxlength="1000" a:placeholder="Link Twitter"
+								aria-describedby="sizing-addon2" />
 						</div>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Site" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-globe" /></span>
-							<h:inputText class="form-control"
+							<h:inputText class="form-control" maxlength="1000"
 								value="#{consultarLocal.localSelected.URL_site}" id="linkSite"
 								a:placeholder="Link Site" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
-
-					<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
-						<h:commandLink value="Salvar" class="btn btn-lg btn-success"
-							action="#{consultarLocal.updateLocal}">
-							<i class="fa fa-fw fa-save" />
-						</h:commandLink>
-						<h:outputText value=" " />
-						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
-							action="consultaLocal.xhtml" immediate="true">
-							<i class="fa fa-fw fa-remove" />
-						</h:commandLink>
-					</div>
 				</div>
-				<div class="col-lg-4" />
+			</div>
+			<div class="col-md-12" style="margin-top: 2%; padding-bottom: 5%;">
+				<h:commandLink value="Salvar" class="btn btn-lg btn-success"
+					action="#{consultarLocal.updateLocal}">
+					<i class="fa fa-fw fa-save" />
+				</h:commandLink>
+				<h:outputText value=" " />
+				<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
+					action="consultaLocal.xhtml" immediate="true">
+					<i class="fa fa-fw fa-remove" />
+				</h:commandLink>
 			</div>
 		</h:form>
 	</ui:define>

@@ -3,6 +3,7 @@ package br.web;
 import java.io.IOException;
 
 import javax.faces.application.ResourceHandler;
+import javax.faces.application.ViewExpiredException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -13,7 +14,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(servletNames = { "Faces Servlet"})
+@WebFilter(servletNames = { "Faces Servlet" })
 public class NoCacheFilter implements Filter {
 
 	@Override
@@ -26,12 +27,16 @@ public class NoCacheFilter implements Filter {
 																													// resources
 																													// (CSS/JS/Images/etc)
 			httpRes.setHeader("Cache-Control", "no-cache, must-revalidate"); // HTTP
-																						// 1.1.
+																				// 1.1.
 			httpRes.setHeader("Pragma", "no-cache"); // HTTP 1.0.
 			httpRes.setDateHeader("Expires", 0); // Proxies.
 		}
-
-		chain.doFilter(request, response);
+		try {
+			chain.doFilter(request, response);
+		} catch (ViewExpiredException e) {
+			e.printStackTrace();
+			((HttpServletResponse) response).sendRedirect(httpReq.getContextPath() + "/index.xhtml");
+		}
 	}
 
 	// ...

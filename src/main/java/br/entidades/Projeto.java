@@ -70,13 +70,13 @@ public class Projeto implements Serializable {
 	private List<ImagemREST> imagensREST;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Instituicao> patrocinadores;
+	private List<Local> patrocinadores;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Instituicao> apoio;
+	private List<Local> apoio;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Instituicao> parceiros;
+	private List<Local> parceiros;
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Associado> patrocinadoresAssociado;
@@ -161,36 +161,36 @@ public class Projeto implements Serializable {
 		URL_site = uRL_site;
 	}
 
-	public List<Instituicao> getPatrocinadores() {
+	public List<Local> getPatrocinadores() {
 		if (patrocinadores == null) {
 			patrocinadores = new ArrayList<>();
 		}
 		return patrocinadores;
 	}
 
-	public void setPatrocinadores(List<Instituicao> patrocinadores) {
+	public void setPatrocinadores(List<Local> patrocinadores) {
 		this.patrocinadores = patrocinadores;
 	}
 
-	public List<Instituicao> getApoio() {
+	public List<Local> getApoio() {
 		if (apoio == null) {
 			apoio = new ArrayList<>();
 		}
 		return apoio;
 	}
 
-	public void setApoio(List<Instituicao> apoio) {
+	public void setApoio(List<Local> apoio) {
 		this.apoio = apoio;
 	}
 
-	public List<Instituicao> getParceiros() {
+	public List<Local> getParceiros() {
 		if (parceiros == null) {
 			parceiros = new ArrayList<>();
 		}
 		return parceiros;
 	}
 
-	public void setParceiros(List<Instituicao> parceiros) {
+	public void setParceiros(List<Local> parceiros) {
 		this.parceiros = parceiros;
 	}
 

@@ -2,7 +2,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
@@ -17,31 +16,40 @@
 		<h:form id="addlocal">
 			<div class="row">
 				<div class="col-md-12">
-				<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="nome" value="Nome" />
 						</h3>
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
-							value="#{consultarLocal.localSelected.nome}" />
+							value="#{consultarLocal.localSelected.nome} #{consultarLocal.localSelected.nomeFantasia}" />
+					</div>
+					<div class="col-md-6" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="cnpj" value="CNPJ" rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.cnpj} " 
+							rendered="#{not empty consultarLocal.localSelected.cnpj}"	/>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="desc" value="Descrição" />
 						</h3>
-						<h:outputText styleClass="col-md-offset-1"
+						<h:outputText
 							style="font-size: large;"
 							value="#{consultarLocal.localSelected.descricao}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h3>
-							<h:outputLabel id="categoria" value="Categoria" />
+							<h:outputLabel id="orgresponsavel" value="Órgão" />
 						</h3>
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
-							value="#{consultarLocal.localSelected.categoria}" />
+							value="#{consultarLocal.localSelected.orgaoResp}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="responsavel" value="Responsável" />
 						</h3>
@@ -49,7 +57,15 @@
 							style="font-size: large;"
 							value="#{consultarLocal.localSelected.responsavel}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="contato" value="Contato" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.contato}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="email" value="E-mail" />
 						</h3>
@@ -57,21 +73,63 @@
 							style="font-size: large;"
 							value="#{consultarLocal.localSelected.email}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h3>
-							<h:outputLabel id="endereco" value="Endereço" />
+							<h:outputLabel id="estado" value="Estado" />
 						</h3>
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
-							value="#{consultarLocal.localSelected.endereco}" />
+							value="#{consultarLocal.localSelected.endereco.estado}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="cidade" value="Cidade" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.endereco.cidade}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="bairro" value="Bairro" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.endereco.bairro}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="cep" value="CEP" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.endereco.cep}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.endereco.logradouro}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h3>
-							<h:outputLabel id="telefone" value="Telefone" />
+							<h:outputLabel id="categoria" value="Categoria" />
 						</h3>
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
-							value="#{consultarLocal.localSelected.telefone}" />
+							value="#{consultarLocal.localSelected.categoria}" />
+					</div>
+
+					<div class="col-md-9" style="margin-top: 2%;">
+						<h3>
+							<h:outputLabel id="telefones" value="Telefones" />
+						</h3>
+						<h:outputText styleClass="col-md-offset-1"
+							style="font-size: large;"
+							value="#{consultarLocal.localSelected.telefone1}" />
+							<h:outputText style="font-size: large;"
+							value="&nbsp;&nbsp;#{consultarLocal.localSelected.telefone2}" />
+							<h:outputText style="font-size: large;"
+							value="&nbsp;&nbsp;#{consultarLocal.localSelected.telefone3}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<p:outputPanel

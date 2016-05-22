@@ -20,6 +20,7 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
+import br.entidades.Endereco;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.LoginBean;
@@ -33,9 +34,11 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 	private static final long serialVersionUID = 734069129117081739L;
 
 	private Local local;
+	private Endereco endereco;
 	private LocalDAO localDAO;
 	private MapModel mapModel;
-
+	private boolean cnpjSet = false;
+	
 	private Logger log = Logger.getGlobal();
 
 	@ManagedProperty(value = "#{loginBean}")
@@ -97,6 +100,10 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 		}
 	}
 
+	public void removerLogo() {
+		local.setLogo(null);
+	}
+	
 	public void handleFileUpload(FileUploadEvent event) {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
@@ -105,9 +112,19 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 		getLocal().getImagens().add(i);
 	}
 
+	public void handleLogoUpload(FileUploadEvent event) {
+		Imagem i = new Imagem();
+		i.setData(event.getFile().getContents());
+		i.setNomeArquivo(event.getFile().getFileName());
+		i.setDataCriado(new Date());
+		getLocal().setLogo(i);
+	}
+	
 	public Local getLocal() {
 		if (local == null) {
 			local = new Local();
+			endereco = new Endereco();
+			local.setEndereco(endereco);
 		}
 		return local;
 	}
@@ -144,6 +161,14 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public boolean isCnpjSet() {
+		return cnpjSet;
+	}
+
+	public void setCnpjSet(boolean cnpjSet) {
+		this.cnpjSet = cnpjSet;
 	}
 
 }

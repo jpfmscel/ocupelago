@@ -26,7 +26,7 @@ public class LoginBean implements Serializable {
 			setLogado(true);
 			return "indexadm";
 		} else {
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado!", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Usuário não registrado ou não autorizado!", ""));
 		}
 		return "login";
 	}

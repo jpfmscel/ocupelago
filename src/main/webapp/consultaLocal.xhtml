@@ -70,7 +70,7 @@
 									<ui:repeat var="local" value="#{listFactory.listaLocal}">
 										<tr>
 											<td style="width: 25%"><h:outputText
-													value="#{local.nome}">
+													value="#{local.nome} #{local.nomeFantasia}">
 													<f:converter converterId="stringConverter100" />
 												</h:outputText></td>
 											<td style="width: 45%"><h:outputText

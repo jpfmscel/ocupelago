@@ -24,39 +24,42 @@ public class ManterUsuario implements Serializable {
 
 	public String adicionarUsuario() {
 
-		if (!getUsuarioAdd().getSenha().equals(
-				getUsuarioAdd().getConfirmacaoSenha())) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"A senha não é igual à confirmação de senha!", ""));
+		if (!getUsuarioAdd().getSenha().equals(getUsuarioAdd().getConfirmacaoSenha())) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "A senha não é igual à confirmação de senha!", ""));
 			return "addUsuario.xhtml";
 		}
 
 		Usuario userDB = getDao().buscarUsuario(getUsuarioAdd().getEmail());
 
 		if (userDB != null) {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR,
-							"Já existe um registro com esse login ou e-mail!",
-							""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Já existe um registro com esse login ou e-mail!", ""));
 			return "addUsuario.xhtml";
 		} else {
 			getUsuarioAdd().setDataCriado(new Date());
 			getDao().iniciarTransacao();
 			getDao().inserir(getUsuarioAdd());
 			getDao().comitarTransacao();
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO,
-							"Usuário registrado com sucesso!", ""));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Usuário registrado com sucesso!", ""));
 			setUsuarioAdd(null);
 		}
 
 		return "login.xhtml";
 	}
 
+	public void criarAdm(Usuario u) {
+		u.setAdministrador(true);
+		getDao().iniciarTransacao();
+		getDao().update(u);
+		getDao().comitarTransacao();
+	}
+
+	public void removerAdm(Usuario u) {
+		u.setAdministrador(false);
+		getDao().iniciarTransacao();
+		getDao().update(u);
+		getDao().comitarTransacao();
+	}
+	
 	public List<Usuario> buscaParteNome() {
 		return getDao().buscarParteNome(this.search);
 	}

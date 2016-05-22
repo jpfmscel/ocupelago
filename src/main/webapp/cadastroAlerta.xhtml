@@ -12,7 +12,7 @@
 	</f:metadata>
 </h:head>
 <ui:composition template="main.xhtml">
-	<ui:define name="title">Cadastro de Local</ui:define>
+	<ui:define name="title">Cadastro de Alerta</ui:define>
 	<ui:define name="body">
 		<script src="https://maps.googleapis.com/maps/api/js?sensor=false" />
 		<h:form id="addalerta">
@@ -46,15 +46,35 @@
 
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h:outputLabel value="Categoria" />
-						<br />
+				 		<br />
 						<h:selectOneMenu value="#{cadastrarAlerta.alerta.categoria}"
 							id="categoria">
-							<f:selectItem itemLabel="Animal" itemValue="Animal" />
+
+							<f:selectItem itemLabel="Animais" itemValue="Animal" />
+							<!-- onde foi identificada fauna do Lago) -->
 							<f:selectItem itemLabel="Criminal" itemValue="Criminal" />
-							<f:selectItem itemLabel="Ambiental" itemValue="Ambiental" />
-							<f:selectItem itemLabel="Segurança" itemValue="Seguranca" />
-							<f:selectItem itemLabel="Incêndio" itemValue="Incendio" />
+							<f:selectItem itemLabel="Segurança" itemValue="Segurança" />
+							<!-- onde esteja ocorrendo problemas de segurança) -->
+							<f:selectItem itemLabel="Captação de água"
+								itemValue="Captação de água" />
+							<!-- onde esteja ocorrendo captação irregular de água do Lago) -->
+							<f:selectItem itemLabel="Esgoto" itemValue="Esgoto" />
+							<!-- onde esteja acontecendo ocorrendo o lançamento de esgoto no Lago) -->
+							<f:selectItem itemLabel="Foco da Dengue"
+								itemValue="Foco da Dengue" />
+							<!-- que possua foco da dengue) -->
+							<f:selectItem itemLabel="Incêndio" itemValue="Incêndio" />
+							<!-- onde esteja ocorrendo incêndio) -->
+							<f:selectItem itemLabel="Lixo" itemValue="Lixo" />
+							<!-- onde haja descarte de resíduos) -->
+							<f:selectItem itemLabel="Esporte" itemValue="Esporte" />
+							<!-- onde esteja acontecendo uma prova de natação, triathlon, caiaque, canoa, etc) -->
+							<f:selectItem itemLabel="Entretenimento"
+								itemValue="Entretenimento" />
+							<!-- onde esteja acontecendo um show, uma festa, exposição, etc) -->
+							<f:selectItem itemLabel="Visual legal" itemValue="Visual legal" />
 							<f:selectItem itemLabel="Outros" itemValue="Outros" />
+
 						</h:selectOneMenu>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">

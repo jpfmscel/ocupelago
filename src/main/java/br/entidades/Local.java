@@ -10,10 +10,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.Type;
 
 import br.entidades.rest.ImagemREST;
@@ -21,7 +20,7 @@ import br.entidades.rest.ImagemREST;
 import com.google.gson.annotations.Expose;
 
 @Entity
-public class Local implements Serializable {
+public class Local implements Serializable { 
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,7 +30,12 @@ public class Local implements Serializable {
 	@Expose
 	private int id;
 
-	@Column(nullable = false, length = 150)
+	// 00.000.000/0001-00
+	@Column(nullable = true, length = 18)
+	@Expose
+	private String cnpj;
+
+	@Column(nullable = true ,length = 150)
 	@Expose
 	private String nome;
 
@@ -50,14 +54,6 @@ public class Local implements Serializable {
 	@Column(nullable = false, length = 100)
 	@Expose
 	private String email;
-
-	@Column(nullable = false, length = 250)
-	@Expose
-	private String endereco;
-
-	@Column(nullable = false, length = 15)
-	@Expose
-	private String telefone;
 
 	@Column(nullable = false)
 	@Expose
@@ -92,6 +88,41 @@ public class Local implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
+
+	@Column(nullable = true, length = 100)
+	@Expose
+	private String razaoSocial;
+
+	@Column(nullable = true, length = 100)
+	@Expose
+	private String nomeFantasia;
+
+	@Column(nullable = true, length = 100)
+	@Expose
+	private String orgaoResp; // op
+
+	@Column(nullable = false, length = 50)
+	@Expose
+	private String contato;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@Expose
+	private Endereco endereco;
+
+	@Column(nullable = true, length = 15)
+	@Expose
+	private String telefone1;
+
+	@Column(nullable = true, length = 15)
+	@Expose
+	private String telefone2;
+
+	@Column(nullable = true, length = 15)
+	@Expose
+	private String telefone3;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	private Imagem logo;
 
 	@Expose
 	@Transient
@@ -145,22 +176,6 @@ public class Local implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public String getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(String endereco) {
-		this.endereco = endereco;
-	}
-
-	public String getTelefone() {
-		return telefone;
-	}
-
-	public void setTelefone(String telefone) {
-		this.telefone = telefone;
 	}
 
 	public double getLatitude() {
@@ -238,6 +253,78 @@ public class Local implements Serializable {
 		this.imagens = imagens;
 	}
 
+	public String getRazaoSocial() {
+		return razaoSocial;
+	}
+
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
+	}
+
+	public String getNomeFantasia() {
+		return nomeFantasia;
+	}
+
+	public void setNomeFantasia(String nomeFantasia) {
+		this.nomeFantasia = nomeFantasia;
+	}
+
+	public String getOrgaoResp() {
+		return orgaoResp;
+	}
+
+	public void setOrgaoResp(String orgaoResp) {
+		this.orgaoResp = orgaoResp;
+	}
+
+	public String getContato() {
+		return contato;
+	}
+
+	public void setContato(String contato) {
+		this.contato = contato;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public String getTelefone1() {
+		return telefone1;
+	}
+
+	public void setTelefone1(String telefone1) {
+		this.telefone1 = telefone1;
+	}
+
+	public String getTelefone2() {
+		return telefone2;
+	}
+
+	public void setTelefone2(String telefone2) {
+		this.telefone2 = telefone2;
+	}
+
+	public String getTelefone3() {
+		return telefone3;
+	}
+
+	public void setTelefone3(String telefone3) {
+		this.telefone3 = telefone3;
+	}
+
+	public Imagem getLogo() {
+		return logo;
+	}
+
+	public void setLogo(Imagem logo) {
+		this.logo = logo;
+	}
+
 	public String getFixedVideoURL() {
 		if (videoURL != null && videoURL.contains("watch?v=")) {
 			return videoURL.replace("watch?v=", "v/");
@@ -254,6 +341,14 @@ public class Local implements Serializable {
 
 	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
+	}
+
+	public String getCnpj() {
+		return cnpj;
+	}
+
+	public void setCnpj(String cnpj) {
+		this.cnpj = cnpj;
 	}
 
 }
