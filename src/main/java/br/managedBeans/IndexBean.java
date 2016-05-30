@@ -8,15 +8,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import br.dao.LocalDAO;
+import br.dao.NoticiaDAO;
 import br.entidades.Esporte;
 import br.entidades.Evento;
 import br.entidades.Local;
 import br.entidades.Noticia;
 import br.entidades.Projeto;
 
+
 @SessionScoped
 @ManagedBean(name = "indexBean")
-public class IndexBean {
+public class IndexBean extends ManagedBeanGenerico{
 
 	private Noticia noticiaSel;
 	private Evento eventoSel;
@@ -28,6 +30,7 @@ public class IndexBean {
 	private List<Local> clubes;
 
 	private LocalDAO localDAO;
+	private NoticiaDAO noticiaDAO;
 
 	@PostConstruct
 	public void init() {
@@ -39,6 +42,7 @@ public class IndexBean {
 		String redirect = null;
 		if (o instanceof Noticia) {
 			setNoticiaSel((Noticia) o);
+			addVisualizacao();
 			redirect = "post";
 		} else if (o instanceof Evento) {
 			setEventoSel((Evento) o);
@@ -126,6 +130,13 @@ public class IndexBean {
 		}
 		return localDAO;
 	}
+	
+	public NoticiaDAO getNoticiaDAO() {
+		if (noticiaDAO == null) {
+			noticiaDAO = new NoticiaDAO();
+		}
+		return noticiaDAO;
+	}
 
 	public void setLocalDAO(LocalDAO localDAO) {
 		this.localDAO = localDAO;
@@ -153,4 +164,11 @@ public class IndexBean {
 		this.restaurantes = restaurantes;
 	}
 
+	private void addVisualizacao(){
+		this.noticiaSel.setVisualizacoes(this.noticiaSel.getVisualizacoes()+1);
+		getNoticiaDAO().iniciarTransacao();
+		getNoticiaDAO().update(this.noticiaSel);
+		getNoticiaDAO().comitarTransacao();
+		atualizarNoticias();
+	}
 }

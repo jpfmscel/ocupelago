@@ -64,6 +64,11 @@ public class Noticia implements Serializable {
 	@Expose
 	@Column(nullable = true, length = 1000)
 	private String URL_site;
+	
+	@Expose
+	@Column(nullable = true)
+	private int visualizacoes;
+	
 
 	@Expose
 	@Column(nullable = false)
@@ -114,6 +119,14 @@ public class Noticia implements Serializable {
 
 	public void setSubtitulo(String subtitulo) {
 		this.subtitulo = subtitulo;
+	}
+	
+	public int getVisualizacoes() {
+		return visualizacoes;
+	}
+
+	public void setVisualizacoes(int visualizacoes) {
+		this.visualizacoes = visualizacoes;
 	}
 
 	public String getDescricao() {

@@ -42,19 +42,22 @@ public class CadastrarAlerta extends ManagedBeanGenerico implements Serializable
 
 	public String adicionarAlerta() {
 		try {
+			if(getAlerta().getLatitude() == 0 || getAlerta().getLongitude() == 0){
+				
+			}
 			getAlerta().setDataCriado(new Date());
 			getAlertaDAO().iniciarTransacao();
 			getAlertaDAO().inserir(getAlerta());
 			getAlertaDAO().comitarTransacao();
 			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 			log.log(Level.INFO, "Alerta " + getAlerta().toString() + " cadastrada com sucesso!");
-			atualizarAlertas();
 			setAlerta(null);
 		} catch (Exception e) {
 			log.log(Level.SEVERE, "Alerta " + getAlerta().toString() + " com erro!");
 			e.printStackTrace();
 			return null;
 		}
+		atualizarAlertas();
 		return "consultaAlerta.xhtml";
 	}
 

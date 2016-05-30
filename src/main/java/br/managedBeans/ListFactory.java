@@ -1,6 +1,9 @@
 package br.managedBeans;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -101,6 +104,34 @@ public class ListFactory {
 
 	}
 
+	public void noticiaSortDate() {
+		Collections.sort(listaNoticia, new Comparator<Noticia>() {
+
+			@Override
+			public int compare(Noticia o1, Noticia o2) {
+				if (o1.getCriadoEm().after(o2.getCriadoEm()))
+					return -1;
+				if (o1.getCriadoEm().before(o2.getCriadoEm()))
+					return 1;
+				return 0;
+			}
+		});
+	}
+
+	public void noticiaSortVisualizacao() {
+		Collections.sort(listaNoticia, new Comparator<Noticia>() {
+
+			@Override
+			public int compare(Noticia o1, Noticia o2) {
+				if (o1.getVisualizacoes() > o2.getVisualizacoes())
+					return -1;
+				if (o1.getVisualizacoes() < o2.getVisualizacoes())
+					return 1;
+				return 0;
+			}
+		});
+	}
+
 	public List<Alerta> getListaAlerta() {
 		if (!(isSameMinute(dataAlerta) && !listaAlerta.isEmpty())) {
 			atualizarLista(new AlertaDAO(), dataAlerta);
@@ -145,7 +176,7 @@ public class ListFactory {
 
 	public List<Noticia> getListaNoticia() {
 		if (!(isSamePeriod(dataNoticia) && !listaNoticia.isEmpty())) {
-			atualizarLista(new NoticiaDAO(), dataNoticia);
+			atualizarLista(new NoticiaDAO(), dataNoticia);			
 			for (Noticia noticia : listaNoticia) {
 				noticia.getImagensREST();
 			}
@@ -155,6 +186,7 @@ public class ListFactory {
 
 	public void setListaNoticia(List<Noticia> listaNoticia) {
 		this.listaNoticia = listaNoticia;
+		noticiaSortDate();
 	}
 
 	public List<Esporte> getListaEsporte() {

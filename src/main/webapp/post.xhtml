@@ -29,6 +29,9 @@
 								value="#{indexBean.noticiaSel.criadoEm}">
 								<f:convertDateTime pattern="dd/MM/yyyy 'às' HH:mm" />
 							</h:outputText>
+							<h:outputText value="&nbsp;&nbsp;&nbsp;&nbsp;#{indexBean.noticiaSel.visualizacoes}" >							
+						</h:outputText>
+						<i class="glyphicon glyphicon-eye-open"/>
 						</small>
 					</h1>
 				</div>
@@ -88,12 +91,6 @@
 					<div class="col-sm-2"></div>
 				</p:outputPanel>
 			</div>
-		</div>
-		<!-- /.container -->
-
-
-		<div class="row">
-			<div class="gap" />
 			<div class="center">
 				<h:form>
 					<h:commandLink value="Voltar" class="btn btn-lg btn-primary"

@@ -20,7 +20,6 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
-import br.entidades.Endereco;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.LoginBean;
@@ -34,11 +33,10 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 	private static final long serialVersionUID = 734069129117081739L;
 
 	private Local local;
-	private Endereco endereco;
 	private LocalDAO localDAO;
 	private MapModel mapModel;
 	private boolean cnpjSet = false;
-	
+
 	private Logger log = Logger.getGlobal();
 
 	@ManagedProperty(value = "#{loginBean}")
@@ -57,7 +55,6 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Local " + getLocal().toString() + " cadastrado com sucesso!");
 				setLocal(null);
-				getListFactory().atualizarLista(new LocalDAO(), new Date());
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local!" + e.getCause(), null));
@@ -66,7 +63,7 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local cadastrado com sucesso!", null));
-
+		atualizarLocais();
 		return "consultaLocal.xhtml";
 	}
 
@@ -103,7 +100,7 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 	public void removerLogo() {
 		local.setLogo(null);
 	}
-	
+
 	public void handleFileUpload(FileUploadEvent event) {
 		Imagem i = new Imagem();
 		i.setData(event.getFile().getContents());
@@ -119,12 +116,10 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 		i.setDataCriado(new Date());
 		getLocal().setLogo(i);
 	}
-	
+
 	public Local getLocal() {
 		if (local == null) {
 			local = new Local();
-			endereco = new Endereco();
-			local.setEndereco(endereco);
 		}
 		return local;
 	}

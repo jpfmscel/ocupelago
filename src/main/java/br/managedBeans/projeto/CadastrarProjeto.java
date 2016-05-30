@@ -17,13 +17,13 @@ import org.primefaces.model.UploadedFile;
 import br.dao.ProjetoDAO;
 import br.entidades.Imagem;
 import br.entidades.Projeto;
-import br.managedBeans.ListFactory;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarProjeto")
-public class CadastrarProjeto implements Serializable {
+public class CadastrarProjeto extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -1121239889065920261L;
 
@@ -35,9 +35,6 @@ public class CadastrarProjeto implements Serializable {
 
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
-
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
 
 	public String adicionarProjeto() {
 		try {
@@ -52,7 +49,6 @@ public class CadastrarProjeto implements Serializable {
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Projeto " + getProjeto().toString() + " cadastrado com sucesso!");
 				setProjeto(null);
-				getListFactory().atualizarLista(new ProjetoDAO(), new Date());
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause(), null));
@@ -61,7 +57,7 @@ public class CadastrarProjeto implements Serializable {
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Projeto cadastrado com sucesso!", null));
-
+		atualizarProjetos();
 		return "consultaProjeto.xhtml";
 	}
 
@@ -123,14 +119,6 @@ public class CadastrarProjeto implements Serializable {
 
 	public void setProjetoDAO(ProjetoDAO projetoDAO) {
 		this.projetoDAO = projetoDAO;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
 	}
 
 	public LoginBean getLoginBean() {

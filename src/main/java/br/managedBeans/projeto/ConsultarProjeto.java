@@ -59,7 +59,7 @@ public class ConsultarProjeto extends ManagedBeanGenerico implements Serializabl
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.log(Level.INFO, "Projeto " + e.toString() + " com erro!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir o projeto : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setProjetoSelected(null);
@@ -69,7 +69,7 @@ public class ConsultarProjeto extends ManagedBeanGenerico implements Serializabl
 
 	public String updateProjeto() {
 		try {
-			if (!getProjetoDAO().buscarPorNome(getProjetoSelected().getTitulo()).isEmpty()) {
+			if (getProjetoDAO().buscarPorNome(getProjetoSelected().getTitulo()).size() > 1) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Projeto já existe!", null));
 				return null;
 			} else {
@@ -80,7 +80,7 @@ public class ConsultarProjeto extends ManagedBeanGenerico implements Serializabl
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.INFO, "Projeto " + getProjetoSelected().toString() + " com erro!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o projeto : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o projeto : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
 		setProjetoSelected(null);

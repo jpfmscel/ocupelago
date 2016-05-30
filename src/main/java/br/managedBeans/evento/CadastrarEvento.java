@@ -21,13 +21,13 @@ import br.dao.EventoDAO;
 import br.entidades.Evento;
 import br.entidades.Imagem;
 import br.entidades.Local;
-import br.managedBeans.ListFactory;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEvento")
-public class CadastrarEvento implements Serializable {
+public class CadastrarEvento extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -4742047936382758532L;
 
@@ -38,9 +38,6 @@ public class CadastrarEvento implements Serializable {
 
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
-
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
 
 	public String adicionarEvento() {
 		try {
@@ -59,7 +56,6 @@ public class CadastrarEvento implements Serializable {
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Evento " + getEvento().toString() + " cadastrado com sucesso!");
 				setEvento(null);
-				getListFactory().atualizarLista(new EventoDAO(), new Date());
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o evento : " + e.getCause(), null));
@@ -68,6 +64,7 @@ public class CadastrarEvento implements Serializable {
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento cadastrado com sucesso!", null));
+		atualizarEventos();
 		return "consultaEvento.xhtml";
 	}
 
@@ -136,14 +133,6 @@ public class CadastrarEvento implements Serializable {
 
 	public void setEventoDAO(EventoDAO eventoDAO) {
 		this.eventoDAO = eventoDAO;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
 	}
 
 	public LoginBean getLoginBean() {

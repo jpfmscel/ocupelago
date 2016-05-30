@@ -19,19 +19,17 @@ import br.entidades.Imagem;
 import br.entidades.Noticia;
 import br.managedBeans.ListFactory;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarNoticia")
-public class CadastrarNoticia implements Serializable {
+public class CadastrarNoticia extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = -4742047936382758532L;
 
 	private Noticia noticia;
 	private NoticiaDAO noticiaDAO;
-
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
 
 	private Logger log = Logger.getGlobal();
 
@@ -52,7 +50,6 @@ public class CadastrarNoticia implements Serializable {
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Notícia " + getNoticia().toString() + " cadastrada com sucesso!");
 				setNoticia(null);
-				getListFactory().atualizarLista(new NoticiaDAO(), new Date());
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause(), null));
@@ -61,6 +58,7 @@ public class CadastrarNoticia implements Serializable {
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Notícia cadastrada com sucesso!", null));
+		atualizarNoticias();
 		return "consultaNoticia.xhtml";
 	}
 
@@ -114,14 +112,6 @@ public class CadastrarNoticia implements Serializable {
 
 	public void setNoticiaDAO(NoticiaDAO noticiaDAO) {
 		this.noticiaDAO = noticiaDAO;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
 	}
 
 	public LoginBean getLoginBean() {

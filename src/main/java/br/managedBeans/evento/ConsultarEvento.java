@@ -60,7 +60,7 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 		} catch (Exception ex) {
 			log.log(Level.INFO, "Evento " + e.toString() + " com erro!");
 			ex.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a evento : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir o evento : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setEventoSelected(null);
@@ -70,7 +70,7 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 
 	public String updateEvento() {
 		try {
-			if (!getEventoDAO().buscarPorNome(getEventoSelected().getNome()).isEmpty()) {
+			if (getEventoDAO().buscarPorNome(getEventoSelected().getNome()).size() > 1) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Evento já existe!", null));
 				return null;
 			} else {
@@ -85,7 +85,7 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 		} catch (Exception e) {
 			log.log(Level.INFO, "Evento " + e.toString() + " com erro!");
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a evento : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o evento : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
 		setEventoSelected(null);

@@ -17,13 +17,13 @@ import org.primefaces.model.UploadedFile;
 import br.dao.EsporteDAO;
 import br.entidades.Esporte;
 import br.entidades.Imagem;
-import br.managedBeans.ListFactory;
 import br.managedBeans.LoginBean;
+import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
 
 @ViewScoped
 @ManagedBean(name = "cadastrarEsporte")
-public class CadastrarEsporte implements Serializable {
+public class CadastrarEsporte extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = 734069129117081739L;
 
@@ -36,24 +36,20 @@ public class CadastrarEsporte implements Serializable {
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
 
-	@ManagedProperty(value = "#{listFactory}")
-	private ListFactory listFactory;
-
 	public String adicionarEsporte() {
 		try {
 			if (!getEsporteDAO().buscarPorNome(getEsporte().getNome()).isEmpty()) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Esporte já existe!", null));
 				return null;
 			} else {
-			atualizaTipoEsporte();
-			fixURL();
-			getEsporteDAO().iniciarTransacao();
-			getEsporteDAO().inserir(getEsporte());
-			getEsporteDAO().comitarTransacao();
-			log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
-			log.log(Level.INFO, "Esporte " + getEsporte().toString() + " cadastrado com sucesso!");
-			setEsporte(null);
-			getListFactory().atualizarLista(new EsporteDAO(), new Date());
+				atualizaTipoEsporte();
+				fixURL();
+				getEsporteDAO().iniciarTransacao();
+				getEsporteDAO().inserir(getEsporte());
+				getEsporteDAO().comitarTransacao();
+				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
+				log.log(Level.INFO, "Esporte " + getEsporte().toString() + " cadastrado com sucesso!");
+				setEsporte(null);
 			}
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o esporte : " + e.getCause(), null));
@@ -62,7 +58,7 @@ public class CadastrarEsporte implements Serializable {
 			return null;
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Esporte cadastrado com sucesso!", null));
-
+		atualizarEsportes();
 		return "consultaEsporte.xhtml";
 	}
 
@@ -142,14 +138,6 @@ public class CadastrarEsporte implements Serializable {
 
 	public void setTipoEsporte(String tipoEsporte) {
 		this.tipoEsporte = tipoEsporte;
-	}
-
-	public ListFactory getListFactory() {
-		return listFactory;
-	}
-
-	public void setListFactory(ListFactory listFactory) {
-		this.listFactory = listFactory;
 	}
 
 	public LoginBean getLoginBean() {

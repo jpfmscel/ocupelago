@@ -80,6 +80,12 @@ public abstract class BaseDao<T> implements Serializable {
 		Query q = gerarQuery(getClasse());
 		return (List<T>) q.getResultList();
 	}
+	
+	@SuppressWarnings({ "unchecked" })
+	public List<T> findAllDate(String criterio) {
+		Query q = gerarQueryOrderDate(getClasse(), criterio);
+		return (List<T>) q.getResultList();
+	}
 
 	private Query gerarQuery(Class<T> classe) {
 		String nomeClasse = classe.getSimpleName();
@@ -88,6 +94,14 @@ public abstract class BaseDao<T> implements Serializable {
 		return getEntityManager().createQuery(sb.toString());
 	}
 
+	private Query gerarQueryOrderDate(Class<T> classe, String criterio) {
+		String nomeClasse = classe.getSimpleName();
+		StringBuffer sb = new StringBuffer();
+		sb.append("Select x from " + nomeClasse + " x where ativo <> 0 order by x." + criterio + " desc");
+		System.out.println(sb.toString());
+		return getEntityManager().createQuery(sb.toString());
+	}
+	
 	@SuppressWarnings("unchecked")
 	public T buscarSingle(T o) {
 		Query q = gerarQuery(o);

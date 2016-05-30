@@ -7,9 +7,10 @@
 	xmlns:p="http://primefaces.org/ui">
 <ui:composition template="template.xhtml">
 	<ui:define name="menu">
-		<li><a href="#todas">Todas</a></li>
-		<li><a href="#maislidas">Mais Lidas</a></li>
-		<li><a href="#">Clipping</a></li>
+		<li><h:commandLink value="Todas"
+				action="#{listFactory.noticiaSortDate}"></h:commandLink></li>
+		<li><h:commandLink value="Mais Lidas"
+				action="#{listFactory.noticiaSortVisualizacao}"></h:commandLink></li>
 	</ui:define>
 
 	<ui:define name="session">
@@ -55,12 +56,6 @@
 							</div>
 						</ui:repeat>
 					</div>
-				</div>
-				<!-- /.row -->
-				<hr />
-
-				<div class="row">
-					<div class="gap" />
 					<div class="center">
 						<h:commandLink value="Voltar" class="btn btn-lg btn-primary"
 							action="index" immediate="true">

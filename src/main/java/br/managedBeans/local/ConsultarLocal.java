@@ -68,7 +68,7 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 		} catch (Exception ex) {
 			log.log(Level.INFO, "Local " + e.toString() + " com erro!");
 			ex.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir o local : " + ex.getCause().getMessage(), ex.getCause().getMessage()));
 			return null;
 		}
 		setLocalSelected(null);
@@ -78,7 +78,7 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 
 	public String updateLocal() {
 		try {
-			if (!getLocalDAO().buscarPorNome(getLocalSelected().getNome()).isEmpty()) {
+			if (getLocalDAO().buscarPorNome(getLocalSelected().getNome()).size() > 1) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Local já existe!", null));
 				return null;
 			} else {
@@ -89,7 +89,7 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 		} catch (Exception e) {
 			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " com erro!");
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir o local : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o local : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
 		setLocalSelected(null);

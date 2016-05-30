@@ -85,7 +85,7 @@ public class ConsultarEsporte extends ManagedBeanGenerico implements Serializabl
 		} catch (Exception e) {
 			log.log(Level.INFO, "Esporte " + e.toString() + " com erro!");
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao atualizar o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o esporte : " + e.getCause().getMessage(), e.getCause().getMessage()));
 			return null;
 		}
 		setEsporteSelected(null);

@@ -7,10 +7,12 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
@@ -20,7 +22,7 @@ import br.entidades.rest.ImagemREST;
 import com.google.gson.annotations.Expose;
 
 @Entity
-public class Local implements Serializable { 
+public class Local implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +37,7 @@ public class Local implements Serializable {
 	@Expose
 	private String cnpj;
 
-	@Column(nullable = true ,length = 150)
+	@Column(nullable = true, length = 150)
 	@Expose
 	private String nome;
 
@@ -105,8 +107,9 @@ public class Local implements Serializable {
 	@Expose
 	private String contato;
 
-	@OneToOne(cascade = CascadeType.ALL)
 	@Expose
+	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Endereco endereco;
 
 	@Column(nullable = true, length = 15)
@@ -122,6 +125,7 @@ public class Local implements Serializable {
 	private String telefone3;
 
 	@OneToOne(cascade = CascadeType.ALL)
+	@PrimaryKeyJoinColumn
 	private Imagem logo;
 
 	@Expose
@@ -286,6 +290,9 @@ public class Local implements Serializable {
 	}
 
 	public Endereco getEndereco() {
+		if (endereco == null) {
+			endereco = new Endereco();
+		}
 		return endereco;
 	}
 

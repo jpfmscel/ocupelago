@@ -59,7 +59,7 @@ public class ConsultarNoticia extends ManagedBeanGenerico implements Serializabl
 		} catch (Exception ex) {
 			ex.printStackTrace();
 			log.log(Level.INFO, "Noticia " + e.toString() + " com erro!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + ex.getCause().getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao excluir a notícia : " + ex.getCause().getMessage(), null));
 			return null;
 		}
 		setNoticiaSelected(null);
@@ -69,7 +69,7 @@ public class ConsultarNoticia extends ManagedBeanGenerico implements Serializabl
 
 	public String updateNoticia() {
 		try {
-			if (!getNoticiaDAO().buscarPorNome(getNoticiaSelected().getTitulo()).isEmpty()) {
+			if (getNoticiaDAO().buscarPorNome(getNoticiaSelected().getTitulo()).size() > 1) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Noticia já existe!", null));
 				return null;
 			} else {
@@ -80,7 +80,7 @@ public class ConsultarNoticia extends ManagedBeanGenerico implements Serializabl
 		} catch (Exception e) {
 			e.printStackTrace();
 			log.log(Level.INFO, "Noticia " + getNoticiaSelected().toString() + " com erro!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao inserir a notícia : " + e.getCause().getMessage(), null));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar a notícia : " + e.getCause().getMessage(), null));
 			return null;
 		}
 		setNoticiaSelected(null);
