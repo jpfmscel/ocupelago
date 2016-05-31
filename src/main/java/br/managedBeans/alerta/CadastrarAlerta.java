@@ -5,9 +5,11 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.map.PointSelectEvent;
@@ -42,8 +44,9 @@ public class CadastrarAlerta extends ManagedBeanGenerico implements Serializable
 
 	public String adicionarAlerta() {
 		try {
-			if(getAlerta().getLatitude() == 0 || getAlerta().getLongitude() == 0){
-				
+			if (getAlerta().getLatitude() == 0 || getAlerta().getLongitude() == 0) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Selecione um local no mapa!", null));
+				return null;
 			}
 			getAlerta().setDataCriado(new Date());
 			getAlertaDAO().iniciarTransacao();

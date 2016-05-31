@@ -3,7 +3,7 @@ package br.enumeradores;
 public enum EnumWebMethods {
 
 	GET_ESPORTES(1, "getEsportes"), GET_ALERTAS(2, "getAlertas"), GET_LOCAIS(3, "getLocais"), GET_PROJETOS(4, "getProjetos"), GET_NOTICIAS(5, "getNoticias"), GET_EVENTOS(6, "getEventos"), ADD_ALERTA(7, "addAlerta"), ADD_AVALIACAO(8, "addAvaliacao"), LOGIN(
-			9, "login"), ADD_USUARIO(10, "addUsuario"), GET_AVAL_LOCAL(11, "getAvalLocal");
+			9, "login"), ADD_USUARIO(10, "addUsuario"), GET_AVAL_LOCAL(11, "getAvalLocal"), ADD_VIEW_NOTICIA(12, "addViewNoticia");
 
 	EnumWebMethods(Integer cod, String nome) {
 		setNome(nome);

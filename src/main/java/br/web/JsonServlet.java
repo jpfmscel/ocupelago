@@ -26,6 +26,7 @@ import br.dao.UsuarioDAO;
 import br.entidades.Alerta;
 import br.entidades.Avaliacao;
 import br.entidades.Local;
+import br.entidades.Noticia;
 import br.entidades.Usuario;
 import br.entidades.rest.AvaliacaoREST;
 import br.enumeradores.EnumWebMethods;
@@ -37,7 +38,7 @@ import com.google.gson.GsonBuilder;
 @WebServlet("/jsonServlet")
 public class JsonServlet extends HttpServlet {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2437571978006550234L;
 
 	private Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
@@ -50,6 +51,8 @@ public class JsonServlet extends HttpServlet {
 	private AvaliacaoDAO avaliacaoDao;
 	private EventoDAO eventoDao;
 
+	private ListFactory listFactory;
+
 	private Logger log = Logger.getGlobal();
 
 	public JsonServlet() {
@@ -61,7 +64,7 @@ public class JsonServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		setListFactory((ListFactory) getServletContext().getAttribute("listFactory"));
 		Integer method = Integer.valueOf(request.getParameter("method"));
 		String userid = request.getParameter("userid");
 		response.setCharacterEncoding("ISO-8859-1");
@@ -109,6 +112,9 @@ public class JsonServlet extends HttpServlet {
 		case LOGIN:
 			jsonG = loginUsuario(json);
 			break;
+		case ADD_VIEW_NOTICIA:
+			jsonG = addViewNoticia(json);
+			break;
 		default:
 			break;
 		}
@@ -125,12 +131,26 @@ public class JsonServlet extends HttpServlet {
 		return getUsuarioDao().buscarPorId(Integer.valueOf(userid));
 	}
 
+	private String addViewNoticia(String json) {
+		Noticia noti = gson.fromJson(json, Noticia.class);
+
+		Noticia buscarPorId = getNoticiaDao().buscarPorId(noti.getId());
+		int counter = buscarPorId.getVisualizacoes();
+		buscarPorId.setVisualizacoes(++counter);
+
+		getNoticiaDao().iniciarTransacao();
+		getNoticiaDao().update(buscarPorId);
+		getNoticiaDao().comitarTransacao();
+
+		getListFactory().setListaNoticia(new NoticiaDAO().findAll());
+		return gson.toJson(buscarPorId);
+	}
+
 	private String getAvalLocal(String json, String userid) {
-		/*Usuario usuarioLogado = getUsuarioLogado(userid);
-		if (usuarioLogado == null) {
-			return "Você deve estar logado para acessar essa área.";
-		}
-		*/
+		/*
+		 * Usuario usuarioLogado = getUsuarioLogado(userid); if (usuarioLogado
+		 * == null) { return "Você deve estar logado para acessar essa área."; }
+		 */
 		log.log(Level.INFO, "Usuário solicitou avaliacoes local" + json);
 
 		Local l = gson.fromJson(json, Local.class);
@@ -363,6 +383,14 @@ public class JsonServlet extends HttpServlet {
 
 	public void setEventoDao(EventoDAO eventoDao) {
 		this.eventoDao = eventoDao;
+	}
+
+	public ListFactory getListFactory() {
+		return listFactory;
+	}
+
+	public void setListFactory(ListFactory listFactory) {
+		this.listFactory = listFactory;
 	}
 
 }
