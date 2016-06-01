@@ -1,7 +1,9 @@
 package br.managedBeans.local;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,8 +22,11 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
+import br.dao.LocalEsporteDAO;
+import br.entidades.Esporte;
 import br.entidades.Imagem;
 import br.entidades.Local;
+import br.entidades.LocalEsporte;
 import br.managedBeans.LoginBean;
 import br.managedBeans.ManagedBeanGenerico;
 import br.util.Util;
@@ -36,11 +41,24 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 	private LocalDAO localDAO;
 	private MapModel mapModel;
 	private boolean cnpjSet = false;
+	private List<Esporte> esportes;
+	private LocalEsporteDAO localEsporteDAO;
 
 	private Logger log = Logger.getGlobal();
 
 	@ManagedProperty(value = "#{loginBean}")
 	private LoginBean loginBean;
+
+	public List<Esporte> getEsportes() {
+		if (esportes == null) {
+			esportes = new ArrayList<Esporte>();
+		}
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
+	}
 
 	public String adicionarLocal() {
 		try {
@@ -52,6 +70,13 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 				getLocalDAO().iniciarTransacao();
 				getLocalDAO().inserir(getLocal());
 				getLocalDAO().comitarTransacao();
+
+				getLocalEsporteDAO().iniciarTransacao();
+				for (Esporte esporte : getLocal().getEsportes()) {
+					getLocalEsporteDAO().inserir(new LocalEsporte(esporte, getLocal()));
+				}
+				getLocalEsporteDAO().comitarTransacao();
+
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Local " + getLocal().toString() + " cadastrado com sucesso!");
 				setLocal(null);
@@ -137,6 +162,17 @@ public class CadastrarLocal extends ManagedBeanGenerico implements Serializable 
 
 	public void setLocalDAO(LocalDAO localDAO) {
 		this.localDAO = localDAO;
+	}
+
+	public LocalEsporteDAO getLocalEsporteDAO() {
+		if (localEsporteDAO == null) {
+			localEsporteDAO = new LocalEsporteDAO();
+		}
+		return localEsporteDAO;
+	}
+
+	public void setLocalEsporteDAO(LocalEsporteDAO localEsporteDAO) {
+		this.localEsporteDAO = localEsporteDAO;
 	}
 
 	public MapModel getMapModel() {

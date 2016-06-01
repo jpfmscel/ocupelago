@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -131,6 +130,9 @@ public class Local implements Serializable {
 	@Expose
 	@Transient
 	private List<ImagemREST> imagensREST;
+
+	@Transient
+	private List<Esporte> esportes;
 
 	public List<ImagemREST> getImagensREST() {
 		if (imagensREST == null) {
@@ -356,6 +358,14 @@ public class Local implements Serializable {
 
 	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
+	}
+
+	public List<Esporte> getEsportes() {
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
 	}
 
 }

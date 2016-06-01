@@ -28,7 +28,6 @@ import br.util.Util;
 public class ConsultarEsporte extends ManagedBeanGenerico implements Serializable {
 
 	private static final long serialVersionUID = 5362883764686822609L;
-	private List<Esporte> esportes;
 	private Esporte esporteSelected;
 	private EsporteDAO esporteDAO;
 	private String tipoEsporte;
@@ -40,9 +39,7 @@ public class ConsultarEsporte extends ManagedBeanGenerico implements Serializabl
 
 	@PostConstruct
 	public void inciarEsporte() {
-		setEsportes(null);
 		setEsporteSelected(null);
-		getEsportes().addAll(getEsporteDAO().findAll());
 	}
 
 	public String detalharEsporte(Esporte e) {
@@ -144,17 +141,6 @@ public class ConsultarEsporte extends ManagedBeanGenerico implements Serializabl
 		i.setNomeArquivo(event.getFile().getFileName());
 		i.setDataCriado(new Date());
 		getEsporteSelected().getImagens().add(i);
-	}
-
-	public List<Esporte> getEsportes() {
-		if (esportes == null) {
-			esportes = new ArrayList<Esporte>();
-		}
-		return esportes;
-	}
-
-	public void setEsportes(List<Esporte> esportes) {
-		this.esportes = esportes;
 	}
 
 	public Esporte getEsporteSelected() {

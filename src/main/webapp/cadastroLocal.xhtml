@@ -209,7 +209,17 @@
 									required="false" id="telefone3"
 									value="#{cadastrarLocal.local.telefone1}" />
 							</div>
-							<div class="col-md-12" style="margin-top: 2%;">
+							<div class="col-md-3" style="margin-top: 2%;">
+								<h:outputLabel value="Esportes" />
+								<p:selectManyMenu value="#{cadastrarLocal.local.esportes}"
+									showCheckbox="true">
+									<f:selectItems value="#{listFactory.listaEsporte}"
+										itemValue="#{esporte.nome}" var="esporte"
+										itemLabel="&nbsp;&nbsp;#{esporte.nome}" />
+									<f:converter converterId="esporteConverter" />
+								</p:selectManyMenu>
+							</div>
+							<div class="col-md-9" style="margin-top: 2%;">
 								<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
 									streetView="true" id="mapa" style="width:98%;height:450px"
 									model="#{cadastrarLocal.mapModel}">
@@ -287,8 +297,7 @@
 								</div>
 								<p:outputPanel id="videoYou">
 									<p:media value="#{cadastrarLocal.local.videoURL}"
-										 player="flash"
-										style="margin-top:2%; margin-left: 2%;"
+										player="flash" style="margin-top:2%; margin-left: 2%;"
 										rendered="#{cadastrarLocal.local.videoURL != null and cadastrarLocal.local.videoURL != ''}" />
 								</p:outputPanel>
 							</div>
