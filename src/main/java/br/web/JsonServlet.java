@@ -20,11 +20,13 @@ import br.dao.AvaliacaoDAO;
 import br.dao.EsporteDAO;
 import br.dao.EventoDAO;
 import br.dao.LocalDAO;
+import br.dao.LocalEsporteDAO;
 import br.dao.NoticiaDAO;
 import br.dao.ProjetoDAO;
 import br.dao.UsuarioDAO;
 import br.entidades.Alerta;
 import br.entidades.Avaliacao;
+import br.entidades.Esporte;
 import br.entidades.Local;
 import br.entidades.Noticia;
 import br.entidades.Usuario;
@@ -45,6 +47,7 @@ public class JsonServlet extends HttpServlet {
 	private UsuarioDAO usuarioDao;
 	private AlertaDAO alertaDao;
 	private LocalDAO localDao;
+	private LocalEsporteDAO localEsporteDao;
 	private ProjetoDAO projetoDao;
 	private NoticiaDAO noticiaDao;
 	private EsporteDAO esporteDao;
@@ -115,6 +118,12 @@ public class JsonServlet extends HttpServlet {
 		case ADD_VIEW_NOTICIA:
 			jsonG = addViewNoticia(json);
 			break;
+		case GET_LOCAIS_BY_ESPORTE:
+			jsonG = getLocaisByEsporte(json);
+			break;
+		case GET_ESPORTES_BY_LOCAL:
+			jsonG = getEsporteByLocal(json);
+			break;
 		default:
 			break;
 		}
@@ -122,6 +131,16 @@ public class JsonServlet extends HttpServlet {
 		log.log(Level.INFO, json);
 		response.setContentType("application/json");
 		response.getWriter().write(jsonG);
+	}
+
+	private String getEsporteByLocal(String json) {
+		Local local = gson.fromJson(json, Local.class);
+		return gson.toJson(getLocalEsporteDao().getEsportesByLocal(local.getId()));
+	}
+
+	private String getLocaisByEsporte(String json) {
+		Esporte esporte = gson.fromJson(json, Esporte.class);
+		return gson.toJson(getLocalEsporteDao().getLocaisByEsporte(esporte.getId()));
 	}
 
 	private Usuario getUsuarioLogado(String userid) {
@@ -391,6 +410,17 @@ public class JsonServlet extends HttpServlet {
 
 	public void setListFactory(ListFactory listFactory) {
 		this.listFactory = listFactory;
+	}
+
+	public LocalEsporteDAO getLocalEsporteDao() {
+		if (localEsporteDao == null) {
+			localEsporteDao = new LocalEsporteDAO();
+		}
+		return localEsporteDao;
+	}
+
+	public void setLocalEsporteDao(LocalEsporteDAO localEsporteDao) {
+		this.localEsporteDao = localEsporteDao;
 	}
 
 }
