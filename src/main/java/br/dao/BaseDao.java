@@ -123,6 +123,10 @@ public abstract class BaseDao<T> implements Serializable {
 	public void update(T obj) {
 		getEntityManager().merge(obj);
 	}
+	
+	public void remover(T obj){
+		getEntityManager().remove(obj);
+	}
 
 	private Query gerarQuery(T obj) {
 

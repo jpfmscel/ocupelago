@@ -26,19 +26,19 @@
 					</div>
 					<div class="col-md-6" style="margin-top: 2%;">
 						<h3>
-							<h:outputLabel id="cnpj" value="CNPJ" rendered="#{not empty consultarLocal.localSelected.cnpj}" />
+							<h:outputLabel id="cnpj" value="CNPJ"
+								rendered="#{not empty consultarLocal.localSelected.cnpj}" />
 						</h3>
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
-							value="#{consultarLocal.localSelected.cnpj} " 
-							rendered="#{not empty consultarLocal.localSelected.cnpj}"	/>
+							value="#{consultarLocal.localSelected.cnpj} "
+							rendered="#{not empty consultarLocal.localSelected.cnpj}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
 						<h3>
 							<h:outputLabel id="desc" value="Descrição" />
 						</h3>
-						<h:outputText
-							style="font-size: large;"
+						<h:outputText style="font-size: large;"
 							value="#{consultarLocal.localSelected.descricao}" />
 					</div>
 					<div class="col-md-3" style="margin-top: 2%;">
@@ -126,9 +126,9 @@
 						<h:outputText styleClass="col-md-offset-1"
 							style="font-size: large;"
 							value="#{consultarLocal.localSelected.telefone1}" />
-							<h:outputText style="font-size: large;"
+						<h:outputText style="font-size: large;"
 							value="&nbsp;&nbsp;#{consultarLocal.localSelected.telefone2}" />
-							<h:outputText style="font-size: large;"
+						<h:outputText style="font-size: large;"
 							value="&nbsp;&nbsp;#{consultarLocal.localSelected.telefone3}" />
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">
@@ -142,6 +142,41 @@
 								<h:graphicImage value="/image/#{image.id}"
 									title="#{image.nomeArquivo}" />
 							</p:galleria>
+						</p:outputPanel>
+					</div>
+					<div class="col-md-12" style="margin-top: 2%;">
+						<p:outputPanel
+							rendered="#{consultarLocal.localSelected.esportes.size() > 0}">
+							<div class="col-md-12">
+								<h3>
+									<h:outputLabel id="esportes" value="Esportes" />
+								</h3>
+								<table class="table table-hover table-striped">
+									<thead>
+										<tr>
+											<th style="width: 25%">Nome</th>
+											<th style="width: 55%">Descrição</th>
+											<th style="width: 5%">Tipo</th>
+										</tr>
+									</thead>
+									<tbody>
+										<ui:repeat var="esporte"
+											value="#{consultarLocal.localSelected.esportes}">
+											<tr>
+												<td style="width: 25%; padding-top: 1.5%;">#{esporte.nome}</td>
+												<td style="width: 55%; padding-top: 1.5%;">#{esporte.descricao}</td>
+												<td style="width: 5%"><h:graphicImage
+														rendered="#{esporte.aquatico}" value="images/agua.png"
+														style="height: 34px;width: 34px;" /> <h:graphicImage
+														rendered="#{esporte.aereo}" value="images/ar.png"
+														style="height: 34px;width: 34px;" /> <h:graphicImage
+														rendered="#{esporte.terrestre}" value="images/terra.png"
+														style="height: 34px;width: 34px;" /></td>
+											</tr>
+										</ui:repeat>
+									</tbody>
+								</table>
+							</div>
 						</p:outputPanel>
 					</div>
 					<div class="col-md-12" style="margin-top: 2%;">

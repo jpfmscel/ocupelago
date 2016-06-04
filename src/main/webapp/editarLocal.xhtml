@@ -178,7 +178,17 @@
 							required="false" id="telefone3"
 							value="#{consultarLocal.localSelected.telefone1}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Esportes" />
+						<p:selectManyMenu value="#{consultarLocal.localSelected.esportes}"
+							showCheckbox="true">
+							<f:selectItems value="#{listFactory.listaEsporte}"
+								itemValue="#{esporte.nome}" var="esporte"
+								itemLabel="&nbsp;&nbsp;#{esporte.nome}" />
+							<f:converter converterId="esporteConverter" />
+						</p:selectManyMenu>
+					</div>
+					<div class="col-md-9" style="margin-top: 2%;">
 						<p:gmap center="-15.7880217,-47.8390782" zoom="12" type="MAP"
 							streetView="true" id="mapa" style="width:98%;height:450px"
 							model="#{cadastrarLocal.mapModel}">
@@ -192,8 +202,9 @@
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-youtube" /></span>
 							<h:inputText class="form-control" id="videoURL"
-								value="#{consultarLocal.localSelected.videoURL}" maxlength="1000"
-								a:placeholder="URL YouTube" aria-describedby="sizing-addon2">
+								value="#{consultarLocal.localSelected.videoURL}"
+								maxlength="1000" a:placeholder="URL YouTube"
+								aria-describedby="sizing-addon2">
 								<p:ajax event="blur" update="videoYou,videoURL" process="@this"
 									partialSubmit="true"
 									listener="#{cadastrarLocal.filtrarURLYoutube}" />
@@ -210,7 +221,8 @@
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
 								class="fa fa-facebook-square" /></span>
-							<h:inputText class="form-control" id="linkFacebook" maxlength="1000"
+							<h:inputText class="form-control" id="linkFacebook"
+								maxlength="1000"
 								value="#{consultarLocal.localSelected.URL_facebook}"
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>

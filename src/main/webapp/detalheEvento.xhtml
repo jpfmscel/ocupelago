@@ -61,7 +61,7 @@
 					</div>
 
 					<p:outputPanel
-						rendered="#{consultarEvento.eventoSelected.listaEsporte.size() > 0}">
+						rendered="#{consultarEvento.eventoSelected.esportes.size() > 0}">
 						<div class="col-md-12">
 							<h3>
 								<h:outputLabel id="esportes" value="Esportes" />
@@ -76,7 +76,7 @@
 								</thead>
 								<tbody>
 									<ui:repeat var="esporte"
-										value="#{consultarEvento.eventoSelected.listaEsporte}">
+										value="#{consultarEvento.eventoSelected.esportes}">
 										<tr>
 											<td style="width: 25%; padding-top: 1.5%;">#{esporte.nome}</td>
 											<td style="width: 55%; padding-top: 1.5%;">#{esporte.descricao}</td>

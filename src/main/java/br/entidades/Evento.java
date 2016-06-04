@@ -92,9 +92,6 @@ public class Evento implements Serializable {
 	private boolean ativo = true;
 
 	@OneToMany(cascade = CascadeType.ALL)
-	private List<Esporte> listaEsporte;
-
-	@OneToMany(cascade = CascadeType.ALL)
 	private List<Imagem> imagens;
 
 	@Expose
@@ -118,6 +115,9 @@ public class Evento implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Associado> parceirosAssociado;
+	
+	@Transient
+	private List<Esporte> esportes;
 
 	public List<ImagemREST> getImagensREST() {
 		if (imagensREST == null) {
@@ -247,14 +247,6 @@ public class Evento implements Serializable {
 
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
-	}
-
-	public List<Esporte> getListaEsporte() {
-		return listaEsporte;
-	}
-
-	public void setListaEsporte(List<Esporte> listaEsporte) {
-		this.listaEsporte = listaEsporte;
 	}
 
 	public List<Imagem> getImagens() {
@@ -388,6 +380,17 @@ public class Evento implements Serializable {
 			return videoURL.replace("watch?v=", "v/");
 		}
 		return videoURL;
+	}
+	
+	public List<Esporte> getEsportes() {
+		if(esportes == null){
+			esportes = new ArrayList<Esporte>();
+		}
+		return esportes;
+	}
+
+	public void setEsportes(List<Esporte> esportes) {
+		this.esportes = esportes;
 	}
 
 }

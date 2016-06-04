@@ -19,6 +19,7 @@ import br.dao.AlertaDAO;
 import br.dao.AvaliacaoDAO;
 import br.dao.EsporteDAO;
 import br.dao.EventoDAO;
+import br.dao.EventoEsporteDAO;
 import br.dao.LocalDAO;
 import br.dao.LocalEsporteDAO;
 import br.dao.NoticiaDAO;
@@ -27,6 +28,7 @@ import br.dao.UsuarioDAO;
 import br.entidades.Alerta;
 import br.entidades.Avaliacao;
 import br.entidades.Esporte;
+import br.entidades.Evento;
 import br.entidades.Local;
 import br.entidades.Noticia;
 import br.entidades.Usuario;
@@ -48,6 +50,7 @@ public class JsonServlet extends HttpServlet {
 	private AlertaDAO alertaDao;
 	private LocalDAO localDao;
 	private LocalEsporteDAO localEsporteDao;
+	private EventoEsporteDAO eventoEsporteDao;
 	private ProjetoDAO projetoDao;
 	private NoticiaDAO noticiaDao;
 	private EsporteDAO esporteDao;
@@ -124,6 +127,15 @@ public class JsonServlet extends HttpServlet {
 		case GET_ESPORTES_BY_LOCAL:
 			jsonG = getEsporteByLocal(json);
 			break;
+		case GET_EVENTOS_BY_ESPORTE:
+			jsonG = getEventosByEsporte(json);
+			break;
+		case GET_ESPORTES_BY_EVENTO:
+			jsonG = getEsportesByEvento(json);
+			break;
+		case GET_EVENTOS_BY_LOCAL:
+			jsonG = getEventosByLocal(json);
+			break;
 		default:
 			break;
 		}
@@ -141,6 +153,21 @@ public class JsonServlet extends HttpServlet {
 	private String getLocaisByEsporte(String json) {
 		Esporte esporte = gson.fromJson(json, Esporte.class);
 		return gson.toJson(getLocalEsporteDao().getLocaisByEsporte(esporte.getId()));
+	}
+
+	private String getEsportesByEvento(String json) {
+		Evento evento = gson.fromJson(json, Evento.class);
+		return gson.toJson(getEventoEsporteDao().getEsportesByEvento(evento.getId()));
+	}
+
+	private String getEventosByEsporte(String json) {
+		Evento evento = gson.fromJson(json, Evento.class);
+		return gson.toJson(getEventoEsporteDao().getEventosByEsporte(evento.getId()));
+	}
+	
+	private String getEventosByLocal(String json) {
+		Evento evento = gson.fromJson(json, Evento.class);
+		return gson.toJson(getEventoDao().getEventosByLocal(evento.getId()));
 	}
 
 	private Usuario getUsuarioLogado(String userid) {
@@ -423,4 +450,15 @@ public class JsonServlet extends HttpServlet {
 		this.localEsporteDao = localEsporteDao;
 	}
 
+	public EventoEsporteDAO getEventoEsporteDao() {
+		if(eventoEsporteDao == null){
+			eventoEsporteDao = new EventoEsporteDAO();
+		}
+		return eventoEsporteDao;
+	}
+
+	public void setEventoEsporteDao(EventoEsporteDAO eventoEsporteDao) {
+		this.eventoEsporteDao = eventoEsporteDao;
+	}
+	
 }

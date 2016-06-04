@@ -51,26 +51,35 @@
 							requiredMessage="Digite as informações do evento."
 							a:placeholder="Informe as informações do evento" required="true" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-5" style="margin-top: 2%;">
+						<h:outputLabel id="empresa" value="Empresa Organizadora" />
+						<h:inputText class="form-control"
+							a:placeholder="nome da empresa organizadora"
+							value="#{consultarEvento.eventoSelected.nomeEmpresaOrganizadora}" />
+					</div>
+					<div class="col-md-3" style="margin-top: 2%;">
 						<h:outputLabel id="telefone" value="Telefone" />
 						<p:inputMask class="form-control" mask="(99) 9999-9999?9"
 							a:placeholder="telefone do evento"
 							requiredMessage="Digite o telefone do evento."
 							value="#{consultarEvento.eventoSelected.telefone}" />
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
-						<h:outputLabel id="empresa" value="Empresa Organizadora" />
-						<h:inputText class="form-control"
-							a:placeholder="nome da empresa organizadora"
-							value="#{consultarEvento.eventoSelected.nomeEmpresaOrganizadora}" />
-					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-4" style="margin-top: 2%;">
 						<h:outputLabel id="email" value="E-mail" />
 						<h:inputText class="form-control" a:placeholder="e-mail do evento"
 							value="#{consultarEvento.eventoSelected.email}" />
 					</div>
-
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-3" style="margin-top: 2%;">
+						<h:outputLabel value="Esportes" />
+						<p:selectManyMenu value="#{consultarEvento.eventoSelected.esportes}"
+							showCheckbox="true">
+							<f:selectItems value="#{listFactory.listaEsporte}"
+								itemValue="#{esporte.nome}" var="esporte"
+								itemLabel="&nbsp;&nbsp;#{esporte.nome}" />
+							<f:converter converterId="esporteConverter" />
+						</p:selectManyMenu>
+					</div>
+					<div class="col-md-4" style="margin-top: 2%;">
 						<h:outputLabel id="localLab" value="Local" />
 						<br></br>
 						<p:autoComplete id="local"
@@ -112,7 +121,7 @@
 
 						</p:outputPanel>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 
 						<!-- 						<h:outputLabel id="video" value="Vídeo YouTube (URL)" /> -->
 						<div class="input-group">
@@ -133,7 +142,7 @@
 								rendered="#{consultarEvento.eventoSelected.videoURL != null and consultarEvento.eventoSelected.videoURL != ''}" />
 						</p:outputPanel>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Facebook" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
@@ -143,7 +152,7 @@
 								a:placeholder="Link Facebook" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Twitter" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i
@@ -153,7 +162,7 @@
 								a:placeholder="Link Twitter" aria-describedby="sizing-addon2" />
 						</div>
 					</div>
-					<div class="col-md-12" style="margin-top: 2%;">
+					<div class="col-md-6" style="margin-top: 2%;">
 						<!-- 						<h:outputLabel value="Link Site" /> -->
 						<div class="input-group">
 							<span class="input-group-addon" id="sizing-addon2"><i

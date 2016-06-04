@@ -21,8 +21,11 @@ import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 
 import br.dao.LocalDAO;
+import br.dao.LocalEsporteDAO;
+import br.entidades.Esporte;
 import br.entidades.Imagem;
 import br.entidades.Local;
+import br.entidades.LocalEsporte;
 import br.managedBeans.LoginBean;
 import br.managedBeans.ManagedBeanGenerico;
 
@@ -35,6 +38,7 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 	private Local localSelected;
 	private LocalDAO localDAO;
 	private MapModel mapModel;
+	private LocalEsporteDAO localEsporteDAO;
 
 	private Logger log = Logger.getGlobal();
 
@@ -50,11 +54,13 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 
 	public String detalharLocal(Local e) {
 		setLocalSelected(e);
+		getLocalSelected().setEsportes(getLocalEsporteDAO().getEsportesByLocal(getLocalSelected().getId()));
 		return "detalheLocal.xhtml";
 	}
 
 	public String editarLocal(Local e) {
 		setLocalSelected(e);
+		getLocalSelected().setEsportes(getLocalEsporteDAO().getEsportesByLocal(getLocalSelected().getId()));
 		return "editarLocal.xhtml";
 	}
 
@@ -83,6 +89,16 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 				return null;
 			} else {
 				update();
+				
+				getLocalEsporteDAO().iniciarTransacao();				
+				for(LocalEsporte e : getLocalEsporteDAO().getLocalEsportes(getLocalSelected().getId())){						
+					getLocalEsporteDAO().remover(e);
+				}
+				for (Esporte esporte : getLocalSelected().getEsportes()) {
+					getLocalEsporteDAO().inserir(new LocalEsporte(esporte, getLocalSelected()));		
+				}
+				getLocalEsporteDAO().comitarTransacao();
+				
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
 				log.log(Level.INFO, "Local " + getLocalSelected().toString() + " atualizado com sucesso!");
 			}
@@ -175,4 +191,15 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
 	}
+
+	public LocalEsporteDAO getLocalEsporteDAO() {
+		if(localEsporteDAO == null){
+			localEsporteDAO = new LocalEsporteDAO();
+		}
+		return localEsporteDAO;
+	}
+
+	public void setLocalEsporteDAO(LocalEsporteDAO localEsporteDAO) {
+		this.localEsporteDAO = localEsporteDAO;
+	}	
 }

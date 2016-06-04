@@ -15,7 +15,10 @@ import javax.faces.context.FacesContext;
 import org.primefaces.event.FileUploadEvent;
 
 import br.dao.EventoDAO;
+import br.dao.EventoEsporteDAO;
+import br.entidades.Esporte;
 import br.entidades.Evento;
+import br.entidades.EventoEsporte;
 import br.entidades.Imagem;
 import br.managedBeans.LoginBean;
 import br.managedBeans.ManagedBeanGenerico;
@@ -28,6 +31,7 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 	private static final long serialVersionUID = -2333684779244788471L;
 	private Evento eventoSelected;
 	private EventoDAO eventoDAO;
+	private EventoEsporteDAO eventoEsporteDAO;
 
 	private Logger log = Logger.getGlobal();
 
@@ -42,11 +46,13 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 
 	public String detalharEvento(Evento e) {
 		setEventoSelected(e);
+		getEventoSelected().setEsportes(getEventoEsporteDAO().getEsportesByEvento(getEventoSelected().getId()));
 		return "detalheEvento.xhtml";
 	}
 
 	public String editarEvento(Evento e) {
 		setEventoSelected(e);
+		getEventoSelected().setEsportes(getEventoEsporteDAO().getEsportesByEvento(getEventoSelected().getId()));
 		return "editarEvento.xhtml";
 	}
 
@@ -79,6 +85,16 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 					return null;
 				}
 				update();
+				
+				getEventoEsporteDAO().iniciarTransacao();				
+				for(EventoEsporte e : getEventoEsporteDAO().getEventoEsportes(getEventoSelected().getId())){						
+					getEventoEsporteDAO().remover(e);
+				}
+				for (Esporte esporte : getEventoSelected().getEsportes()) {
+					getEventoEsporteDAO().inserir(new EventoEsporte(esporte, getEventoSelected()));		
+				}
+				getEventoEsporteDAO().comitarTransacao();
+				
 				log.log(Level.INFO, "Evento " + getEventoSelected().toString() + " atualizado com sucesso!");
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Evento atualizado com sucesso!", null));
 			}
@@ -148,4 +164,16 @@ public class ConsultarEvento extends ManagedBeanGenerico implements Serializable
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
 	}
+
+	public EventoEsporteDAO getEventoEsporteDAO() {
+		if(eventoEsporteDAO == null){
+			eventoEsporteDAO = new EventoEsporteDAO();
+		}
+		return eventoEsporteDAO;
+	}
+
+	public void setEventoEsporteDAO(EventoEsporteDAO eventoEsporteDAO) {
+		this.eventoEsporteDAO = eventoEsporteDAO;
+	}
+
 }

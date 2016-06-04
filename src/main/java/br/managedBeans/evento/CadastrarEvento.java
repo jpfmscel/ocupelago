@@ -18,7 +18,10 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.UploadedFile;
 
 import br.dao.EventoDAO;
+import br.dao.EventoEsporteDAO;
+import br.entidades.Esporte;
 import br.entidades.Evento;
+import br.entidades.EventoEsporte;
 import br.entidades.Imagem;
 import br.entidades.Local;
 import br.managedBeans.LoginBean;
@@ -33,7 +36,8 @@ public class CadastrarEvento extends ManagedBeanGenerico implements Serializable
 
 	private Evento evento;
 	private EventoDAO eventoDAO;
-
+	private EventoEsporteDAO eventoEsporteDAO;
+	
 	private Logger log = Logger.getGlobal();
 
 	@ManagedProperty(value = "#{loginBean}")
@@ -51,8 +55,15 @@ public class CadastrarEvento extends ManagedBeanGenerico implements Serializable
 				}
 				fixURL();
 				getEventoDAO().iniciarTransacao();
-				getEventoDAO().update(getEvento());
+				getEventoDAO().inserir(getEvento());
 				getEventoDAO().comitarTransacao();
+				
+				getEventoEsporteDAO().iniciarTransacao();
+				for (Esporte esporte : getEvento().getEsportes()) {
+					getEventoEsporteDAO().inserir(new EventoEsporte(esporte, getEvento()));
+				}
+				getEventoEsporteDAO().comitarTransacao();
+				
 				log.log(Level.INFO, "Usuário " + getLoginBean().getUsuarioLogado().getEmail());
 				log.log(Level.INFO, "Evento " + getEvento().toString() + " cadastrado com sucesso!");
 				setEvento(null);
@@ -141,6 +152,17 @@ public class CadastrarEvento extends ManagedBeanGenerico implements Serializable
 
 	public void setLoginBean(LoginBean loginBean) {
 		this.loginBean = loginBean;
+	}
+
+	public EventoEsporteDAO getEventoEsporteDAO() {
+		if(eventoEsporteDAO == null){
+			eventoEsporteDAO = new EventoEsporteDAO();
+		}
+		return eventoEsporteDAO;
+	}
+
+	public void setEventoEsporteDAO(EventoEsporteDAO eventoEsporteDAO) {
+		this.eventoEsporteDAO = eventoEsporteDAO;
 	}
 
 }
