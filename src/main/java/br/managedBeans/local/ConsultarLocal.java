@@ -89,23 +89,23 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 				return null;
 			} else {
 				update();
-				
-				getLocalEsporteDAO().iniciarTransacao();				
-				for(LocalEsporte e : getLocalEsporteDAO().getLocalEsportes(getLocalSelected().getId())){						
+
+				getLocalEsporteDAO().iniciarTransacao();
+				for (LocalEsporte e : getLocalEsporteDAO().getLocalEsportes(getLocalSelected().getId())) {
 					getLocalEsporteDAO().remover(e);
 				}
 				for (Esporte esporte : getLocalSelected().getEsportes()) {
-					getLocalEsporteDAO().inserir(new LocalEsporte(esporte, getLocalSelected()));		
+					getLocalEsporteDAO().inserir(new LocalEsporte(esporte, getLocalSelected()));
 				}
 				getLocalEsporteDAO().comitarTransacao();
-				
+
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Local atualizado com sucesso!", null));
 				log.log(Level.INFO, "Local " + getLocalSelected().toString() + " atualizado com sucesso!");
 			}
 		} catch (Exception e) {
 			log.log(Level.INFO, "Local " + getLocalSelected().toString() + " com erro!");
 			e.printStackTrace();
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o local : " + e.getCause().getMessage(), e.getCause().getMessage()));
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro ao editar o local : " + e.getMessage(), null));
 			return null;
 		}
 		setLocalSelected(null);
@@ -193,7 +193,7 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 	}
 
 	public LocalEsporteDAO getLocalEsporteDAO() {
-		if(localEsporteDAO == null){
+		if (localEsporteDAO == null) {
 			localEsporteDAO = new LocalEsporteDAO();
 		}
 		return localEsporteDAO;
@@ -201,5 +201,5 @@ public class ConsultarLocal extends ManagedBeanGenerico implements Serializable 
 
 	public void setLocalEsporteDAO(LocalEsporteDAO localEsporteDAO) {
 		this.localEsporteDAO = localEsporteDAO;
-	}	
+	}
 }

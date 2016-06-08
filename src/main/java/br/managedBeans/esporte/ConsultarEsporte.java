@@ -98,6 +98,9 @@ public class ConsultarEsporte extends ManagedBeanGenerico implements Serializabl
 	}
 
 	private void atualizaTipoEsporteUpdate() {
+		getEsporteSelected().setAereo(false);
+		getEsporteSelected().setTerrestre(false);
+		getEsporteSelected().setAquatico(false);
 		if (tipoEsporte.equalsIgnoreCase("aereo")) {
 			getEsporteSelected().setAereo(true);
 		} else if (tipoEsporte.equalsIgnoreCase("terrestre")) {

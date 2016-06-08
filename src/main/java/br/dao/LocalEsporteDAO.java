@@ -46,20 +46,20 @@ public class LocalEsporteDAO extends BaseDao<LocalEsporte> {
 
 		return lista;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<LocalEsporte> getLocalEsportes(int idLocal) {
 		Query q = gerarQueryPorLocalEsporte(idLocal);
 		return (List<LocalEsporte>) q.getResultList();
 	}
-	
+
 	private Query gerarQueryPorLocalEsporte(int idLocal) {
 		String nomeClasse = getClasse().getSimpleName();
 		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + nomeClasse + " x where id_evento ='" + idLocal + "'");
+		sb.append("Select x from " + nomeClasse + " x where id_local ='" + idLocal + "'");
 		return getEntityManager().createQuery(sb.toString());
 	}
-	
+
 	private Query gerarQueryPorEsporte(int idEsporte) {
 		String nomeClasse = getClasse().getSimpleName();
 		StringBuffer sb = new StringBuffer();
@@ -74,10 +74,4 @@ public class LocalEsporteDAO extends BaseDao<LocalEsporte> {
 		return getEntityManager().createQuery(sb.toString());
 	}
 
-	public Query gerarQueryPorCategoria(String cat) {
-		String nomeClasse = getClasse().getSimpleName();
-		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + nomeClasse + " x where ativo <> 0 and categoria ='" + cat + "'");
-		return getEntityManager().createQuery(sb.toString());
-	}
 }

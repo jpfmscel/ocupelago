@@ -46,7 +46,7 @@ public class EventoEsporteDAO extends BaseDao<EventoEsporte> {
 
 		return lista;
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<EventoEsporte> getEventoEsportes(int idEvento) {
 		Query q = gerarQueryPorEventoEsporte(idEvento);
@@ -66,7 +66,7 @@ public class EventoEsporteDAO extends BaseDao<EventoEsporte> {
 		sb.append("Select x from " + nomeClasse + " x where id_evento ='" + idEvento + "'");
 		return getEntityManager().createQuery(sb.toString());
 	}
-	
+
 	private Query gerarQueryPorEventoEsporte(int idEvento) {
 		String nomeClasse = getClasse().getSimpleName();
 		StringBuffer sb = new StringBuffer();
@@ -74,10 +74,4 @@ public class EventoEsporteDAO extends BaseDao<EventoEsporte> {
 		return getEntityManager().createQuery(sb.toString());
 	}
 
-	public Query gerarQueryPorCategoria(String cat) {
-		String nomeClasse = getClasse().getSimpleName();
-		StringBuffer sb = new StringBuffer();
-		sb.append("Select x from " + nomeClasse + " x where ativo <> 0 and categoria ='" + cat + "'");
-		return getEntityManager().createQuery(sb.toString());
-	}
 }
